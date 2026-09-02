@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Steps::Outgoings::OutgoingsPaymentsController, type: :controller do
-  # rubocop:disable Layout/LineLength
+  # rubocop:disable-next Layout/LineLength
   it_behaves_like 'a generic step controller', Steps::Outgoings::OutgoingsPaymentsForm, Decisions::OutgoingsDecisionTree do
     describe 'CRUD actions' do
       let(:crime_application) { CrimeApplication.create office_code: }
@@ -17,5 +17,4 @@ RSpec.describe Steps::Outgoings::OutgoingsPaymentsController, type: :controller 
       end
     end
   end
-  # rubocop:enable Layout/LineLength
 end

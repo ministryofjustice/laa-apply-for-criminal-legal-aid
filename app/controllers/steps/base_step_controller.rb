@@ -22,7 +22,7 @@ module Steps
 
     private
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable-next Metrics/MethodLength, Metrics/AbcSize
     def update_and_advance(form_class, as:, record: nil, flash: nil, **kwargs)
       hash = permitted_params(form_class).to_h
       hash.merge!(kwargs, step_name: as)
@@ -41,7 +41,6 @@ module Steps
         render :edit
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
     def permitted_params(form_class)
       params

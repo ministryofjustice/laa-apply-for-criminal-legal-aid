@@ -1,6 +1,6 @@
 module Devise
   class CustomFailureApp < Devise::FailureApp
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable-next Metrics/MethodLength
     def redirect
       store_location!
 
@@ -23,6 +23,5 @@ module Devise
         # simplecov:enable
       end
     end
-    # rubocop:enable Metrics/MethodLength
   end
 end

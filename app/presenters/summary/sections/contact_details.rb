@@ -5,7 +5,7 @@ module Summary
         applicant.present? && !crime_application.appeal_no_changes? && super
       end
 
-      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      # rubocop:disable-next Metrics/MethodLength, Metrics/AbcSize
       def answers
         answers = []
 
@@ -54,7 +54,6 @@ module Summary
 
         answers.flatten.select(&:show?)
       end
-      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       private
 

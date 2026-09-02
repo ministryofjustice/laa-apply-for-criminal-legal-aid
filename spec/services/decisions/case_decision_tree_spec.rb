@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
+# rubocop:disable-next RSpec/MultipleMemoizedHelpers
 RSpec.describe Decisions::CaseDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
@@ -460,4 +460,3 @@ subject: 'partner')
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

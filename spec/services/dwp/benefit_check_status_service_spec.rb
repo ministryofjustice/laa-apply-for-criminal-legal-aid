@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
+# rubocop:disable-next RSpec/MultipleMemoizedHelpers
 RSpec.describe DWP::BenefitCheckStatusService do
   subject { described_class.new(crime_application, applicant) }
 
@@ -152,4 +152,3 @@ RSpec.describe DWP::BenefitCheckStatusService do
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

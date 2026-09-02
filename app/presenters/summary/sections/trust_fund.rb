@@ -1,6 +1,6 @@
 module Summary
   module Sections
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable-next Metrics/MethodLength, Metrics/AbcSize
     class TrustFund < Sections::BaseSection
       include TypeOfMeansAssessment
       include HasDynamicSubject
@@ -42,6 +42,5 @@ module Summary
         YesNoAnswer.new(capital.will_benefit_from_trust_fund.to_s).yes?
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
   end
 end

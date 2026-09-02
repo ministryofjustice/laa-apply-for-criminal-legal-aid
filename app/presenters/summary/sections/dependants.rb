@@ -5,7 +5,7 @@ module Summary
         income.present? && super
       end
 
-      # rubocop:disable Metrics/MethodLength
+      # rubocop:disable-next Metrics/MethodLength
       def answers
         [
           Components::ValueAnswer.new(
@@ -22,7 +22,6 @@ module Summary
           end
         ].flatten.select(&:show?)
       end
-      # rubocop:enable Metrics/MethodLength
 
       private
 

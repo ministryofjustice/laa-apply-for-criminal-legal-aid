@@ -60,7 +60,7 @@ RSpec.describe Adapters::Structs::CaseDetails do
       )
     end
 
-    # rubocop:disable RSpec/ExampleLength
+    # rubocop:disable-next RSpec/ExampleLength
     it 'contains all required attributes' do
       expect(
         subject.serializable_hash.keys
@@ -96,7 +96,6 @@ RSpec.describe Adapters::Structs::CaseDetails do
         ]
       )
     end
-    # rubocop:enable RSpec/ExampleLength
 
     context 'codefendants relationship' do
       it 'has the expected codefendants from the fixture' do
@@ -111,7 +110,7 @@ RSpec.describe Adapters::Structs::CaseDetails do
       end
     end
 
-    # rubocop:disable RSpec/MultipleExpectations
+    # rubocop:disable-next RSpec/MultipleExpectations
     context 'charges relationship' do
       it 'has the expected charges from the fixture' do
         charges = subject.serializable_hash['charges']
@@ -139,6 +138,5 @@ RSpec.describe Adapters::Structs::CaseDetails do
         expect(dates1.date_to).to be_nil
       end
     end
-    # rubocop:enable RSpec/MultipleExpectations
   end
 end

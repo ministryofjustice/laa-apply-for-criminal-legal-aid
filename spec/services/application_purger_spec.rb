@@ -12,11 +12,10 @@ RSpec.describe ApplicationPurger do
   let(:document) { instance_double(Document) }
 
   before do
-    # rubocop:disable RSpec/MessageChain
+    # rubocop:disable-next RSpec/MessageChain
     allow(
       crime_application
     ).to receive_message_chain(:documents, :stored, :not_submitted).and_return(documents)
-    # rubocop:enable RSpec/MessageChain
   end
 
   describe '.call' do

@@ -139,7 +139,7 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
     }
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
+  # rubocop:disable-next RSpec/MultipleMemoizedHelpers
   describe '#generate' do
     context 'without partner' do
       let(:has_partner) { 'no' }
@@ -314,5 +314,4 @@ RSpec.describe SubmissionSerializer::Sections::ClientDetails do
       it { expect(subject.generate).to eq(applicant_with_partner.as_json) }
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end
