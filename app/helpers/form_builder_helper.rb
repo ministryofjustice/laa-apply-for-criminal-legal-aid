@@ -74,12 +74,21 @@ module FormBuilderHelper
 
   def label_with_currency_hint(attribute_name, label_opts)
     label_text = label_opts[:text] ||
-                 I18n.t("helpers.label.#{object_name}.#{attribute_name}", default: nil) ||
+                 localised_label(attribute_name) ||
                  attribute_name.to_s.humanize
 
     hidden_span = content_tag(:span, I18n.t('helpers.currency_input_hint'),
                               class: 'govuk-visually-hidden')
     label_opts.merge(text: safe_join([label_text, hidden_span], ' '))
+  end
+
+  # Resolves an attribute's label the same way the GOV.UK form builder does, i.e.
+  # `helpers.label.<object_name>.<attribute>`, honouring the builder's nested
+  # localisation object-name scanning so labels also resolve inside `fields_for`.
+  def localised_label(attribute_name)
+    key = "helpers.label.#{nested_object_name}.#{attribute_name}"
+
+    I18n.t(key, default: nil) || I18n.t("#{key}_html", default: nil)&.html_safe
   end
 
   # Appends a visually hidden hint to an option's label so screen reader users
@@ -99,10 +108,16 @@ module FormBuilderHelper
   # `helpers.label.<object_name>.<attribute>_options.<value>`, honouring the
   # builder's nested localisation object-name scanning.
   def localised_option_label(attribute_name, value)
-    base_object_name = object_name.to_s.scan(/[[:alpha:]][\w\s]*/).join('.')
-    key = "helpers.label.#{base_object_name}.#{attribute_name}_options.#{value}"
+    key = "helpers.label.#{nested_object_name}.#{attribute_name}_options.#{value}"
 
     I18n.t(key, default: nil) || I18n.t("#{key}_html", default: nil)&.html_safe
+  end
+
+  # Mirrors the GOV.UK form builder's nested localisation object-name scanning,
+  # so keys resolve for nested `fields_for` builders whose `object_name`
+  # contains brackets (e.g. `parent_form[child]` -> `parent_form.child`).
+  def nested_object_name
+    object_name.to_s.scan(/[[:alpha:]][\w\s]*/).join('.')
   end
 
   def segment_names
