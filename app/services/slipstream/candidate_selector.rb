@@ -20,10 +20,10 @@ module Slipstream
     end
 
     def call
-      return false if FeatureFlags.slipstream_audit.disabled?
-      return false unless eligible?
+      return if FeatureFlags.slipstream_audit.disabled?
+      return unless eligible?
 
-      selected?
+      selected? ? :selected : :not_selected
     end
 
     private
