@@ -118,6 +118,23 @@ RSpec.describe FormBuilderHelper, type: :helper do
         expect(hidden_span.text.strip).to eq('Amount in pounds')
       end
 
+      it 'resolves the translated label for nested fields_for object names' do
+        # Nested `fields_for` builders have bracketed object names (e.g.
+        # `parent_form[child]`). The label lookup must honour the form builder's
+        # nested-localisation object-name scanning, otherwise it falls back to the
+        # humanised attribute ("Amount"), which is not translated in Welsh.
+        nested_builder = GOVUKDesignSystemFormBuilder::FormBuilder.new(
+          'steps_income_client_deductions_form[income_tax]', form_object, self, {}
+        )
+
+        html = nested_builder.govuk_number_field(:amount, prefix_text: '£', label: {})
+        doc = Nokogiri::HTML.fragment(html)
+
+        label = doc.at_css('label')
+        expect(label.text).to include('How much?')
+        expect(label.text).not_to include('Amount<')
+      end
+
       it 'renders the £ prefix symbol with aria-hidden on the input wrapper' do
         html = builder.govuk_number_field(:amount, prefix_text: '£', label: { text: 'Enter amount' })
         doc = Nokogiri::HTML.fragment(html)
