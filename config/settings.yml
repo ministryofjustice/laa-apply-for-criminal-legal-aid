@@ -21,6 +21,11 @@ feature_flags:
     staging: true
     preprod: true
     production: true
+  slipstream_audit:
+    local: false
+    staging: false
+    preprod: false
+    production: false
 
 # NOTE: consider if the setting you are adding here
 # should belong in the k8s `config_map`, which is
@@ -36,3 +41,7 @@ settings:
   laa_contact_url: https://legalaidlearning.justice.gov.uk/online-support-2/
   call_charges_url: https://www.gov.uk/call-charges
   criminal_legal_aid_manual: https://www.gov.uk/government/publications/criminal-legal-aid-manual
+
+  # Slipstream audit: percentage of eligible applications that are selected (10 = 10%)
+  slipstream_audit:
+    sample_rate: 10
