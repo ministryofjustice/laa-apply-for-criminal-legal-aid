@@ -692,6 +692,7 @@ en:
           upload_files_heading: Upload files
           upload_files_info: The maximum size for each file is %{max_size}MB. Files must be a DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV or PDF.
           choose_files_button: Choose files
+          drag_and_drop: Drag and drop files here or
           uploaded_files_heading: Uploaded files
           uploaded_files_info: When you submit this application, a caseworker will be able to access these files.
           file_name: File name
