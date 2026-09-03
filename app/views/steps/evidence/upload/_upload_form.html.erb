@@ -10,7 +10,8 @@
     <span class="govuk-visually-hidden">Error:</span>
   </p>
 
-  <%= form_for form_object, html: { id: 'dz-evidence-upload-form' },
+  <%= form_for form_object, html: { id: 'dz-evidence-upload-form',
+                                    data: { 'dropzone-default-message': t("#{i18n_scope}.drag_and_drop") } },
                url: crime_application_documents_path,
                method: :post, multipart: true do |f| %>
 
