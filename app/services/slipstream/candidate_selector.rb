@@ -6,21 +6,18 @@ module Slipstream
   #
   # Eligibility: the application has a single slipstreamable offence only,
   # i.e. exactly one charge whose offence is slipstreamable.
-  # Sample rate: configurable integer percentage via
-  # `Settings.slipstream_audit[:sample_rate]` (e.g. 10 means 10% of
-  # eligible applications are selected).
+  # Sample rate: an integer percentage passed by the caller (e.g. 10 means
+  # 10% of eligible applications are selected).
   #
   # NOTE: persisting the outcome of the selection is handled separately;
   # this service only decides whether an application should be selected.
   class CandidateSelector
-    attr_reader :crime_application
-
-    def initialize(crime_application)
+    def initialize(crime_application, sample_rate:)
       @crime_application = crime_application
+      @sample_rate = sample_rate
     end
 
     def call
-      return if FeatureFlags.slipstream_audit.disabled?
       return unless eligible?
 
       selected? ? :selected : :not_selected
@@ -28,16 +25,14 @@ module Slipstream
 
     private
 
+    attr_reader :crime_application, :sample_rate
+
     def eligible?
       charges.one? && charges.all? { |charge| charge.offence&.slipstreamable }
     end
 
     def selected?
       rand(100) < sample_rate
-    end
-
-    def sample_rate
-      Settings.slipstream_audit.fetch(:sample_rate)
     end
 
     def charges
