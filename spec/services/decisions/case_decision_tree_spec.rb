@@ -30,6 +30,7 @@ RSpec.describe Decisions::CaseDecisionTree do
   let(:is_means_tested) { nil }
   let(:non_means_tested) { nil }
   let(:cifc?) { false }
+  let(:slipstream_audit_enabled) { false }
 
   before do
     allow(
@@ -37,6 +38,9 @@ RSpec.describe Decisions::CaseDecisionTree do
     ).to receive(:crime_application).and_return(crime_application)
 
     allow(crime_application).to receive_messages(update: true, date_stamp: nil)
+    allow(FeatureFlags).to receive(:slipstream_audit).and_return(
+      instance_double(FeatureFlags::EnabledFeature, enabled?: slipstream_audit_enabled)
+    )
   end
 
   it_behaves_like 'a decision tree'
@@ -274,12 +278,42 @@ subject: 'client')
       end
 
       it { is_expected.to have_destination(:charges, :edit, id: crime_application, charge_id: 'charge') }
+
+      context 'when slipstream auditing is enabled' do
+        let(:slipstream_audit_enabled) { true }
+
+        it 'does not record a selection outcome' do
+          expect(Slipstream::PersistSelectionOutcome).not_to receive(:new)
+
+          subject.destination
+        end
+      end
     end
 
     context 'and answer is `no`' do
       let(:add_offence) { YesNoAnswer::NO }
 
       it { is_expected.to have_destination(:has_codefendants, :edit, id: crime_application) }
+
+      context 'when slipstream auditing is enabled' do
+        let(:slipstream_audit_enabled) { true }
+        let(:persister) { instance_double(Slipstream::PersistSelectionOutcome, call: nil) }
+
+        it 'records the selection outcome' do
+          expect(Slipstream::PersistSelectionOutcome).to receive(:new).with(crime_application).and_return(persister)
+          expect(persister).to receive(:call)
+
+          subject.destination
+        end
+      end
+
+      context 'when slipstream auditing is disabled' do
+        it 'does not record a selection outcome' do
+          expect(Slipstream::PersistSelectionOutcome).not_to receive(:new)
+
+          subject.destination
+        end
+      end
     end
   end
 
