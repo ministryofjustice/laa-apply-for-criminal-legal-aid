@@ -7,7 +7,7 @@ module Summary
         income.present? && super
       end
 
-      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      # rubocop:disable-next Metrics/MethodLength, Metrics/AbcSize
       def answers
         [
           Components::ValueAnswer.new(
@@ -32,7 +32,6 @@ module Summary
           ),
         ].select(&:show?)
       end
-      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def heading
         :income_and_employment_details unless crime_application.respond_to?(:navigation_stack)

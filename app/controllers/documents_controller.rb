@@ -7,7 +7,7 @@ class DocumentsController < ApplicationController
 
   respond_to :html, :json, :js
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:disable-next Metrics/AbcSize, Metrics/MethodLength
   def create
     document = Document.create_from_file(
       file: file_from_params, crime_application: current_crime_application
@@ -27,7 +27,6 @@ class DocumentsController < ApplicationController
       end
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def download
     presign_download = Datastore::Documents::Download.new(document: @document).call

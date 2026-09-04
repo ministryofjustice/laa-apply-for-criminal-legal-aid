@@ -86,14 +86,13 @@ RSpec.describe Steps::Client::ResidenceTypeForm do
             ).to be(false)
           end
 
-          # rubocop:disable Layout/LineLength
+          # rubocop:disable-next Layout/LineLength
           it 'cannot reset `relationship_to_owner_of_usual_home_address` as it is relevant' do
             record.update(residence_type: ResidenceType::SOMEONE_ELSE.to_s)
 
             attributes = form.send(:attributes_to_reset)
             expect(attributes['relationship_to_owner_of_usual_home_address']).to eq(relationship_to_owner_of_usual_home_address)
           end
-          # rubocop:enable Layout/LineLength
         end
 
         context 'when a `relationship_to_owner_of_usual_home_address` was not previously recorded' do

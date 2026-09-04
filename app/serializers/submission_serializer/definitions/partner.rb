@@ -5,7 +5,7 @@ module SubmissionSerializer
         super && partner.present?
       end
 
-      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      # rubocop:disable-next Metrics/AbcSize, Metrics/MethodLength
       def to_builder
         Jbuilder.new do |json|
           json.first_name partner.first_name
@@ -38,7 +38,6 @@ module SubmissionSerializer
           json.is_included_in_means_assessment MeansStatus.include_partner?(self)
         end
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
     end
   end
 end

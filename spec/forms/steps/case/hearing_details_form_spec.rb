@@ -55,7 +55,7 @@ RSpec.describe Steps::Case::HearingDetailsForm do
                       latest_year: 2035
     end
 
-    # rubocop:disable Style/HashSyntax
+    # rubocop:disable-next Style/HashSyntax
     context 'when validations pass' do
       context 'when it is the first court hearing it resets dependent attributes' do
         it_behaves_like 'a has-one-association form',
@@ -80,6 +80,5 @@ RSpec.describe Steps::Case::HearingDetailsForm do
                         }
       end
     end
-    # rubocop:enable Style/HashSyntax
   end
 end

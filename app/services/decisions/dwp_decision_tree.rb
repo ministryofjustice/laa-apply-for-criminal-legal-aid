@@ -1,9 +1,9 @@
 module Decisions
-  # rubocop:disable Metrics/ClassLength
+  # rubocop:disable-next Metrics/ClassLength
   class DWPDecisionTree < BaseDecisionTree
     include TypeOfMeansAssessment
 
-    # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
+    # rubocop:disable-next Metrics/MethodLength, Metrics/CyclomaticComplexity
     def destination
       case step_name
       when :benefit_type
@@ -30,7 +30,6 @@ module Decisions
         raise InvalidStep, "Invalid step '#{step_name}'"
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/CyclomaticComplexity
 
     private
 
@@ -154,5 +153,4 @@ module Decisions
       person.dwp_response == 'Undetermined'
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end

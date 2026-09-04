@@ -185,7 +185,7 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
     draft.attributes!.as_json
   end
 
-  # rubocop:disable Rails/SkipsModelValidations
+  # rubocop:disable-next Rails/SkipsModelValidations
   def update_digest_and_timestamp
     updated_digest = Digest::MD5.hexdigest(draft_submission_as_json.to_json)
     return if submission_hexdigest == updated_digest
@@ -195,5 +195,4 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
       submission_updated_at: Time.current
     )
   end
-  # rubocop:enable Rails/SkipsModelValidations
 end

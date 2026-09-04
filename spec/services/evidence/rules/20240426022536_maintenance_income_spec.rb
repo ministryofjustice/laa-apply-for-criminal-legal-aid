@@ -86,7 +86,7 @@ RSpec.describe Evidence::Rules::MaintenanceIncome do
   end
 
   describe '#to_h' do
-    # rubocop:disable Layout/LineLength
+    # rubocop:disable-next Layout/LineLength
     let(:expected_hash) do
       {
         id: 'MaintenanceIncome',
@@ -109,7 +109,6 @@ RSpec.describe Evidence::Rules::MaintenanceIncome do
         }
       }
     end
-    # rubocop:enable Layout/LineLength
 
     it { expect(subject.to_h).to eq expected_hash }
   end

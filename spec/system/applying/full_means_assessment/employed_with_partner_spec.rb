@@ -37,7 +37,7 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
       save_and_continue
     end
 
-    # rubocop:disable RSpec/ExampleLength
+    # rubocop:disable-next RSpec/ExampleLength
     it 'persists a decimal National Insurance deduction without a numeric inputmode' do
       choose_answers('Deductions', ['National Insurance'])
 
@@ -68,7 +68,6 @@ RSpec.describe 'Apply for Criminal Legal Aid when Means Tested' do
         expect(input.value).to eq('123.83')
       end
     end
-    # rubocop:enable RSpec/ExampleLength
   end
 
   describe 'Submitting a means tested application with an employed client and partner' do

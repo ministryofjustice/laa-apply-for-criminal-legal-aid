@@ -9,7 +9,7 @@ module Summary
         false
       end
 
-      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      # rubocop:disable-next Metrics/MethodLength, Metrics/AbcSize
       def answers
         answers = [
           Components::DateAnswer.new(
@@ -37,7 +37,6 @@ module Summary
 
         answers.select(&:show?)
       end
-      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       private
 

@@ -27,7 +27,7 @@ class FileUploadValidator < ActiveModel::Validator
 
   private
 
-  # rubocop:disable Style/GuardClause
+  # rubocop:disable-next Style/GuardClause
   def perform_validations
     record.errors.add(:content_type, :invalid) unless content_type_allowed?
 
@@ -43,7 +43,6 @@ class FileUploadValidator < ActiveModel::Validator
       )
     end
   end
-  # rubocop:enable Style/GuardClause
 
   def content_type_allowed?
     return false unless declared_content_type_allowed? && extension_type_allowed?

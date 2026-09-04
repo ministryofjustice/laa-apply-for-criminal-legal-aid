@@ -5,7 +5,7 @@ module Summary
         applicant.present? && partner&.first_name.present? && super
       end
 
-      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      # rubocop:disable-next Metrics/MethodLength, Metrics/AbcSize
       def answers
         [
           Components::ValueAnswer.new(
@@ -54,7 +54,6 @@ module Summary
           ),
         ].select(&:show?)
       end
-      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def partner
         @partner ||= crime_application.partner

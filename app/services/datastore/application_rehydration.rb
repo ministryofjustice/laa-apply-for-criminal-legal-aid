@@ -1,5 +1,5 @@
 module Datastore
-  # rubocop:disable Metrics/ClassLength
+  # rubocop:disable-next Metrics/ClassLength
   class ApplicationRehydration
     attr_reader :crime_application, :parent
 
@@ -152,5 +152,4 @@ module Datastore
       parent.evidence_details.evidence_prompts
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end

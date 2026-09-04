@@ -124,7 +124,7 @@ RSpec.describe Steps::Client::ContactDetailsForm do
     end
   end
 
-  # rubocop:disable Style/HashSyntax
+  # rubocop:disable-next Style/HashSyntax
   describe '#save' do
     let(:telephone_number) { '07000 000 000' }
     let(:preferred_correspondence_language) { 'cy' }
@@ -176,5 +176,4 @@ RSpec.describe Steps::Client::ContactDetailsForm do
                       }
     end
   end
-  # rubocop:enable Style/HashSyntax
 end
