@@ -58,7 +58,7 @@ DropzoneCfg.prototype.init = function () {
   const self = this
   this.$dropzone = new Dropzone(this.$dropzoneContainer, {
     paramName: "document",
-    dictDefaultMessage: 'Drag and drop files here or', // TODO: i18n
+    dictDefaultMessage: this.$dropzoneContainer.dataset.dropzoneDefaultMessage || 'Drag and drop files here or',
     clickable: '#choose_files_button',
     // Sanitise the filename sent to the server so the WAF doesn't reject
     // unsupported characters (e.g. a colon macOS stores in place of a slash).

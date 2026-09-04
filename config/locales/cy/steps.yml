@@ -695,6 +695,7 @@ cy:
           upload_files_heading: Lanlwytho ffeiliau
           upload_files_info: Y maint ffeil mwyaf yw %{max_size}MB. Rhaid i’r ffeiliau fod yn DOC, DOCX, RTF, ODT, JPG, BMP, PNG, TIF, CSV neu’n PDF.
           choose_files_button: Dewis ffeiliau
+          drag_and_drop: Llusgwch ffeiliau draw i fan hyn neu
           uploaded_files_heading: Ffeiliau wedi’u lanlwytho
           uploaded_files_info: Pan fyddwch yn cyflwyno'r cais hwn, bydd gweithiwr achos yn gallu gweld y ffeiliau hyn.
           file_name: Enw’r ffeil
