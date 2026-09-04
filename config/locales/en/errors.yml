@@ -63,8 +63,9 @@ en:
     errors:
       models:
         start/is_cifc_form:
-          is_cifc:
-            inclusion: Select whether you are making a new application or telling us about a change in financial circumstances
+          attributes:
+            is_cifc:
+              inclusion: Select whether you are making a new application or telling us about a change in financial circumstances
 
         steps/circumstances/pre_cifc_reference_number_form:
           attributes:
