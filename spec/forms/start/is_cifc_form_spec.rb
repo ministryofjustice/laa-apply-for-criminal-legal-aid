@@ -39,11 +39,22 @@ RSpec.describe Start::IsCifcForm do
         expect(form.valid?).to be false
         expect(form.errors.of_kind?(:is_cifc, :inclusion)).to be(true)
 
-        expected_error_message = <<-ERROR
-          Select whether you are making a new application or telling us about a change in financial circumstances
-        ERROR
+        expect(form.errors[:is_cifc]).to include(
+          'Select whether you are making a new application or telling us about a change in financial circumstances'
+        )
+      end
 
-        expect(form.errors.first.options[:message]).to eq expected_error_message.strip
+      it 'localises the error message to the current locale' do
+        form = described_class.build(crime_application, 'maybe')
+
+        message = I18n.with_locale(:cy) do
+          form.valid?
+          form.errors[:is_cifc].first
+        end
+
+        expect(message).to eq(
+          "Dewiswch a ydych chi'n gwneud cais newydd neu'n dweud wrthym am newid yn eich sefyllfa ariannol"
+        )
       end
     end
   end
