@@ -9,9 +9,9 @@ module Datastore
     def call
       Rails.error.handle(fallback: -> { false }) do
         CrimeApplication.transaction do
-          crime_application.assign_attributes(
-            submitted_at: Time.current
-          )
+          crime_application.submitted_at = Time.current
+
+          Slipstream::FinalizeSelectionOutcome.new(crime_application).call
 
           DatastoreApi::Requests::CreateApplication.new(
             payload: application_payload
