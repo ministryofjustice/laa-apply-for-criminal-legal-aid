@@ -77,9 +77,16 @@ module Decisions
     end
 
     def after_charges_summary
-      return edit(:has_codefendants) if form_object.add_offence.no?
+      if form_object.add_offence.no?
+        persist_slipstream_selection_outcome if FeatureFlags.slipstream_audit.enabled?
+        return edit(:has_codefendants)
+      end
 
       edit_new_charge
+    end
+
+    def persist_slipstream_selection_outcome
+      Slipstream::PersistSelectionOutcome.new(current_crime_application).call
     end
 
     def after_has_codefendants
