@@ -63,8 +63,9 @@ cy:
     errors:
       models:
         start/is_cifc_form:
-          is_cifc:
-            inclusion: Dewiswch a ydych chi'n gwneud cais newydd neu'n dweud wrthym am newid yn eich sefyllfa ariannol
+          attributes:
+            is_cifc:
+              inclusion: Dewiswch a ydych chi'n gwneud cais newydd neu'n dweud wrthym am newid yn eich sefyllfa ariannol
 
         steps/circumstances/pre_cifc_reference_number_form:
           attributes:
