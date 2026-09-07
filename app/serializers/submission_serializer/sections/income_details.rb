@@ -1,7 +1,7 @@
 module SubmissionSerializer
   module Sections
     class IncomeDetails < Sections::BaseSection
-      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength
+      # rubocop:disable-next Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength
       def to_builder
         Jbuilder.new do |json|
           json.client_in_armed_forces income.client_in_armed_forces
@@ -58,7 +58,6 @@ module SubmissionSerializer
           json.businesses Definitions::Business.generate(income.businesses)
         end
       end
-      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength
     end
   end
 end

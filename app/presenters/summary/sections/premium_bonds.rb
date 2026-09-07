@@ -1,6 +1,6 @@
 module Summary
   module Sections
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable-next Metrics/MethodLength, Metrics/AbcSize
     class PremiumBonds < Sections::BaseSection
       include HasDynamicSubject
 
@@ -40,6 +40,5 @@ module Summary
         YesNoAnswer.new(capital.has_premium_bonds).yes?
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
   end
 end

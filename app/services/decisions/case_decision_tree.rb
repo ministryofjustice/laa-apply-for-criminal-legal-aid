@@ -1,5 +1,5 @@
 module Decisions
-  # rubocop:disable Metrics/ClassLength
+  # rubocop:disable-next Metrics/ClassLength
   class CaseDecisionTree < BaseDecisionTree
     include TypeOfMeansAssessment
 
@@ -190,5 +190,4 @@ module Decisions
       form_object.crime_application
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end

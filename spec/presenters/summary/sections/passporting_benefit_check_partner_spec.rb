@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
+# rubocop:disable-next RSpec/MultipleMemoizedHelpers
 describe Summary::Sections::PassportingBenefitCheckPartner do
   subject { described_class.new(crime_application) }
 
@@ -197,4 +197,3 @@ describe Summary::Sections::PassportingBenefitCheckPartner do
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

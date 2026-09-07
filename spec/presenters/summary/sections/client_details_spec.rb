@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
+# rubocop:disable-next RSpec/MultipleMemoizedHelpers
 describe Summary::Sections::ClientDetails do
   subject { described_class.new(crime_application) }
 
@@ -143,4 +143,3 @@ describe Summary::Sections::ClientDetails do
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

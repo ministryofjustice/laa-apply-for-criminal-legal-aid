@@ -89,7 +89,7 @@ RSpec.describe Adapters::Structs::CapitalDetails do
       )
     end
 
-    # rubocop:disable RSpec/ExampleLength
+    # rubocop:disable-next RSpec/ExampleLength
     it 'contains all required attributes' do
       expect(
         subject.serializable_hash.keys
@@ -113,7 +113,6 @@ RSpec.describe Adapters::Structs::CapitalDetails do
         ]
       )
     end
-    # rubocop:enable RSpec/ExampleLength
 
     it 'omits savings array' do
       expect(subject.serializable_hash.key?('savings')).to be false

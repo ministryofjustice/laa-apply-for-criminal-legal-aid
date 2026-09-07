@@ -2,7 +2,7 @@ module Steps
   module HasOneAssociation
     extend ActiveSupport::Concern
 
-    # rubocop:disable Metrics/BlockLength
+    # rubocop:disable-next Metrics/BlockLength
     class_methods do
       attr_accessor :association_name, :through_association
 
@@ -42,6 +42,5 @@ module Steps
         alias_method :kase, :case if name == :case
       end
     end
-    # rubocop:enable Metrics/BlockLength
   end
 end

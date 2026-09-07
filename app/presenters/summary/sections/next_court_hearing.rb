@@ -5,7 +5,7 @@ module Summary
         kase.present? && super
       end
 
-      # rubocop:disable Metrics/MethodLength
+      # rubocop:disable-next Metrics/MethodLength
       def answers
         [
           Components::EnTextAnswer.new(
@@ -24,7 +24,6 @@ module Summary
           ),
         ].select(&:show?)
       end
-      # rubocop:enable Metrics/MethodLength
     end
   end
 end

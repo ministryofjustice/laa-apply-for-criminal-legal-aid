@@ -1,7 +1,7 @@
 module SubmissionSerializer
   module Definitions
     class Business < Definitions::BaseDefinition
-      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      # rubocop:disable-next Metrics/AbcSize, Metrics/MethodLength
       def to_builder
         Jbuilder.new do |json|
           json.ownership_type ownership_type
@@ -22,7 +22,6 @@ module SubmissionSerializer
           json.percentage_profit_share percentage_profit_share&.to_f
         end
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
       def payment_blank?(payment)
         payment&.amount.blank? || payment&.frequency.blank?

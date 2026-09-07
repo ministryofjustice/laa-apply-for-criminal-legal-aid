@@ -1,5 +1,5 @@
 require 'rails_helper'
-# rubocop:disable RSpec/MultipleMemoizedHelpers
+# rubocop:disable-next RSpec/MultipleMemoizedHelpers
 RSpec.describe Steps::Income::IncomeBenefitsForm do
   subject(:form) { described_class.new(crime_application:) }
 
@@ -142,4 +142,3 @@ RSpec.describe Steps::Income::IncomeBenefitsForm do
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

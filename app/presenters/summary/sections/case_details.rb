@@ -5,7 +5,7 @@ module Summary
         kase.present? && super
       end
 
-      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      # rubocop:disable-next Metrics/MethodLength, Metrics/AbcSize
       def answers
         [
           # This is an optional field, depending on case type
@@ -93,7 +93,6 @@ module Summary
           ),
         ].select(&:show?)
       end
-      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def heading
         :case_details_and_offences

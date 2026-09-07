@@ -110,7 +110,7 @@ RSpec.describe 'Dashboard', :authorized do
       end
     end
 
-    # rubocop:disable RSpec/ExampleLength
+    # rubocop:disable-next RSpec/ExampleLength
     it 'has the application details' do
       assert_select 'dl.govuk-summary-list:nth-of-type(1)' do
         assert_select 'div.govuk-summary-list__row:nth-of-type(1)' do
@@ -143,7 +143,6 @@ RSpec.describe 'Dashboard', :authorized do
         end
       end
     end
-    # rubocop:enable RSpec/ExampleLength
 
     it 'has a read only version of the check your answers' do
       # client details section, no change links
@@ -194,7 +193,7 @@ RSpec.describe 'Dashboard', :authorized do
       get completed_crime_application_path(returned_application_fixture_id)
     end
 
-    # rubocop:disable Layout/LineLength
+    # rubocop:disable-next Layout/LineLength
     it 'has a notification banner with the return details' do
       assert_select 'strong.govuk-tag.govuk-tag--blue', 'Returned'
 
@@ -209,7 +208,6 @@ RSpec.describe 'Dashboard', :authorized do
         end
       end
     end
-    # rubocop:enable Layout/LineLength
   end
 
   describe 'show an application representation order (in `returned` status)' do
@@ -234,7 +232,7 @@ RSpec.describe 'Dashboard', :authorized do
       assert_select 'button.govuk-button', count: 0, text: 'Upload supporting evidence'
     end
 
-    # rubocop:disable Layout/LineLength
+    # rubocop:disable-next Layout/LineLength
     it 'has a notification banner with the return details' do
       assert_select 'div.govuk-notification-banner' do
         assert_select 'h2', 'Important'
@@ -245,7 +243,6 @@ RSpec.describe 'Dashboard', :authorized do
         end
       end
     end
-    # rubocop:enable Layout/LineLength
 
     it 're-creates the application and renders the check your answers page' do
       expect do

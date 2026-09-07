@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
+# rubocop:disable-next RSpec/MultipleMemoizedHelpers
 RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
   subject(:validator) { described_class.new(record) }
 
@@ -471,4 +471,3 @@ RSpec.describe EmploymentDetails::AnswersValidator, type: :model do
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
+# rubocop:disable-next RSpec/MultipleMemoizedHelpers
 RSpec.describe TypeOfMeansAssessment do
   subject(:assessable) do
     assessable_class.new(crime_application:)
@@ -696,4 +696,3 @@ conflict_of_interest: 'yes')
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

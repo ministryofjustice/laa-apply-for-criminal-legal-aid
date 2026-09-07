@@ -5,7 +5,7 @@ module Summary
         applicant.present? && super
       end
 
-      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      # rubocop:disable-next Metrics/MethodLength, Metrics/AbcSize
       def answers
         [
           Components::FreeTextAnswer.new(
@@ -52,7 +52,6 @@ module Summary
           )
         ].select(&:show?)
       end
-      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def editable?
         crime_application.initial? && super

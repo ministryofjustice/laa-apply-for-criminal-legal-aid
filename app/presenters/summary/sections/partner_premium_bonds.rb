@@ -1,6 +1,6 @@
 module Summary
   module Sections
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable-next Metrics/MethodLength, Metrics/AbcSize
     class PartnerPremiumBonds < Sections::BaseSection
       include HasDynamicSubject
 
@@ -46,6 +46,5 @@ module Summary
         SubjectType.new(:partner)
       end
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
   end
 end

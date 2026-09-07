@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
+# rubocop:disable-next RSpec/MultipleMemoizedHelpers
 RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
   subject { described_class.new(crime_application) }
 
@@ -471,4 +471,3 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

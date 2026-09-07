@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
+# rubocop:disable-next RSpec/MultipleMemoizedHelpers
 RSpec.describe Decisions::DWPDecisionTree do
   subject { described_class.new(form_object, as: step_name) }
 
@@ -287,4 +287,3 @@ RSpec.describe Decisions::DWPDecisionTree do
     it { is_expected.to have_destination(:confirm_details, :edit, id: crime_application) }
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

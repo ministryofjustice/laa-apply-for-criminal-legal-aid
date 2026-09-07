@@ -61,7 +61,7 @@ RSpec.configure do |config|
 
   # Stubs the following requests to the datastore that are triggered when an application is created/updated/deleted
   # globally as they are frequently called. There are specific tests for these requests.
-  # rubocop:disable Layout/LineLength
+  # rubocop:disable-next Layout/LineLength
   config.before do
     stub_request(:post, 'http://datastore-webmock/api/v1/applications/draft_created')
       .with(body: /\{"entity_id":"[0-9a-f-]{36}","entity_type":"(initial|post_submission_evidence|change_in_financial_circumstances)","business_reference":\d+,"created_at":"(null|(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2}) UTC)"}/)
@@ -75,7 +75,6 @@ RSpec.configure do |config|
       .with(body: /\{"entity_id":"[0-9a-f-]{36}","entity_type":"(initial|post_submission_evidence|change_in_financial_circumstances)","business_reference":\d+,"reason":"(provider_action|retention_rule)","deleted_by":".*?"}/)
       .to_return(body: '{}')
   end
-  # rubocop:enable Layout/LineLength
 end
 
 RSpec::Matchers.define_negated_matcher :not_change, :change

@@ -8,7 +8,7 @@ module Summary
         benefit_selected? && super
       end
 
-      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      # rubocop:disable-next Metrics/MethodLength, Metrics/AbcSize
       def answers
         answers = []
 
@@ -46,7 +46,6 @@ module Summary
         answers.select(&:show?)
         answers
       end
-      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def change_path
         edit_steps_dwp_benefit_type_path

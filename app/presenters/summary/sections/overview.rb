@@ -5,7 +5,7 @@ module Summary
         show_overview_details? && super
       end
 
-      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      # rubocop:disable-next Metrics/MethodLength, Metrics/AbcSize
       def answers
         relevant_answers =
           [
@@ -68,7 +68,6 @@ module Summary
 
         relevant_answers
       end
-      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def heading
         :application_details

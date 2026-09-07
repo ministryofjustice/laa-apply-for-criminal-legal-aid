@@ -17,7 +17,7 @@ module Test
   end
 end
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
+# rubocop:disable-next RSpec/MultipleMemoizedHelpers
 RSpec.describe ApplicationFulfilmentValidator, type: :model do
   subject { Test::CrimeApplicationValidatable.new(arguments) }
 
@@ -304,4 +304,3 @@ RSpec.describe ApplicationFulfilmentValidator, type: :model do
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

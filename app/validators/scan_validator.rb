@@ -9,7 +9,7 @@ class ScanValidator < ActiveModel::Validator
 
   private
 
-  # rubocop:disable Style/GuardClause, Style/IfUnlessModifier
+  # rubocop:disable-next Style/GuardClause, Style/IfUnlessModifier
   def perform_validations
     if Datastore::Documents::Scan.inconclusive?(record)
       record.errors.add(:scan_status, :inconclusive)
@@ -19,5 +19,4 @@ class ScanValidator < ActiveModel::Validator
       record.errors.add(:scan_status, :flagged)
     end
   end
-  # rubocop:enable Style/GuardClause, Style/IfUnlessModifier
 end

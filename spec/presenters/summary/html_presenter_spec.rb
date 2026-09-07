@@ -4,11 +4,11 @@ require 'rails_helper'
 # It is not intended to test conditionality or complex rules,
 # as that is tested individually in each of the sections specs.
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
+# rubocop:disable-next RSpec/MultipleMemoizedHelpers
 describe Summary::HtmlPresenter do
   subject(:presenter) { described_class.new(crime_application:) }
 
-  # rubocop:disable Layout/LineLength
+  # rubocop:disable-next Layout/LineLength
   let(:database_application) do
     instance_double(
       CrimeApplication, applicant: (double benefit_type: 'universal_credit', has_partner: 'yes', first_name: 'Arnold', last_name: 'Slit', date_of_birth: Date.new(1990, 1, 1)),
@@ -26,7 +26,6 @@ describe Summary::HtmlPresenter do
       appeal_no_changes?: appeal_no_changes?
     )
   end
-  # rubocop:enable Layout/LineLength
 
   let(:kase) do
     instance_double(
@@ -700,4 +699,3 @@ describe Summary::HtmlPresenter do
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

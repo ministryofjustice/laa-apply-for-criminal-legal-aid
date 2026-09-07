@@ -7,7 +7,7 @@ module Summary
 
       private
 
-      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      # rubocop:disable-next Metrics/MethodLength, Metrics/AbcSize
       def answers
         attributes =
           [
@@ -49,7 +49,6 @@ module Summary
 
         attributes
       end
-      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def name
         I18n.t('summary.sections.employment')

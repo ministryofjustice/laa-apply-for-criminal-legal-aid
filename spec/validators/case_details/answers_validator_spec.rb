@@ -90,7 +90,7 @@ RSpec.describe CaseDetails::AnswersValidator, type: :model do
         subject.validate
       end
 
-      # rubocop:disable RSpec/MultipleExpectations
+      # rubocop:disable-next RSpec/MultipleExpectations
       context 'when application is non means tested' do
         let(:non_means_tested) { true }
 
@@ -115,7 +115,6 @@ RSpec.describe CaseDetails::AnswersValidator, type: :model do
           subject.validate
         end
       end
-      # rubocop:enable RSpec/MultipleExpectations
     end
 
     context 'with change in financial circumstances application' do

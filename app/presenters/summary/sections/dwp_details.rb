@@ -7,7 +7,7 @@ module Summary
         benefit_check_subject.present? && super
       end
 
-      # rubocop:disable Metrics/MethodLength
+      # rubocop:disable-next Metrics/MethodLength
       def answers
         [
           Components::FreeTextAnswer.new(
@@ -31,7 +31,6 @@ module Summary
           ),
         ].select(&:show?)
       end
-      # rubocop:enable Metrics/MethodLength
 
       def name
         :details

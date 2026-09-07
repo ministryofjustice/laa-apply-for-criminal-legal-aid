@@ -172,7 +172,7 @@ describe EmploymentIncomePaymentsCalculator do
     crime_application.income_payments << income_payment
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:disable-next Metrics/AbcSize, Metrics/MethodLength
   def create_employments(ownership_type)
     employments = [
       Employment.new(amount: 1000,
@@ -232,5 +232,4 @@ describe EmploymentIncomePaymentsCalculator do
     ]
     crime_application.employments << employments
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 end
