@@ -6,7 +6,7 @@
     "yarn": ">=4"
   },
   "dependencies": {
-    "@ministryofjustice/frontend": "^10.0.1",
+    "@ministryofjustice/frontend": "^11.0.0",
     "accessible-autocomplete": "^3.0.1",
     "dropzone": "^6.0.0-beta.2",
     "govuk-frontend": "^6.5.0",
