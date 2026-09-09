@@ -10,6 +10,7 @@ RSpec.describe Datastore::ApplicationSubmission do
   let(:crime_application) { CrimeApplication.find_by(usn: 123) }
   let(:payload) { service.application_payload }
   let(:case_type) { 'either_way' }
+  let(:selection_finalizer) { instance_double(Slipstream::FinalizeSelectionOutcome, call: nil) }
 
   before do
     # create all neccessary records
@@ -135,6 +136,9 @@ RSpec.describe Datastore::ApplicationSubmission do
       will_benefit_from_trust_fund: 'no'
     )
     allow(crime_application).to receive(:destroy!)
+    allow(Slipstream::FinalizeSelectionOutcome).to receive(:new)
+      .with(crime_application)
+      .and_return(selection_finalizer)
 
     stub_request(:post, 'http://datastore-webmock/api/v1/applications')
       .to_return(status: 201, body: '{}')
@@ -149,6 +153,13 @@ RSpec.describe Datastore::ApplicationSubmission do
 
     it 'sets the submitted_at' do
       expect { subject.call }.to change(crime_application, :submitted_at).from(nil).to(submitted_date)
+    end
+
+    it 'finalizes the slipstream selection before generating the payload' do
+      expect(selection_finalizer).to receive(:call).ordered
+      expect(service).to receive(:application_payload).and_call_original.ordered
+
+      service.call
     end
 
     describe 'the submitted date stamp' do
@@ -213,7 +224,17 @@ RSpec.describe Datastore::ApplicationSubmission do
     end
 
     context 'handling of errors' do
+      let!(:selection_outcome) do
+        crime_application.create_slipstream_audit_selection_outcome!(
+          status: :selected,
+          sample_rate: 10,
+          sampled_at: 1.day.ago,
+          status_determined_at: 1.day.ago
+        )
+      end
+
       before do
+        allow(Slipstream::FinalizeSelectionOutcome).to receive(:new).and_call_original
         stub_request(:post, 'http://datastore-webmock/api/v1/applications')
           .to_raise(StandardError)
 
@@ -230,6 +251,10 @@ RSpec.describe Datastore::ApplicationSubmission do
         expect(crime_application.reload.date_stamp).to be_nil
         expect(crime_application.reload.submitted_at).to be_nil
         expect(crime_application.reload.status).to eq('in_progress')
+      end
+
+      it 'rolls back the finalized selection outcome' do
+        expect(selection_outcome.reload).to be_selected
       end
 
       it 'reports the exception, and redirect to the error page' do
