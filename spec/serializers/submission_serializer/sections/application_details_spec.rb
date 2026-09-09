@@ -31,6 +31,7 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       pre_cifc_maat_id: nil,
       pre_cifc_usn: 'USN123',
       pre_cifc_reason: 'Won the lottery',
+      slipstream_audit_selection_outcome: selection_outcome,
     )
   end
 
@@ -38,6 +39,15 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
   let(:submitted_at) { DateTime.new(2022, 12, 15) }
   let(:date_stamp) { DateTime.new(2022, 12, 13) }
   let(:date_of_birth) { Date.new(1990, 1, 1) }
+  let(:selection_outcome) do
+    instance_double(
+      SlipstreamAuditSelectionOutcome,
+      status: 'confirmed',
+      sample_rate: 10,
+      sampled_at: DateTime.new(2026, 9, 3, 10),
+      status_determined_at: DateTime.new(2026, 9, 4, 11)
+    )
+  end
 
   let(:date_stamp_context) do
     DateStampContext.new(
@@ -74,10 +84,24 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       pre_cifc_maat_id: nil,
       pre_cifc_usn: 'USN123',
       pre_cifc_reason: 'Won the lottery',
+      slipstream_audit_selection_outcome: {
+        status: 'confirmed',
+        sample_rate: 10,
+        sampled_at: DateTime.new(2026, 9, 3, 10),
+        status_determined_at: DateTime.new(2026, 9, 4, 11)
+      },
     }.as_json
   end
 
   describe '#generate' do
     it { expect(subject.generate).to eq(json_output) }
+
+    context 'without a slipstream audit selection outcome' do
+      let(:selection_outcome) { nil }
+
+      it 'omits the outcome' do
+        expect(subject.generate).not_to have_key('slipstream_audit_selection_outcome')
+      end
+    end
   end
 end
