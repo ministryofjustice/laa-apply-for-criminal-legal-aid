@@ -2,6 +2,12 @@ require 'rails_helper'
 
 RSpec.describe 'Evidence upload page', :authorized do
   include_context 'with office code selected'
+
+  def dropzone_i18n(body)
+    form = Nokogiri::HTML(body).at_css('form#dz-evidence-upload-form')
+    JSON.parse(form['data-dropzone-i18n'])
+  end
+
   before do
     crime_application = CrimeApplication.create(
       office_code: selected_office_code,
@@ -65,6 +71,24 @@ RSpec.describe 'Evidence upload page', :authorized do
           assert_select 'span.app-uploaded-file__filename', 'test.pdf'
           assert_select 'strong.govuk-tag:nth-of-type(1)', 'Uploaded'
         end
+      end
+    end
+
+    it 'exposes the localised uploaded status label for the JavaScript upload component' do
+      i18n = dropzone_i18n(response.body)
+
+      expect(i18n['uploaded']).to eq(I18n.t('steps.evidence.upload.edit.uploaded'))
+    end
+
+    context 'when the locale is Welsh' do
+      before do
+        get edit_steps_evidence_upload_path(crime_application, locale: :cy)
+      end
+
+      it 'exposes the Welsh uploaded status label for the JavaScript upload component' do
+        i18n = dropzone_i18n(response.body)
+
+        expect(i18n['uploaded']).to eq(I18n.t('steps.evidence.upload.edit.uploaded', locale: :cy))
       end
     end
 
