@@ -22,7 +22,19 @@ module SubmissionSerializer
           json.pre_cifc_maat_id crime_application.pre_cifc_maat_id
           json.pre_cifc_usn crime_application.pre_cifc_usn
           json.pre_cifc_reason crime_application.pre_cifc_reason
+          serialize_slipstream_audit_selection_outcome(json)
         end
+      end
+
+      private
+
+      def serialize_slipstream_audit_selection_outcome(json)
+        outcome = crime_application.slipstream_audit_selection_outcome
+        return unless outcome
+
+        json.slipstream_audit_selection_outcome(
+          Definitions::SlipstreamAuditSelectionOutcome.generate(outcome)
+        )
       end
     end
   end
