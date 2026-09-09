@@ -13,30 +13,22 @@ module Slipstream
   # this service only decides whether an application should be selected.
   class CandidateSelector
     def initialize(crime_application, sample_rate:)
-      @crime_application = crime_application
+      @eligibility_checker = EligibilityChecker.new(crime_application)
       @sample_rate = sample_rate
     end
 
     def call
-      return unless eligible?
+      return unless eligibility_checker.eligible?
 
       selected? ? :selected : :not_selected
     end
 
     private
 
-    attr_reader :crime_application, :sample_rate
-
-    def eligible?
-      charges.one? && charges.all? { |charge| charge.offence&.slipstreamable }
-    end
+    attr_reader :eligibility_checker, :sample_rate
 
     def selected?
       rand(100) < sample_rate
-    end
-
-    def charges
-      crime_application.case&.charges.to_a
     end
   end
 end
