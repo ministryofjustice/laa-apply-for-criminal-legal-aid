@@ -55,6 +55,7 @@ RSpec.describe Datastore::ApplicationRehydration do
         properties: [],
         evidence_last_run_at: an_instance_of(DateTime),
         evidence_prompts: an_instance_of(Array),
+        slipstream_audit_selection_outcome: an_instance_of(SlipstreamAuditSelectionOutcome),
         pre_cifc_reference_number: nil,
         pre_cifc_maat_id: nil,
         pre_cifc_usn: nil,
@@ -516,12 +517,89 @@ RSpec.describe Datastore::ApplicationRehydration do
       end
     end
 
+    context 'with a slipstream audit selection outcome' do
+      it 'restores all selection outcome data' do
+        expect(crime_application).to receive(:update!).with(
+          hash_including(
+            slipstream_audit_selection_outcome: have_attributes(
+              status: 'confirmed',
+              sample_rate: 10,
+              sampled_at: DateTime.parse('2026-09-03T10:00:00.000Z'),
+              status_determined_at: DateTime.parse('2026-09-04T11:00:00.000Z')
+            )
+          )
+        )
+
+        subject.call
+      end
+
+      %w[not_selected selected confirmed withdrawn].each do |status|
+        context "when the stored status is #{status}" do
+          let(:parent) do
+            super().deep_merge('slipstream_audit_selection_outcome' => { 'status' => status })
+          end
+
+          it 'restores the status unchanged' do
+            expect(crime_application).to receive(:update!).with(
+              hash_including(
+                slipstream_audit_selection_outcome: have_attributes(status:)
+              )
+            )
+
+            subject.call
+          end
+        end
+      end
+
+      it 'does not run the sampling algorithm' do
+        expect(Slipstream::CandidateSelector).not_to receive(:new)
+        expect(Slipstream::PersistSelectionOutcome).not_to receive(:new)
+
+        subject.call
+      end
+    end
+
+    context 'without a slipstream audit selection outcome' do
+      let(:parent) { super().except('slipstream_audit_selection_outcome') }
+
+      it 'rehydrates the application without creating an outcome' do
+        expect(SlipstreamAuditSelectionOutcome).not_to receive(:new)
+        expect(crime_application).to receive(:update!).with(
+          hash_including(slipstream_audit_selection_outcome: nil)
+        )
+
+        subject.call
+      end
+    end
+
     context 'for an already re-hydrated application' do
       let(:applicant) { 'something' }
 
       it 'skips the re-hydration, to avoid overwriting any details' do
+        expect(SlipstreamAuditSelectionOutcome).not_to receive(:new)
         expect(crime_application).not_to receive(:update!)
         expect(subject.call).to be_nil
+      end
+    end
+
+    context 'with a persisted application' do
+      let(:crime_application) { CrimeApplication.create! }
+
+      before do
+        allow_any_instance_of(Datastore::Events::DraftCreated).to receive(:call)
+        allow(crime_application).to receive(:update!).and_call_original
+      end
+
+      it 'persists the outcome once when rehydration is attempted repeatedly' do
+        expect { subject.call }.to change(SlipstreamAuditSelectionOutcome, :count).by(1)
+
+        expect(subject.call).to be_nil
+        expect(crime_application.slipstream_audit_selection_outcome).to have_attributes(
+          status: 'confirmed',
+          sample_rate: 10,
+          sampled_at: DateTime.parse('2026-09-03T10:00:00.000Z'),
+          status_determined_at: DateTime.parse('2026-09-04T11:00:00.000Z')
+        )
       end
     end
   end
