@@ -39,6 +39,7 @@ module Datastore
         properties: parent.capital&.properties || [],
         evidence_last_run_at: evidence_last_run_at,
         evidence_prompts: evidence_prompts,
+        slipstream_audit_selection_outcome: slipstream_audit_selection_outcome,
 
         # Change in Financial Circumstances specific fields
         pre_cifc_reference_number: parent.pre_cifc_reference_number,
@@ -150,6 +151,18 @@ module Datastore
       return [] unless parent&.evidence_details&.evidence_prompts
 
       parent.evidence_details.evidence_prompts
+    end
+
+    def slipstream_audit_selection_outcome
+      outcome = parent.slipstream_audit_selection_outcome
+      return unless outcome
+
+      SlipstreamAuditSelectionOutcome.new(
+        status: outcome.status,
+        sample_rate: outcome.sample_rate,
+        sampled_at: outcome.sampled_at,
+        status_determined_at: outcome.status_determined_at
+      )
     end
   end
 end
