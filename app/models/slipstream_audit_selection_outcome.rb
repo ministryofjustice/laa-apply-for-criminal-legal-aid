@@ -3,12 +3,14 @@ class SlipstreamAuditSelectionOutcome < ApplicationRecord
 
   # An eligible application is sampled once. A selected outcome is subsequently
   # confirmed or withdrawn based on the checks performed at submission.
+  # Disable scopes to avoid a collision between the not_selected scope and the
+  # negative scope Rails generates for selected.
   enum :status, {
     not_selected: 'not_selected',
     selected: 'selected',
     confirmed: 'confirmed',
     withdrawn: 'withdrawn'
-  }
+  }, scopes: false
 
   # The percentage chance of selection: a sample rate of 20 means 20%.
   validates :sample_rate,
