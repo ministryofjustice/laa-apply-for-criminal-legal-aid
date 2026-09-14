@@ -15,7 +15,7 @@
       <%= f.fields_for :codefendants do |c| %>
         <% index = c.index + 1 %>
 
-          <%= c.govuk_fieldset legend: { text: t('.codefendant_legend', count: codefendant_count, index:) }, id: "codefendant_#{index}" do %>
+          <%= c.govuk_fieldset legend: { text: t('.codefendant_legend', count: codefendant_count, index: index) }, id: "codefendant_#{index}" do %>
           <%= c.govuk_text_field :first_name, autocomplete: 'off', width: 'three-quarters' %>
           <%= c.govuk_text_field :last_name, autocomplete: 'off', width: 'three-quarters' %>
 
@@ -24,7 +24,7 @@
           <%= c.button t('.remove_button', index:), type: :submit, value: '1', name: c.field_name(:_destroy, index: nil),
                        class: %w[govuk-button govuk-button--secondary govuk-!-margin-bottom-8],
                        data: { module: 'govuk-button' } if @form_object.show_destroy? %>
-          <hr/>              
+          <hr>
         <% end %>
       <% end %>
 

@@ -24,7 +24,7 @@
       <%= f.fields_for :dependants do |c| %>
         <% index = c.index + 1 %>
 
-        <%= c.govuk_fieldset legend: { text: t('.dependant_legend', count: dependant_count, index:), tag: 'h2', size: 'm' }, id: "dependant_#{index}", class: 'govuk-!-margin-top-4'  do %>
+        <%= c.govuk_fieldset legend: { text: t('.dependant_legend', count: dependant_count, index: index), tag: 'h2', size: 'm' }, id: "dependant_#{index}", class: 'govuk-!-margin-top-4'  do %>
           <%# The form builder renders suffix_text with aria-hidden="true", so sighted users see
               "years old" but screen readers do not. We link a visually-hidden duplicate to the
               input via aria-describedby so assistive technologies announce the unit. The
@@ -46,8 +46,8 @@
                        class: %w[govuk-button govuk-button--secondary govuk-!-margin-bottom-8],
                        data: { module: 'govuk-button' } if @form_object.show_destroy? %>
 
-          <hr/>
-          
+          <hr>
+
         <% end %>
       <% end %>
 
