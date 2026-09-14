@@ -14,11 +14,13 @@
 
     <p class="govuk-!-margin-bottom-7"><%= t('.info', asset: PropertyType.to_phrase(@form_object.record.property_type)) %></p>
 
+    <% property_owner_count = @form_object.property_owners.length %>
+
     <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
       <%= f.fields_for :property_owners do |po_field| %>
         <% index = po_field.index + 1 %>
-        <%= po_field.govuk_fieldset legend: { text: t('.property_owners_fieldset_legend', index:), tag: 'h2', size: 'l' }, id: "property_owner_#{index}" do %>
-          <%= po_field.govuk_text_field :name, autocomplete: 'off', label: { tag: 'h3', size: 'm', text: label_t(:name, index: index.ordinalize_fully) }  %>
+        <%= po_field.govuk_fieldset legend: { text: t('.property_owners_fieldset_legend', count: property_owner_count, index:), tag: 'h2', size: 'l' }, id: "property_owner_#{index}" do %>
+          <%= po_field.govuk_text_field :name, autocomplete: 'off', label: { tag: 'h3', size: 'm', text: t('.name_label') }  %>
           <%= po_field.govuk_radio_buttons_fieldset :relationship, legend: { tag: 'h3', size: 'm', text: legend_t(:relationship) } do %>
             <% @form_object.relationships.each_with_index do |option, index| %>
               <%= po_field.govuk_radio_button :relationship, option, link_errors: index.zero? %>
@@ -32,8 +34,9 @@
                                           label: { text: label_t("percentage_owned_#{@form_object.record.property_type}"), tag: 'h3', size: 'm' } %>
 
           <%= po_field.button t('.remove_button', index:), type: :submit, value: '1', name: po_field.field_name(:_destroy, index: po_field.id),
-                        class: %w[govuk-button govuk-button--warning],
+                        class: %w[govuk-button govuk-button--secondary govuk-!-margin-bottom-8],
                         data: { module: 'govuk-button' } if @form_object.show_destroy? %>
+          <hr/>
         <%end%>
       <%end%>
 

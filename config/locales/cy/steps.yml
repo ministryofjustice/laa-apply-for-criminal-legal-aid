@@ -235,6 +235,11 @@ cy:
           page_title: Pryd ddigwyddodd y trosedd?
           heading: Pryd ddigwyddodd y trosedd?
           offence_label: "Trosedd:"
+          date_from_label: Dyddiad cychwyn
+          date_to_label: Dyddiad gorffen
+          offence_legend:
+            one: Dyddiad %{index}
+            other: Dyddiad %{index} o %{count}
           add_button: Ychwanegu dyddiad arall
           remove_button: Tynnu
           deleted_flash: Mae dyddiad y trosedd wedi cael ei ddileu
@@ -256,7 +261,9 @@ cy:
         edit:
           page_title: Manylion cyd-ddiffynyddion
           heading: Rhowch fanylion unrhyw gyd-ddiffynyddion yn yr achos
-          codefendant_legend: Cyd-ddiffynnydd %{index}
+          codefendant_legend:
+            one: Cyd-ddiffynnydd %{index}
+            other: Cyd-ddiffynnydd %{index} o %{count}
           add_button: Ychwanegu cyd-ddiffynnydd arall
           remove_button: Tynnu cyd-ddiffynnydd %{index}
           deleted_flash: Mae'r cyd-ddiffynnydd wedi cael ei ddileu
@@ -331,6 +338,10 @@ cy:
         edit:
           page_title: Oedran dibynyddion
           heading: Oedran dibynyddion
+          dependant_legend:
+            one: Dibynnydd %{index}
+            other: Dibynnydd %{index} o %{count}
+          age_label: Faint yw oed y dibynnydd?
           age: Faint yw oed y %{ordinal} dibynnydd?
           age_hint: oed
           remove_button: Tynnu’r %{ordinal} dibynnydd
@@ -648,7 +659,10 @@ cy:
             residential: Perchnogion eraill yr eiddo preswyl
             commercial: Perchnogion eraill yr eiddo masnachol
             land: Perchnogion eraill y tir
-          property_owners_fieldset_legend: Perchennog arall %{index}
+          property_owners_fieldset_legend:
+            one: Perchennog arall %{index}
+            other: Perchennog arall %{index} o %{count}
+          name_label: Beth yw enw'r perchennog arall?
           add_button: Ychwanegu perchennog arall
           remove_button: Tynnu perchennog %{index}
           deleted_flash: Mae'r perchennog wedi'i ddileu

@@ -234,8 +234,13 @@ en:
           page_title: When did the offence happen?
           heading: When did the offence happen?
           offence_label: "Offence:"
+          date_from_label: Start date
+          date_to_label: End date
+          offence_legend:
+            one: Date %{index}
+            other: Date %{index} of %{count}
           add_button: Add another date for this offence
-          remove_button: Remove
+          remove_button: Remove date %{index}
           deleted_flash: The offence date has been deleted
           inset: If there is more than one of the same offence, add a new date for each.
       charges_summary:
@@ -255,7 +260,9 @@ en:
         edit:
           page_title: Details of co-defendants
           heading: Enter the details of any co-defendants in the case
-          codefendant_legend: Co-defendant %{index}
+          codefendant_legend:
+            one: Co-defendant %{index}
+            other: Co-defendant %{index} of %{count}
           add_button: Add another co-defendant
           remove_button: Remove co-defendant %{index}
           deleted_flash: The co-defendant has been deleted
@@ -328,6 +335,10 @@ en:
         edit:
           page_title: Dependants’ ages
           heading: Dependants’ ages
+          dependant_legend:
+            one: Dependant %{index}
+            other: Dependant %{index} of %{count}
+          age_label: How old is the dependant?
           age: How old is the %{ordinal} dependant?
           age_hint: years old
           remove_button: Remove %{ordinal} dependant
@@ -645,7 +656,10 @@ en:
             residential: Other owners of the residential property
             commercial: Other owners of the commercial property
             land: Other owners of the land
-          property_owners_fieldset_legend: Other owner %{index}
+          property_owners_fieldset_legend:
+            one: Other owner %{index}
+            other: Other owner %{index} of %{count}
+          name_label: What is the name of the other owner?
           add_button: Add another owner
           remove_button: Remove owner %{index}
           deleted_flash: The owner has been deleted
