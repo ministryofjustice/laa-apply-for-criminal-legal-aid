@@ -21,39 +21,62 @@
     <% dependant_count = @form_object.dependants.length %>
 
     <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
-      <%= f.fields_for :dependants do |c| %>
-        <% index = c.index + 1 %>
 
-        <%= c.govuk_fieldset legend: { text: t('.dependant_legend', count: dependant_count, index: index), tag: 'h2', size: 'm' }, id: "dependant_#{index}", class: 'govuk-!-margin-top-4'  do %>
-          <%# The form builder renders suffix_text with aria-hidden="true", so sighted users see
-              "years old" but screen readers do not. We link a visually-hidden duplicate to the
-              input via aria-describedby so assistive technologies announce the unit. The
-              aria: { describedby: } hash is deep-merged by the form builder, preserving any
-              automatically generated hint/error IDs. %>
-          <%= c.govuk_number_field :age,
-                                   autocomplete: 'off',
-                                   class: 'govuk-input--width-2',
-                                   suffix_text: t('.age_hint'),
-                                   label: { text: t('.age_label'), tag: 'h3', size: 'm', class: 'govuk-!-margin-bottom-4' },
-                                   width: 2,
-                                   inputmode: 'numeric',
-                                   maxlength: 3,
-                                   extra_letter_spacing: true,
-                                   aria: { describedby: "dependant-age-unit-#{index}" },
-                                   after_input: content_tag(:span, t('.age_hint'), class: 'govuk-visually-hidden', id: "dependant-age-unit-#{index}") %>
+      <div class="moj-add-another">
 
-          <%= c.button t('.remove_button', ordinal: index.ordinalize_fully), type: :submit, value: '1', name: c.field_name(:_destroy, index: nil),
-                       class: %w[govuk-button govuk-button--secondary govuk-!-margin-bottom-8],
-                       data: { module: 'govuk-button' } if @form_object.show_destroy? %>
+        <div class="moj-add-another__items">
 
-          <hr>
+        <%= f.fields_for :dependants do |c| %>
 
-        <% end %>
+          <div class="moj-add-another__item">
+
+          <% index = c.index + 1 %>
+
+          <div class="moj-add-another__item-container">
+            <div class="moj-add-another__item-row">
+            <%= c.govuk_fieldset legend: { text: t('.dependant_legend', count: dependant_count, index: index), tag: 'h2', size: 'm', class: 'moj-add-another__item-title' }, id: "dependant_#{index}", class: 'moj-add-another__fieldset' do %>
+              <%# The form builder renders suffix_text with aria-hidden="true", so sighted users see
+                  "years old" but screen readers do not. We link a visually-hidden duplicate to the
+                  input via aria-describedby so assistive technologies announce the unit. The
+                  aria: { describedby: } hash is deep-merged by the form builder, preserving any
+                  automatically generated hint/error IDs. %>
+              <%= c.govuk_number_field(
+                    :age,
+                    autocomplete: 'off',
+                    class: 'govuk-input--width-2',
+                    suffix_text: t('.age_hint'),
+                    label: { text: t('.age_label'), tag: 'h3', size: 'm', class: 'govuk-!-margin-bottom-4' },
+                    width: 2,
+                    inputmode: 'numeric',
+                    maxlength: 3,
+                    extra_letter_spacing: true,
+                    aria: { describedby: "dependant-age-unit-#{index}" },
+                    after_input: content_tag(:span, t('.age_hint'), class: 'govuk-visually-hidden', id: "dependant-age-unit-#{index}")
+                  ) %>
+
+            <% end %>
+
+            </div>
+
+            <div class="moj-add-another__remove-button-container">
+              <%= c.button t('.remove_button', ordinal: index.ordinalize_fully), type: :submit, value: '1', name: c.field_name(:_destroy, index: nil),
+                           class: %w[govuk-button govuk-button--secondary moj-add-another__remove-button govuk-!-margin-bottom-8],
+                           data: { module: 'govuk-button' } if @form_object.show_destroy? %>
+            </div>
+
+          </div>
+        </div>
       <% end %>
 
-      <%= f.button t('.add_button'), type: :submit, name: :add_dependant,
-                   class: %w[govuk-button govuk-button--secondary govuk-!-margin-top-2],
-                   data: { module: 'govuk-button' } %>
+      </div>
+
+      <div class="moj-add-another__add-button-container">
+        <%= f.button t('.add_button'), type: :submit, name: :add_dependant,
+                     class: %w[govuk-button govuk-button--secondary moj-add-another__add-button govuk-!-margin-top-2],
+                     data: { module: 'govuk-button' } %>
+      </div>
+
+      </div>
 
       <%= f.continue_button %>
     <% end %>

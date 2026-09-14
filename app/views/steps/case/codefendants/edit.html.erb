@@ -12,25 +12,39 @@
     <% codefendant_count = @form_object.codefendants.length %>
 
     <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
-      <%= f.fields_for :codefendants do |c| %>
-        <% index = c.index + 1 %>
+      <div class="moj-add-another">
 
-          <%= c.govuk_fieldset legend: { text: t('.codefendant_legend', count: codefendant_count, index: index) }, id: "codefendant_#{index}" do %>
-          <%= c.govuk_text_field :first_name, autocomplete: 'off', width: 'three-quarters' %>
-          <%= c.govuk_text_field :last_name, autocomplete: 'off', width: 'three-quarters' %>
+        <div class="moj-add-another__items">
+          <%= f.fields_for :codefendants do |c| %>
+            <% index = c.index + 1 %>
 
-          <%= c.govuk_collection_radio_buttons :conflict_of_interest, c.object.choices, :value, inline: true %>
+            <div class="moj-add-another__item">
+              <div class="moj-add-another__item-container">
+                <div class="moj-add-another__item-row">
+                  <%= c.govuk_fieldset legend: { text: t('.codefendant_legend', count: codefendant_count, index: index), class: 'moj-add-another__item-title' }, id: "codefendant_#{index}", class: 'moj-add-another__fieldset' do %>
+                    <%= c.govuk_text_field :first_name, autocomplete: 'off', width: 'three-quarters' %>
+                    <%= c.govuk_text_field :last_name, autocomplete: 'off', width: 'three-quarters' %>
 
-          <%= c.button t('.remove_button', index:), type: :submit, value: '1', name: c.field_name(:_destroy, index: nil),
-                       class: %w[govuk-button govuk-button--secondary govuk-!-margin-bottom-8],
-                       data: { module: 'govuk-button' } if @form_object.show_destroy? %>
-          <hr>
-        <% end %>
-      <% end %>
+                    <%= c.govuk_collection_radio_buttons :conflict_of_interest, c.object.choices, :value, inline: true %>
+                  <% end %>
+                </div>
 
-      <%= f.button t('.add_button'), type: :submit, name: :add_codefendant,
-                   class: %w[govuk-button govuk-button--secondary govuk-!-margin-bottom-8],
-                   data: { module: 'govuk-button' } %>
+                <div class="moj-add-another__remove-button-container">
+                  <%= c.button t('.remove_button', index:), type: :submit, value: '1', name: c.field_name(:_destroy, index: nil),
+                               class: %w[govuk-button govuk-button--secondary moj-add-another__remove-button govuk-!-margin-bottom-8],
+                               data: { module: 'govuk-button' } if @form_object.show_destroy? %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="moj-add-another__add-button-container">
+          <%= f.button t('.add_button'), type: :submit, name: :add_codefendant,
+                       class: %w[govuk-button govuk-button--secondary moj-add-another__add-button govuk-!-margin-bottom-8],
+                       data: { module: 'govuk-button' } %>
+        </div>
+      </div>
 
       <%= f.continue_button %>
     <% end %>
