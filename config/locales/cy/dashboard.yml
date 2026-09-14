@@ -149,6 +149,7 @@ cy:
       questions: Os oes gennych unrhyw gwestiynau, cysylltwch â’ch rheolwr contract.
     dashboard_header:
       heading: Eich ceisiadau
+      service_outage: Ni fydd y gwasanaeth ar gael ddydd Mercher 16 Medi 2026 rhwng 5pm a 5:30pm.
       start_button: Cychwyn cais
       create_button: Gwneud cais newydd
     subnavigation:
