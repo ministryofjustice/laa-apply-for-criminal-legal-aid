@@ -8,9 +8,19 @@ module CapybaraHelpers # rubocop:disable Metrics/ModuleLength
   def fill_date(question, with: nil)
     date = with || Time.zone.today
 
-    within(find('legend', text: question).sibling('div.govuk-date-input')) do
+    legend = find_date_legend(question)
+
+    within(legend.sibling('div.govuk-date-input')) do
       fill_in_date(date)
     end
+  end
+
+  def find_date_legend(question)
+    exact_legend = all('legend', text: /\A#{Regexp.escape(question)}\z/).first
+    return exact_legend if exact_legend
+
+    base_question = question.sub(/\s+\d+\z/, '')
+    all('legend', text: /\A#{Regexp.escape(base_question)}(?:\s+\d+)?\z/).first || find('legend', text: question)
   end
 
   # radio buttons
