@@ -59,22 +59,22 @@ RSpec.describe 'Viewing dashboard with Contingent Liability Criminal Legal Aid a
     end
 
     it 'shows Contingent Liability notice when viewing all tabs' do
-      within('.govuk-notification-banner') do |notice|
+      within('.govuk-notification-banner', match: :first) do |notice|
         expect(notice).to have_content('You cannot use this account to start, change or submit applications.')
       end
 
       click_on('Submitted')
-      within('.govuk-notification-banner') do |notice|
+      within('.govuk-notification-banner', match: :first) do |notice|
         expect(notice).to have_content('You cannot use this account to start, change or submit applications.')
       end
 
       click_on('Decided')
-      within('.govuk-notification-banner') do |notice|
+      within('.govuk-notification-banner', match: :first) do |notice|
         expect(notice).to have_content('You cannot use this account to start, change or submit applications.')
       end
 
       click_on('Returned')
-      within('.govuk-notification-banner') do |notice|
+      within('.govuk-notification-banner', match: :first) do |notice|
         expect(notice).to have_content('You cannot use this account to start, change or submit applications.')
       end
     end
