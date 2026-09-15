@@ -37,6 +37,11 @@ DropzoneCfg.prototype.init = function () {
 
   if (!this.$dropzoneContainer || !this.$feedbackContainer) { return }
 
+  // Localised strings injected by the server so JS-rendered content reflects the current locale.
+  // Keys mirror the translation keys under the `steps.evidence.upload.edit` scope: to add a
+  // string, render it in the `data-dropzone-i18n` JSON blob then reference `this.i18n.<key>`.
+  this.i18n = JSON.parse(this.$dropzoneContainer.dataset.dropzoneI18n || '{}')
+
   // As dropzone and the fallback components share the parent form component, dropzone specific styling is added here
   this.$dropzoneContainer.classList.add("dropzone")
 
@@ -58,7 +63,7 @@ DropzoneCfg.prototype.init = function () {
   const self = this
   this.$dropzone = new Dropzone(this.$dropzoneContainer, {
     paramName: "document",
-    dictDefaultMessage: this.$dropzoneContainer.dataset.dropzoneDefaultMessage || 'Drag and drop files here or',
+    dictDefaultMessage: this.i18n.drag_and_drop || 'Drag and drop files here or',
     clickable: '#choose_files_button',
     // Sanitise the filename sent to the server so the WAF doesn't reject
     // unsupported characters (e.g. a colon macOS stores in place of a slash).
@@ -89,7 +94,7 @@ DropzoneCfg.prototype.init = function () {
     this.$statusTag = document.getElementById(file.upload.uuid).querySelector(".app-uploaded-file__status")
     this.$statusTag.classList.remove("govuk-tag--yellow")
     this.$statusTag.classList.add("govuk-tag--green")
-    this.$statusTag.innerHTML = "Uploaded"
+    this.$statusTag.textContent = this.i18n.uploaded || 'Uploaded'
 
     setDeleteDocumentValue(file, response)
   });

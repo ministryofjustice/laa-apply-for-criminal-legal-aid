@@ -147,6 +147,7 @@ en:
       questions: If you have any questions, contact your contract manager.
     dashboard_header:
       heading: Your applications
+      service_outage: The service will be unavailable on Wednesday 16 September 2026 from 5pm to 5:30pm
       start_button: Start an application
       create_button: Make a new application
     subnavigation:
