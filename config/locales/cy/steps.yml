@@ -235,13 +235,13 @@ cy:
           page_title: Pryd ddigwyddodd y trosedd?
           heading: Pryd ddigwyddodd y trosedd?
           offence_label: "Trosedd:"
-          date_from_label: Dyddiad cychwyn
+          date_from_label: Dyddiad dechrau
           date_to_label: Dyddiad gorffen
           offence_legend:
             one: Dyddiad %{index}
             other: Dyddiad %{index} o %{count}
           add_button: Ychwanegu dyddiad arall
-          remove_button: Tynnu
+          remove_button: Dileu dyddiad %{index}
           deleted_flash: Mae dyddiad y trosedd wedi cael ei ddileu
           inset: Os oes mwy nag un o'r un drosedd, ychwanegwch ddyddiad newydd ar gyfer pob un.
       charges_summary:
@@ -341,7 +341,7 @@ cy:
           dependant_legend:
             one: Dibynnydd %{index}
             other: Dibynnydd %{index} o %{count}
-          age_label: Faint yw oed y dibynnydd?
+          age_label: Beth yw oedran y dibynnydd?
           age: Faint yw oed y %{ordinal} dibynnydd?
           age_hint: oed
           remove_button: Tynnu’r %{ordinal} dibynnydd
@@ -662,7 +662,7 @@ cy:
           property_owners_fieldset_legend:
             one: Perchennog arall %{index}
             other: Perchennog arall %{index} o %{count}
-          name_label: Beth yw enw'r perchennog arall?
+          name_label: Beth yw enw’r perchennog arall?
           add_button: Ychwanegu perchennog arall
           remove_button: Tynnu perchennog %{index}
           deleted_flash: Mae'r perchennog wedi'i ddileu
