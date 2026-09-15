@@ -223,6 +223,36 @@ RSpec.describe Datastore::ApplicationSubmission do
       end
     end
 
+    context 'submission with a slipstream audit selection outcome' do
+      let(:sampled_at) { DateTime.new(2026, 9, 3, 10) }
+      let(:status_determined_at) { DateTime.new(2026, 9, 4, 11) }
+
+      before do
+        crime_application.create_slipstream_audit_selection_outcome!(
+          status: :confirmed,
+          sample_rate: 10,
+          sampled_at: sampled_at,
+          status_determined_at: status_determined_at
+        )
+        service.call
+      end
+
+      it 'includes the outcome in the submitted payload' do
+        expect(payload['slipstream_audit_selection_outcome']).to eq(
+          {
+            'status' => 'confirmed',
+            'sample_rate' => 10,
+            'sampled_at' => sampled_at.utc.iso8601(3),
+            'status_determined_at' => status_determined_at.utc.iso8601(3)
+          }
+        )
+      end
+
+      it 'conforms to the application schema' do
+        expect(LaaCrimeSchemas::Validator.new(payload)).to be_valid
+      end
+    end
+
     context 'handling of errors' do
       let!(:selection_outcome) do
         crime_application.create_slipstream_audit_selection_outcome!(
