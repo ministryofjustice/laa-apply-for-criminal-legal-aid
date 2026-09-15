@@ -24,7 +24,9 @@
         <div class="moj-add-another">
           <div class="moj-add-another__items">
             <%= f.fields_for :offence_dates do |od| %>
+
               <% index = od.index + 1 %>
+              
               <div class="moj-add-another__item">
                 <div class="moj-add-another__item-container">
                   <div class="moj-add-another__item-row">

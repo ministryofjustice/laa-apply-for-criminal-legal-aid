@@ -18,10 +18,11 @@
 
     <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
       <div class="moj-add-another">
-
         <div class="moj-add-another__items">
           <%= f.fields_for :property_owners do |po_field| %>
+
             <% index = po_field.index + 1 %>
+            
             <div class="moj-add-another__item">
               <div class="moj-add-another__item-container">
                 <div class="moj-add-another__item-row">
