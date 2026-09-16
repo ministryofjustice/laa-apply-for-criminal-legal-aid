@@ -341,7 +341,7 @@ en:
           age_label: How old is the dependant?
           age: How old is the %{ordinal} dependant?
           age_hint: years old
-          remove_button: Remove %{ordinal} dependant
+          remove_button: Remove dependant %{index}
           add_button: Add another dependant
           deleted_flash: The dependant has been deleted
           dependants_definition: *dependants_definition

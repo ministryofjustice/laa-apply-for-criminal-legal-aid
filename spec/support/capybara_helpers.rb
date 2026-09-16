@@ -16,11 +16,15 @@ module CapybaraHelpers # rubocop:disable Metrics/ModuleLength
   end
 
   def find_date_legend(question)
-    exact_legend = all('legend', text: /\A#{Regexp.escape(question)}\z/).first
-    return exact_legend if exact_legend
+    numbered_date = /\A(Start date|End date)\s+(\d+)\z/.match(question)
 
-    base_question = question.sub(/\s+\d+\z/, '')
-    all('legend', text: /\A#{Regexp.escape(base_question)}(?:\s+\d+)?\z/).first || find('legend', text: question)
+    if numbered_date
+      label, index = numbered_date.captures
+
+      find("#offence_#{index}").find('legend', exact_text: label)
+    else
+      find('legend', text: question)
+    end
   end
 
   # radio buttons

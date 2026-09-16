@@ -9,7 +9,7 @@
 
     <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
 
-    <% offence_date_count = Array(@form_object&.offence_dates).length %>
+    <% offence_date_count = @form_object.offence_dates.length %>
 
     <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
 

@@ -344,7 +344,7 @@ cy:
           age_label: Beth yw oedran y dibynnydd?
           age: Faint yw oed y %{ordinal} dibynnydd?
           age_hint: oed
-          remove_button: Tynnu’r %{ordinal} dibynnydd
+          remove_button: Tynnu’r dibynnydd %{index}
           add_button: Ychwanegu dibynnydd arall
           deleted_flash: Mae'r dibynnydd wedi'i ddileu
           dependants_definition: *dependants_definition
