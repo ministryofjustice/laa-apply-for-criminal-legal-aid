@@ -8,8 +8,22 @@ module CapybaraHelpers # rubocop:disable Metrics/ModuleLength
   def fill_date(question, with: nil)
     date = with || Time.zone.today
 
-    within(find('legend', text: question).sibling('div.govuk-date-input')) do
+    legend = find_date_legend(question)
+
+    within(legend.sibling('div.govuk-date-input')) do
       fill_in_date(date)
+    end
+  end
+
+  def find_date_legend(question)
+    numbered_date = /\A(Start date|End date)\s+(\d+)\z/.match(question)
+
+    if numbered_date
+      label, index = numbered_date.captures
+
+      find("#offence_#{index}").find('legend', exact_text: label)
+    else
+      find('legend', text: question)
     end
   end
 
