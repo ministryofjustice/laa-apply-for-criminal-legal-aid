@@ -34,8 +34,15 @@ module ProviderDataApi
         mutex.synchronize { counters.dup }
       end
 
+      def activity_snapshot
+        mutex.synchronize { activity.dup }
+      end
+
       def reset!
-        mutex.synchronize { @counters = Hash.new(0) }
+        mutex.synchronize do
+          @counters = Hash.new(0)
+          @activity = {}
+        end
       end
 
       private
@@ -50,15 +57,25 @@ module ProviderDataApi
 
         mutex.synchronize do
           counters[labels] += 1
+          activity[{ outcome: outcome.to_s, operation: operation.to_s }.freeze] = Time.now.to_f
         end
       end
 
       def extract_status(exception)
-        exception.respond_to?(:response) ? exception.response&.dig(:status) : nil
+        return unless exception.respond_to?(:response)
+
+        response = exception.response
+        return response[:status] if response.is_a?(Hash)
+
+        response.status if response.respond_to?(:status)
       end
 
       def counters
         @counters ||= Hash.new(0)
+      end
+
+      def activity
+        @activity ||= {}
       end
 
       def mutex

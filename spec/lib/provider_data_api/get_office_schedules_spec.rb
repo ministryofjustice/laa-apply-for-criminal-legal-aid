@@ -49,6 +49,70 @@ RSpec.describe ProviderDataApi::GetOfficeSchedules do
       end
     end
 
+    context 'when PDA returns a malformed response body' do
+      let(:response) { instance_double(Faraday::Response, status: 200, body: 'not-a-hash') }
+
+      before do
+        allow(http_client).to receive(:get).and_return(response)
+        allow(Rails.error).to receive(:report)
+      end
+
+      it 'reports the error and records failure metrics instead of success' do
+        expect { service_call }.to raise_error(Dry::Struct::Error)
+        expect(Rails.error).to have_received(:report).with(
+          kind_of(Dry::Struct::Error),
+          hash_including(
+            handled: true,
+            severity: :error,
+            context: hash_including(
+              source: 'provider_data_api',
+              operation: 'get_office_schedules',
+              office_code: '1A2B3C'
+            )
+          )
+        )
+        expect_metric(outcome: 'failure', http_status: '200', error_class: 'Dry::Struct::Error')
+        expect(ProviderDataApi::RequestMonitor.snapshot.keys).not_to include(hash_including(outcome: 'success'))
+      end
+    end
+
+    [405, 500].each do |status|
+      context "when PDA returns HTTP #{status}" do
+        let(:http_client) { ProviderDataApi::HttpClient.call }
+
+        before do
+          stub_request(:get, 'https://pda.example.com/provider-offices/1A2B3C/schedules?areaOfLaw=CRIME+LOWER')
+            .to_return(status: status, body: 'PDA error')
+          allow(Rails.error).to receive(:report)
+        end
+
+        it 'records a failure through the real HTTP middleware' do
+          expect { service_call }.to raise_error(Faraday::Error)
+          expect(ProviderDataApi::RequestMonitor.snapshot).to include(
+            hash_including(outcome: 'failure', http_status: status.to_s) => 1
+          )
+          expect(Rails.error).to have_received(:report)
+        end
+      end
+    end
+
+    context 'when PDA returns invalid JSON' do
+      let(:http_client) { ProviderDataApi::HttpClient.call }
+
+      before do
+        stub_request(:get, 'https://pda.example.com/provider-offices/1A2B3C/schedules?areaOfLaw=CRIME+LOWER')
+          .to_return(status: 200, body: 'not-json', headers: { 'Content-Type' => 'application/json' })
+        allow(Rails.error).to receive(:report)
+      end
+
+      it 'records the parsing failure' do
+        expect { service_call }.to raise_error(Faraday::ParsingError)
+        expect(ProviderDataApi::RequestMonitor.snapshot).to include(
+          hash_including(outcome: 'failure', http_status: '200', error_class: 'Faraday::ParsingError') => 1
+        )
+      end
+    end
+
     context 'when PDA is unavailable' do
       let(:connection_error) { Faraday::ConnectionFailed.new('execution expired') }
 
