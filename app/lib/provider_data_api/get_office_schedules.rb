@@ -55,16 +55,20 @@ module ProviderDataApi
     end
 
     def success_response(response)
+      schedules = OfficeSchedules.new(response.body)
       RequestMonitor.record_success(operation: operation, status: response.status)
-      OfficeSchedules.new(response.body)
+      schedules
+    rescue Dry::Struct::Error, Dry::Types::CoercionError => e
+      report_failure(e, status: response.status)
+      raise
     end
 
     def report_not_found(status: nil)
       RequestMonitor.record_not_found(operation:, status:)
     end
 
-    def report_failure(error)
-      RequestMonitor.record_failure(operation: operation, exception: error)
+    def report_failure(error, status: nil)
+      RequestMonitor.record_failure(operation: operation, exception: error, status: status)
       Rails.error.report(error, handled: true, severity: :error, context: failure_context)
     end
 
