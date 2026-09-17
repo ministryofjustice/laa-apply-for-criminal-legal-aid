@@ -14,32 +14,50 @@
 
     <p class="govuk-!-margin-bottom-7"><%= t('.info', asset: PropertyType.to_phrase(@form_object.record.property_type)) %></p>
 
+    <% property_owner_count = @form_object.property_owners.length %>
+
     <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
-      <%= f.fields_for :property_owners do |po_field| %>
-        <% index = po_field.index + 1 %>
-        <%= po_field.govuk_fieldset legend: { text: t('.property_owners_fieldset_legend', index:), tag: 'h2', size: 'l' }, id: "property_owner_#{index}" do %>
-          <%= po_field.govuk_text_field :name, autocomplete: 'off', label: { tag: 'h3', size: 'm', text: label_t(:name, index: index.ordinalize_fully) }  %>
-          <%= po_field.govuk_radio_buttons_fieldset :relationship, legend: { tag: 'h3', size: 'm', text: legend_t(:relationship) } do %>
-            <% @form_object.relationships.each_with_index do |option, index| %>
-              <%= po_field.govuk_radio_button :relationship, option, link_errors: index.zero? %>
-            <% end %>
-            <%= po_field.govuk_radio_divider I18n.t('divider_text') %>
-            <%= po_field.govuk_radio_button :relationship, 'other' do %>
-              <%= po_field.govuk_text_field :other_relationship, autocomplete: 'off', width: 'one-third' %>
-            <%end%>
+      <div class="moj-add-another">
+        <div class="moj-add-another__items">
+          <%= f.fields_for :property_owners do |po_field| %>
+
+            <% index = po_field.index + 1 %>
+
+            <div class="moj-add-another__item">
+              <div class="moj-add-another__item-container">
+                <div class="moj-add-another__item-row">
+                  <%= po_field.govuk_fieldset legend: { text: t('.property_owners_fieldset_legend', count: property_owner_count, index: index), tag: 'h2', size: 'l', class: 'moj-add-another__item-title' }, id: "property_owner_#{index}", class: 'moj-add-another__fieldset' do %>
+                    <%= po_field.govuk_text_field :name, autocomplete: 'off', label: { tag: 'h3', size: 'm', text: t('.name_label') } %>
+                    <%= po_field.govuk_radio_buttons_fieldset :relationship, legend: { tag: 'h3', size: 'm', text: legend_t(:relationship) } do %>
+                      <% @form_object.relationships.each_with_index do |option, relationship_index| %>
+                        <%= po_field.govuk_radio_button :relationship, option, link_errors: relationship_index.zero? %>
+                      <% end %>
+                      <%= po_field.govuk_radio_divider I18n.t('divider_text') %>
+                      <%= po_field.govuk_radio_button :relationship, 'other' do %>
+                        <%= po_field.govuk_text_field :other_relationship, autocomplete: 'off', width: 'one-third' %>
+                      <% end %>
+                    <% end %>
+                    <%= po_field.govuk_number_field :percentage_owned, suffix_text: '%', width: 'one-quarter',
+                                                    label: { text: label_t("percentage_owned_#{@form_object.record.property_type}"), tag: 'h3', size: 'm' } %>
+                  <% end %>
+                </div>
+
+                <div class="moj-add-another__remove-button-container">
+                  <%= po_field.button t('.remove_button', index:), type: :submit, value: '1', name: po_field.field_name(:_destroy, index: po_field.id),
+                                      class: %w[govuk-button govuk-button--secondary moj-add-another__remove-button govuk-!-margin-bottom-8],
+                                      data: { module: 'govuk-button' } if @form_object.show_destroy? %>
+                </div>
+              </div>
+            </div>
           <% end %>
-          <%= po_field.govuk_number_field :percentage_owned, suffix_text: '%', width: 'one-quarter',
-                                          label: { text: label_t("percentage_owned_#{@form_object.record.property_type}"), tag: 'h3', size: 'm' } %>
+        </div>
 
-          <%= po_field.button t('.remove_button', index:), type: :submit, value: '1', name: po_field.field_name(:_destroy, index: po_field.id),
-                        class: %w[govuk-button govuk-button--warning],
-                        data: { module: 'govuk-button' } if @form_object.show_destroy? %>
-        <%end%>
-      <%end%>
-
-      <%= f.button t('.add_button'), type: :submit, name: :add_property_owner,
-                   class: %w[govuk-button govuk-button--secondary govuk-!-margin-bottom-8],
-                   data: { module: 'govuk-button' } %>
+        <div class="moj-add-another__add-button-container">
+          <%= f.button t('.add_button'), type: :submit, name: :add_property_owner,
+                       class: %w[govuk-button govuk-button--secondary moj-add-another__add-button govuk-!-margin-bottom-8],
+                       data: { module: 'govuk-button' } %>
+        </div>
+      </div>
 
       <%= f.continue_button %>
     <% end %>

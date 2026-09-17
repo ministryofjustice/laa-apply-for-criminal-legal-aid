@@ -9,6 +9,8 @@
 
     <h1 class="govuk-heading-xl"><%=t '.heading' %></h1>
 
+    <% offence_date_count = @form_object.offence_dates.length %>
+
     <%= step_form @form_object, data: { module: 'multi-action-form' } do |f| %>
 
       <%= f.govuk_fieldset(
@@ -19,24 +21,40 @@
               )
             end
           ) do %>
-        <%= f.fields_for :offence_dates do |od| %>
-          <% index = od.index + 1 %>
+        <div class="moj-add-another">
+          <div class="moj-add-another__items">
+            <%= f.fields_for :offence_dates do |od| %>
 
-          <%= od.date_input :date_from, legend: { text: t("helpers.legend.#{f.object_name}.date_from", index:), size: 's' } %>
+              <% index = od.index + 1 %>
 
-          <%= od.date_input :date_to, legend: { text: t("helpers.legend.#{f.object_name}.date_to", index:), size: 's' } %>
+              <div class="moj-add-another__item">
+                <div class="moj-add-another__item-container">
+                  <div class="moj-add-another__item-row">
+                    <%= od.govuk_fieldset legend: { text: t('.offence_legend', count: offence_date_count, index: index), class: 'moj-add-another__item-title' }, id: "offence_#{index}", class: 'moj-add-another__fieldset' do %>
+                      <%= od.date_input :date_from, legend: { text: t('.date_from_label'), size: 's' } %>
+                      <%= od.date_input :date_to, legend: { text: t('.date_to_label'), size: 's' } %>
+                    <% end %>
+                  </div>
 
-          <%= od.button t('.remove_button', index:), type: :submit, value: '1', name: od.field_name(:_destroy, index: od.id),
-                        class: %w[govuk-button govuk-button--warning],
-                        data: { module: 'govuk-button' } if @form_object.show_destroy? %>
-        <% end %>
+                  <div class="moj-add-another__remove-button-container">
+                    <%= od.button t('.remove_button', index:), type: :submit, value: '1', name: od.field_name(:_destroy, index: od.id),
+                                  class: %w[govuk-button govuk-button--secondary moj-add-another__remove-button govuk-!-margin-bottom-8],
+                                  data: { module: 'govuk-button' } if @form_object.show_destroy? %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
       <% end %>
 
       <%= govuk_inset_text(text: t('.inset')) %>
 
-      <%= f.button t('.add_button'), type: :submit, name: :add_offence_date,
-                   class: %w[govuk-button govuk-button--secondary govuk-!-margin-bottom-8],
-                   data: { module: 'govuk-button' } %>
+      <div class="moj-add-another__add-button-container">
+        <%= f.button t('.add_button'), type: :submit, name: :add_offence_date,
+                     class: %w[govuk-button govuk-button--secondary moj-add-another__add-button govuk-!-margin-bottom-8],
+                     data: { module: 'govuk-button' } %>
+      </div>
 
       <%= f.continue_button %>
     <% end %>
