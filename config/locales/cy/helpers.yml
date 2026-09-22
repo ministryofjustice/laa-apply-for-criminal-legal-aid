@@ -798,10 +798,10 @@ cy:
         partner_employment_status_options: *EMPLOYMENT_STATUS_OPTIONS
       steps_income_client_employer_details_form:
         employer_name: Enw’r cyflogwr
-        address: *ADDRESS_DETAILS
+        <<: *ADDRESS_DETAILS
       steps_income_partner_employer_details_form:
         employer_name: Enw’r cyflogwr
-        address: *ADDRESS_DETAILS
+        <<: *ADDRESS_DETAILS
       steps_income_client_employment_details_form:
         job_title: Beth yw teitl swydd eich cleient?
         amount: Beth yw eu cyflog neu eu tâl?

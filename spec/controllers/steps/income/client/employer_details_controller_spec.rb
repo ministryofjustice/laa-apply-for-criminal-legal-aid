@@ -42,7 +42,7 @@ RSpec.describe Steps::Income::Client::EmployerDetailsController, type: :controll
       {
         id: crime_application,
         employment_id: employment,
-        steps_income_client_employer_details_form: { employer_name: 'abc', address: address_attributes }
+        steps_income_client_employer_details_form: { employer_name: 'abc' }.merge(address_attributes)
       }
     end
 
