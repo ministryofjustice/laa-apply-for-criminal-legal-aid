@@ -357,7 +357,7 @@ cy:
       client:
         employer_details:
           edit:
-            page_title: Pwy sy'n cyflogi eich cleient?
+            page_title: I bwy mae eich cleient yn gweithio?
             heading: I bwy mae eich cleient yn gweithio?
             subheading: Ychwanegu enw a chyfeiriad cyflogwr eich cleient. Os oes ganddynt fwy nag un cyflogwr, gallwch ychwanegu mwy.
         employment_details:
@@ -421,7 +421,7 @@ cy:
       partner:
         employer_details:
           edit:
-            page_title: Pwy sy'n cyflogi eich partner?
+            page_title: I bwy mae'r partner yn gweithio?
             heading: I bwy mae'r partner yn gweithio?
             subheading: Ychwanegu manylion cyflogwr y partner. Os oes ganddynt fwy nag un swydd, gallwch ychwanegu mwy.
         employment_details:

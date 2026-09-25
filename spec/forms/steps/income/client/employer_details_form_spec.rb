@@ -8,8 +8,7 @@ RSpec.describe Steps::Income::Client::EmployerDetailsForm do
       crime_application: crime_application,
       record: employment,
       employer_name: employer_name,
-      address: address_attributes,
-    }
+    }.merge(address_attributes)
   end
 
   let(:crime_application) { CrimeApplication.new }
@@ -60,6 +59,24 @@ RSpec.describe Steps::Income::Client::EmployerDetailsForm do
       it 'has a validation error on the field' do
         expect(form).not_to be_valid
         expect(form.errors.of_kind?(:address_line_one, :blank)).to be(true)
+      end
+    end
+
+    context 'when only the postcode is missing' do
+      let(:employer_name) { 'abc' }
+
+      before {
+        address_attributes.merge!(postcode: nil)
+      }
+
+      it 'returns false' do
+        expect(form.save).to be(false)
+      end
+
+      it 'has a validation error on the postcode field only' do
+        expect(form).not_to be_valid
+        expect(form.errors.of_kind?(:postcode, :blank)).to be(true)
+        expect(form.errors.attribute_names).to eq([:postcode])
       end
     end
   end

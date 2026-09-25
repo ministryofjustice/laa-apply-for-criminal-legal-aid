@@ -3,7 +3,6 @@ module Steps
     module Client
       class EmployerDetailsForm < Steps::BaseFormObject
         attribute :employer_name
-        attribute :address
 
         attribute :address_line_one
         attribute :address_line_two
@@ -11,8 +10,8 @@ module Steps
         attribute :country
         attribute :postcode
 
-        validates :employer_name, :address, presence: true
-        validates_with AddressValidator
+        validates :employer_name, presence: true
+        validates :address_line_one, :city, :country, :postcode, presence: true
 
         def persist!
           record.update(attributes)
