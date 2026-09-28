@@ -518,6 +518,10 @@ RSpec.describe Datastore::ApplicationRehydration do
     end
 
     context 'with a slipstream audit selection outcome' do
+      let(:parent) do
+        super().deep_merge('slipstream_audit_selection_outcome' => { 'selection_reason' => 'offence' })
+      end
+
       it 'restores all selection outcome data' do
         expect(crime_application).to receive(:update!).with(
           hash_including(
@@ -525,7 +529,8 @@ RSpec.describe Datastore::ApplicationRehydration do
               status: 'confirmed',
               sample_rate: 10,
               sampled_at: DateTime.parse('2026-09-03T10:00:00.000Z'),
-              status_determined_at: DateTime.parse('2026-09-04T11:00:00.000Z')
+              status_determined_at: DateTime.parse('2026-09-04T11:00:00.000Z'),
+              selection_reason: 'offence'
             )
           )
         )

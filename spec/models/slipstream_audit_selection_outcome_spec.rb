@@ -27,6 +27,35 @@ RSpec.describe SlipstreamAuditSelectionOutcome, type: :model do
     it { expect(outcome.selected?).to be true }
   end
 
+  describe 'selection_reason' do
+    it { expect(outcome.selection_reason).to be_nil }
+
+    it 'accepts a nil selection_reason' do
+      outcome.selection_reason = nil
+
+      expect(outcome).to be_valid
+    end
+
+    it 'accepts the offence selection_reason' do
+      outcome.selection_reason = :offence
+
+      expect(outcome).to be_valid
+      expect(outcome.offence?).to be true
+    end
+
+    it 'accepts the age selection_reason' do
+      outcome.selection_reason = :age
+
+      expect(outcome).to be_valid
+      expect(outcome.age?).to be true
+    end
+
+    it 'rejects an unsupported selection_reason at the database level' do
+      expect { outcome.update_column(:selection_reason, 'unsupported') } # rubocop:disable Rails/SkipsModelValidations
+        .to raise_error(ActiveRecord::StatementInvalid, /slipstream_audit_selection_outcomes_reason_check/)
+    end
+  end
+
   describe 'validations' do
     it 'requires a sample rate greater than zero' do
       outcome.sample_rate = 0
