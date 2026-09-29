@@ -196,13 +196,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ministryofjustice/frontend@npm:^11.0.1":
-  version: 11.0.1
-  resolution: "@ministryofjustice/frontend@npm:11.0.1"
+"@ministryofjustice/frontend@npm:^11.1.0":
+  version: 11.1.0
+  resolution: "@ministryofjustice/frontend@npm:11.1.0"
   peerDependencies:
     govuk-frontend: ^6.0.0
-    moment: 2.30.1
-  checksum: 10c0/db58569a6bdce434b0fef7fc9c9efca3b31d0ad289d05cadeb06ca3c00069705d45a12e19a68734c97e1999fb2e6919ef76b38ce4fcd6a53696387e02f318b33
+    moment: ^2.30.1
+  checksum: 10c0/46e7c90f93ed0ba830c6e4ea4ba30b6074be37b0b4d3673fdabb8203a757c73912f1b139e8d9912faf9f602fefee67dbe04ec7e320a358102b7c5bd98caba9c9
   languageName: node
   linkType: hard
 
@@ -507,10 +507,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dropzone@npm:^6.3.1":
-  version: 6.3.1
-  resolution: "dropzone@npm:6.3.1"
-  checksum: 10c0/6f75ba37c80c647b2e2570bbaffdc9d2547d6b7a4b3a3d244ead6fd83e7b7490b845e5c4d77e9ad388bced426e5d9a6c1a4367ad9317288131d9322e8579bc47
+"dropzone@npm:^6.3.4":
+  version: 6.3.4
+  resolution: "dropzone@npm:6.3.4"
+  checksum: 10c0/a59f2fec25ed9bb824aa98318b8560a9e4029fd1c030f200dff4ae8ec8984fe0caff37645ceb2ab1b05ae0c2ce06cce987141bd744be54bceb571a2a9f0187cd
   languageName: node
   linkType: hard
 
@@ -804,9 +804,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "laa-apply-for-criminal-legal-aid@workspace:."
   dependencies:
-    "@ministryofjustice/frontend": "npm:^11.0.1"
+    "@ministryofjustice/frontend": "npm:^11.1.0"
     accessible-autocomplete: "npm:^3.0.1"
-    dropzone: "npm:^6.3.1"
+    dropzone: "npm:^6.3.4"
     esbuild: "npm:^0.28.2"
     govuk-frontend: "npm:^6.5.1"
     moment: "npm:2.31.0"
