@@ -538,6 +538,27 @@ RSpec.describe Datastore::ApplicationRehydration do
         subject.call
       end
 
+      context 'when the returned outcome has no selection reason' do
+        let(:parent) do
+          super().deep_dup.tap do |application|
+            application.fetch('slipstream_audit_selection_outcome').delete('selection_reason')
+          end
+        end
+
+        it 'restores the outcome without a selection reason' do
+          expect(crime_application).to receive(:update!).with(
+            hash_including(
+              slipstream_audit_selection_outcome: have_attributes(
+                status: 'confirmed',
+                selection_reason: nil
+              )
+            )
+          )
+
+          subject.call
+        end
+      end
+
       %w[not_selected selected confirmed withdrawn].each do |status|
         context "when the stored status is #{status}" do
           let(:parent) do
