@@ -10,9 +10,11 @@ RSpec.describe Slipstream::FinalizeSelectionOutcome do
   let(:initially_determined_at) { Time.zone.parse('2026-09-03 10:00:00') }
   let(:finalized_at) { Time.zone.parse('2026-09-04 11:00:00') }
   let(:status) { :selected }
+  let(:selection_reason) { :offence }
   let!(:outcome) do
     crime_application.create_slipstream_audit_selection_outcome!(
       status: status,
+      selection_reason: selection_reason,
       sample_rate: 10,
       sampled_at: sampled_at,
       status_determined_at: initially_determined_at
@@ -56,6 +58,19 @@ RSpec.describe Slipstream::FinalizeSelectionOutcome do
       it 'withdraws the outcome and records when it was finalized' do
         expect(finalizer.call).to have_attributes(
           status: 'withdrawn',
+          status_determined_at: finalized_at
+        )
+      end
+    end
+
+    context 'when an age-selected applicant ages out before submission' do
+      let(:eligible) { false }
+      let(:selection_reason) { :age }
+
+      it 'confirms the outcome and preserves the selection reason' do
+        expect(finalizer.call).to have_attributes(
+          status: 'confirmed',
+          selection_reason: 'age',
           status_determined_at: finalized_at
         )
       end

@@ -4,8 +4,14 @@ RSpec.describe Slipstream::PersistSelectionOutcome do
   subject(:persister) { described_class.new(crime_application) }
 
   let(:crime_application) { CrimeApplication.create! }
-  let(:selector) { instance_double(Slipstream::CandidateSelector, call: status) }
+  let(:selection) do
+    { status: }.tap do |result|
+      result[:selection_reason] = selection_reason if selection_reason
+    end
+  end
+  let(:selector) { instance_double(Slipstream::CandidateSelector, call: selection) }
   let(:status) { :selected }
+  let(:selection_reason) { status == :selected ? :offence : nil }
   let(:sampled_at) { Time.zone.parse('2026-09-03 10:00:00') }
 
   before do
@@ -22,22 +28,31 @@ RSpec.describe Slipstream::PersistSelectionOutcome do
       expect(outcome).to have_attributes(
         crime_application: crime_application,
         status: 'selected',
+        selection_reason: 'offence',
         sample_rate: 10,
         sampled_at: sampled_at,
         status_determined_at: sampled_at
       )
     end
 
+    context 'when the age category caused selection' do
+      let(:selection_reason) { :age }
+
+      it 'persists the age selection reason' do
+        expect(persister.call).to have_attributes(status: 'selected', selection_reason: 'age')
+      end
+    end
+
     context 'when the application is not selected' do
       let(:status) { :not_selected }
 
       it 'persists the not-selected outcome' do
-        expect(persister.call).to be_not_selected
+        expect(persister.call).to have_attributes(not_selected?: true, selection_reason: nil)
       end
     end
 
     context 'when the application is ineligible' do
-      let(:status) { nil }
+      let(:selection) { nil }
 
       it 'does not persist an outcome' do
         expect { persister.call }.not_to change(SlipstreamAuditSelectionOutcome, :count)
