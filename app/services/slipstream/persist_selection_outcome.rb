@@ -11,10 +11,10 @@ module Slipstream
         existing_outcome = SlipstreamAuditSelectionOutcome.find_by(crime_application:)
         return existing_outcome if existing_outcome
 
-        status = selector.call
-        return unless status
+        selection = selector.call
+        return unless selection
 
-        persist(status)
+        persist(selection)
       end
     end
 
@@ -22,11 +22,14 @@ module Slipstream
 
     attr_reader :crime_application, :sample_rate, :selector
 
-    def persist(status)
+    def persist(selection)
       sampled_at = Time.current
+      status = selection.fetch(:status)
+      selection_reason = selection.fetch(:selection_reason, nil)
 
       crime_application.create_slipstream_audit_selection_outcome!(
         status: status,
+        selection_reason: selection_reason,
         sample_rate: sample_rate,
         sampled_at: sampled_at,
         status_determined_at: sampled_at
