@@ -136,6 +136,8 @@ en:
       continue_to_delete_button: Continue to delete application
       go_back_link: Back to applications
   shared:
+    slipstream_audit_notice:
+      explanation: For assurance purposes, Interests of Justice (IOJ) reasons are required for this application.
     application_overview:
       heading:
         initial: Application for a criminal legal aid representation order

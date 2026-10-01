@@ -1,0 +1,5 @@
+<% return unless current_crime_application&.slipstream_audit_ioj_required? %>
+
+<%= govuk_notification_banner(title_text: t('helpers.important')) do |nb| %>
+  <p><%= t('.explanation') %></p>
+<% end %>

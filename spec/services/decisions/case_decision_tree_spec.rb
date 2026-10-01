@@ -8,9 +8,11 @@ RSpec.describe Decisions::CaseDecisionTree do
     instance_double(
       CrimeApplication,
       id: '10',
-      applicant: instance_double(Applicant),
+      applicant: applicant,
       case: kase, # TODO: refactor the CaseDecisionTree to use #kase instead of #case
       kase: kase,
+      ioj: nil,
+      slipstream_audit_selection_outcome: selection_outcome,
       non_means_tested?: non_means_tested,
       cifc?: cifc?,
     )
@@ -27,6 +29,8 @@ RSpec.describe Decisions::CaseDecisionTree do
 
   let(:codefendants_double) { double('codefendants_collection') }
   let(:charges_double) { double('charges_collection') }
+  let(:applicant) { instance_double(Applicant, date_of_birth: 18.years.ago.to_date) }
+  let(:selection_outcome) { nil }
   let(:is_means_tested) { nil }
   let(:non_means_tested) { nil }
   let(:cifc?) { false }
@@ -365,6 +369,39 @@ subject: 'client')
         let(:ioj_passported) { true }
 
         it { is_expected.to have_destination(:ioj_passport, :edit, id: crime_application) }
+      end
+
+      context 'when a selected slipstream audit application would normally be passported' do
+        let(:slipstream_audit_enabled) { true }
+        let(:ioj_passported) { false }
+        let(:selection_status) { 'selected' }
+        let(:charges_double) { [Charge.new(offence_name: 'Assault by beating')] }
+        let(:selection_outcome) do
+          instance_double(
+            SlipstreamAuditSelectionOutcome,
+            selected?: selection_status == 'selected',
+            confirmed?: selection_status == 'confirmed',
+            selection_reason: 'offence'
+          )
+        end
+
+        before do
+          allow_any_instance_of(Passporting::IojPassporter).to receive(:call).and_call_original
+        end
+
+        it 'routes to the existing IoJ reasons form' do
+          expect(subject).to have_destination(:ioj, :edit, id: crime_application)
+        end
+
+        context 'when the selected outcome was confirmed and restored after return' do
+          let(:selection_status) { 'confirmed' }
+
+          it 'routes to the existing IoJ reasons form without resampling' do
+            expect(Slipstream::CandidateSelector).not_to receive(:new)
+
+            expect(subject).to have_destination(:ioj, :edit, id: crime_application)
+          end
+        end
       end
     end
   end
