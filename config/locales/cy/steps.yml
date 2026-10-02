@@ -236,7 +236,7 @@ cy:
           heading: Pryd ddigwyddodd y trosedd?
           offence_label: "Trosedd:"
           date_from_label: Dyddiad dechrau
-          date_to_label: Dyddiad gorffen
+          date_to_label: Dyddiad gorffen (dewisol)
           offence_legend:
             one: Dyddiad %{index}
             other: Dyddiad %{index} o %{count}

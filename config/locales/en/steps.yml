@@ -235,7 +235,7 @@ en:
           heading: When did the offence happen?
           offence_label: "Offence:"
           date_from_label: Start date
-          date_to_label: End date
+          date_to_label: End date (optional)
           offence_legend:
             one: Date %{index}
             other: Date %{index} of %{count}
