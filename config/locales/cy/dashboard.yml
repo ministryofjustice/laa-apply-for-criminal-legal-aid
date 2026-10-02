@@ -138,6 +138,8 @@ cy:
       continue_to_delete_button: Bwrw ymlaen i ddileu'r cais
       go_back_link: Yn ôl i'r ceisiadau
   shared:
+    slipstream_audit_notice:
+      explanation: At ddibenion sicrwydd, mae angen rhesymau Er Budd Cyfiawnder (IOJ) ar gyfer y cais hwn.
     application_overview:
       heading:
         initial: Cais am orchymyn cynrychiolaeth cymorth cyfreithiol troseddol

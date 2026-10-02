@@ -15,6 +15,7 @@ RSpec.describe Tasks::Ioj do
   let(:complete?) { false }
   let(:ioj) { nil }
   let(:passporter_result) { false }
+  let(:audit_required) { false }
 
   let(:validator) do
     instance_double(
@@ -27,7 +28,10 @@ RSpec.describe Tasks::Ioj do
     allow(InterestsOfJustice::AnswersValidator).to receive(:new)
       .with(crime_application).and_return(validator)
 
-    allow(crime_application).to receive(:ioj_passported?).and_return(passporter_result)
+    allow(crime_application).to receive_messages(
+      ioj_passported?: passporter_result,
+      slipstream_audit_ioj_required?: audit_required
+    )
   end
 
   describe '#path' do
@@ -38,6 +42,13 @@ RSpec.describe Tasks::Ioj do
     end
 
     context 'when the application is not Ioj passported (or there is override)' do
+      it { expect(subject.path).to eq('/applications/12345/steps/case/ioj') }
+    end
+
+    context 'when the application is required to complete IoJ for slipstream audit' do
+      let(:audit_required) { true }
+      let(:passporter_result) { true }
+
       it { expect(subject.path).to eq('/applications/12345/steps/case/ioj') }
     end
   end
@@ -63,6 +74,12 @@ RSpec.describe Tasks::Ioj do
 
     context 'when we do not have yet an ioj record' do
       it { expect(subject.in_progress?).to be(false) }
+
+      context 'when IoJ is required for slipstream audit' do
+        let(:audit_required) { true }
+
+        it { expect(subject.in_progress?).to be(true) }
+      end
 
       context 'when ioj_passported' do
         let(:passporter_result) { true }

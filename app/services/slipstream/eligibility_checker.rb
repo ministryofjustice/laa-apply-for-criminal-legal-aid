@@ -15,6 +15,10 @@ module Slipstream
       nil
     end
 
+    def single_slipstreamable_offence?
+      charges.one? && charges.all? { |charge| charge.offence&.slipstreamable }
+    end
+
     private
 
     attr_reader :crime_application
@@ -27,10 +31,6 @@ module Slipstream
       return false unless crime_application.case
 
       Passporting::IojPassporter.new(crime_application).age_passported?
-    end
-
-    def single_slipstreamable_offence?
-      charges.one? && charges.all? { |charge| charge.offence&.slipstreamable }
     end
   end
 end
