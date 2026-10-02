@@ -45,7 +45,8 @@ RSpec.describe SubmissionSerializer::Sections::ApplicationDetails do
       status: 'confirmed',
       sample_rate: 10,
       sampled_at: DateTime.new(2026, 9, 3, 10),
-      status_determined_at: DateTime.new(2026, 9, 4, 11)
+      status_determined_at: DateTime.new(2026, 9, 4, 11),
+      selection_reason: nil
     )
   end
 

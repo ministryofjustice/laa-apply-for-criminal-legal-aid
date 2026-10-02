@@ -161,7 +161,8 @@ module Datastore
         status: outcome.status,
         sample_rate: outcome.sample_rate,
         sampled_at: outcome.sampled_at,
-        status_determined_at: outcome.status_determined_at
+        status_determined_at: outcome.status_determined_at,
+        selection_reason: outcome.selection_reason
       )
     end
   end

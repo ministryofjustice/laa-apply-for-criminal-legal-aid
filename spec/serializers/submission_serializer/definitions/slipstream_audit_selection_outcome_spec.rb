@@ -9,7 +9,8 @@ RSpec.describe SubmissionSerializer::Definitions::SlipstreamAuditSelectionOutcom
       status: 'confirmed',
       sample_rate: 10,
       sampled_at: DateTime.new(2026, 9, 3, 10),
-      status_determined_at: DateTime.new(2026, 9, 4, 11)
+      status_determined_at: DateTime.new(2026, 9, 4, 11),
+      selection_reason: nil
     )
   end
 
@@ -30,5 +31,15 @@ RSpec.describe SubmissionSerializer::Definitions::SlipstreamAuditSelectionOutcom
 
       expect(described_class.generate(outcome)).to include('status' => status)
     end
+  end
+
+  it 'includes selection_reason when present' do
+    allow(outcome).to receive(:selection_reason).and_return('offence')
+
+    expect(serialized_outcome).to include('selection_reason' => 'offence')
+  end
+
+  it 'omits selection_reason when absent' do
+    expect(serialized_outcome).not_to have_key('selection_reason')
   end
 end

@@ -4,8 +4,8 @@ RSpec.describe Slipstream::CandidateSelector do
   subject(:selection) { described_class.new(crime_application, sample_rate:) }
 
   let(:crime_application) { instance_double(CrimeApplication) }
-  let(:eligibility_checker) { instance_double(Slipstream::EligibilityChecker, eligible?: eligible) }
-  let(:eligible) { true }
+  let(:eligibility_checker) { instance_double(Slipstream::EligibilityChecker, selection_reason: reason) }
+  let(:reason) { :offence }
   let(:sample_rate) { 10 }
 
   before do
@@ -16,7 +16,7 @@ RSpec.describe Slipstream::CandidateSelector do
 
   describe '#call' do
     context 'when the application is ineligible' do
-      let(:eligible) { false }
+      let(:reason) { nil }
 
       it 'returns nil without sampling' do
         expect(selection).not_to receive(:rand)
@@ -29,13 +29,21 @@ RSpec.describe Slipstream::CandidateSelector do
       context 'and the random number falls within the sample rate' do
         before { allow(selection).to receive(:rand).with(100).and_return(9) }
 
-        it { expect(selection.call).to be(:selected) }
+        it { expect(selection.call).to eq(status: :selected, selection_reason: :offence) }
       end
 
       context 'and the random number falls outside the sample rate' do
         before { allow(selection).to receive(:rand).with(100).and_return(10) }
 
-        it { expect(selection.call).to be(:not_selected) }
+        it { expect(selection.call).to eq(status: :not_selected) }
+      end
+
+      context 'when the age category applies' do
+        let(:reason) { :age }
+
+        before { allow(selection).to receive(:rand).with(100).and_return(9) }
+
+        it { expect(selection.call).to eq(status: :selected, selection_reason: :age) }
       end
 
       context 'when given a lower sample rate' do
@@ -44,7 +52,7 @@ RSpec.describe Slipstream::CandidateSelector do
         it 'uses the rate passed by the caller' do
           allow(selection).to receive(:rand).with(100).and_return(4)
 
-          expect(selection.call).to be(:selected)
+          expect(selection.call).to eq(status: :selected, selection_reason: :offence)
         end
       end
     end
