@@ -5,6 +5,12 @@ RSpec.describe 'Apply for Criminal Legal Aid when age passported' do
 
   let(:case_type) { ['Indictable', 'Either way'].sample }
 
+  before do
+    # These scenarios cover age passporting independently of slipstream audit routing.
+    allow(FeatureFlags).to receive(:slipstream_audit)
+      .and_return(instance_double(FeatureFlags::EnabledFeature, enabled?: false))
+  end
+
   describe 'an age passported draft' do
     before do
       draft_age_passported_application(case_type:)

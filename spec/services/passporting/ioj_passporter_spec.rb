@@ -25,7 +25,11 @@ RSpec.describe Passporting::IojPassporter do
   end
 
   before do
-    allow(crime_application).to receive_messages(ioj_passport: [], not_means_tested?: false)
+    allow(crime_application).to receive_messages(
+      ioj_passport: [],
+      not_means_tested?: false,
+      slipstream_audit_selection_outcome: nil
+    )
   end
 
   describe '#call' do
@@ -122,6 +126,63 @@ RSpec.describe Passporting::IojPassporter do
       let(:ioj_passport) { [] }
 
       it { expect(subject.passported?).to be(false) }
+    end
+
+    context 'when there is a persisted slipstream audit outcome' do
+      let(:ioj_passport) { [IojPassportType::ON_OFFENCE] }
+      let(:outcome) { instance_double(SlipstreamAuditSelectionOutcome) }
+      let(:audit_requirement) { instance_double(Slipstream::AuditIojRequirement, required?: audit_required) }
+      let(:audit_required) { true }
+
+      before do
+        allow(crime_application).to receive(:slipstream_audit_selection_outcome).and_return(outcome)
+        allow(subject).to receive(:passported_without_audit?).and_return(true)
+        allow(Slipstream::AuditIojRequirement).to receive(:new)
+          .with(crime_application).and_return(audit_requirement)
+      end
+
+      it 'requires the IoJ form when audit is the reason' do
+        expect(subject.passported?).to be(false)
+      end
+
+      context 'when the persisted outcome no longer applies to the current details' do
+        let(:audit_required) { false }
+
+        it 'keeps normal passporting in place' do
+          expect(subject.passported?).to be(true)
+        end
+      end
+
+      context 'when the application is no longer normally passported' do
+        before { allow(subject).to receive(:passported_without_audit?).and_return(false) }
+
+        it 'routes to the ordinary IoJ form' do
+          expect(subject.passported?).to be(false)
+        end
+      end
+    end
+  end
+
+  describe '#passported_without_audit?' do
+    context 'when the current details would normally passport IoJ' do
+      let(:under18) { true }
+
+      it 'calculates passporting from current details and honours the override' do
+        expect(subject.passported_without_audit?).to be(true)
+      end
+
+      context 'when there is a passport override' do
+        let(:ioj) { instance_double(Ioj, passport_override: true) }
+
+        it { expect(subject.passported_without_audit?).to be(false) }
+      end
+    end
+
+    context 'when normal passporting does not apply' do
+      let(:under18) { false }
+      let(:charges) { [] }
+
+      it { expect(subject.passported_without_audit?).to be(false) }
     end
   end
 

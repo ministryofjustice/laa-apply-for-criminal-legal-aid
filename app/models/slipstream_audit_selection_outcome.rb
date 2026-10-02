@@ -12,6 +12,13 @@ class SlipstreamAuditSelectionOutcome < ApplicationRecord
     withdrawn: 'withdrawn'
   }, scopes: false
 
+  # The category that caused selection. Nullable: not every outcome has a
+  # reason recorded yet, and it is not required based on status.
+  enum :selection_reason, {
+    offence: 'offence',
+    age: 'age'
+  }, scopes: false
+
   # The percentage chance of selection: a sample rate of 20 means 20%.
   validates :sample_rate,
             numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 100 }

@@ -141,6 +141,11 @@ class CrimeApplication < ApplicationRecord # rubocop:disable Metrics/ClassLength
     super
   end
 
+  def slipstream_audit_ioj_required?
+    normally_passported = Passporting::IojPassporter.new(self).passported_without_audit?
+    Slipstream::AuditIojRequirement.new(self).required?(normally_passported:)
+  end
+
   def client_details_complete?
     valid?(:client_details)
   end

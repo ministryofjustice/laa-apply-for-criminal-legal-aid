@@ -4,8 +4,8 @@ module Slipstream
   # the offence(s), as this determines whether they are asked to provide IoJ
   # justification.
   #
-  # Eligibility: the application has a single slipstreamable offence only,
-  # i.e. exactly one charge whose offence is slipstreamable.
+  # Eligibility: the applicant is under 18, or the application has a single
+  # slipstreamable offence. Age-based eligibility takes priority.
   # Sample rate: an integer percentage passed by the caller (e.g. 10 means
   # 10% of eligible applications are selected).
   #
@@ -18,9 +18,15 @@ module Slipstream
     end
 
     def call
-      return unless eligibility_checker.eligible?
+      selection_reason = eligibility_checker.selection_reason
+      return unless selection_reason
 
-      selected? ? :selected : :not_selected
+      return { status: :not_selected } unless selected?
+
+      {
+        status: :selected,
+        selection_reason: selection_reason
+      }
     end
 
     private

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_08_26_153254) do
+ActiveRecord::Schema[7.2].define(version: 2026_09_28_113531) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -471,7 +471,9 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_26_153254) do
     t.datetime "status_determined_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "selection_reason"
     t.index ["crime_application_id"], name: "idx_slipstream_outcomes_app", unique: true
+    t.check_constraint "selection_reason IN ('offence', 'age')", name: "slipstream_audit_selection_outcomes_reason_check"
     t.check_constraint "status IN ('not_selected', 'selected', 'confirmed', 'withdrawn')", name: "slipstream_audit_selection_outcomes_status_check"
     t.check_constraint "sample_rate BETWEEN 1 AND 100", name: "slipstream_outcomes_sample_rate_check"
   end
