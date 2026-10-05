@@ -13,6 +13,36 @@ RSpec.describe 'Sentry before_send callback' do # rubocop:disable RSpec/Describe
     expect(result).to be_a(Sentry::ErrorEvent)
   end
 
+  describe 'SDK data collection' do
+    let(:data_collection) { Sentry.configuration.data_collection }
+
+    it 'disables Sentry Rails structured logging' do
+      expect(Sentry.configuration.rails.structured_logging.enabled?).to be(false)
+    end
+
+    it 'does not collect user information, cookies, bodies, or query parameters' do
+      expect(data_collection.user_info).to be(false)
+      expect(data_collection.cookies.mode).to eq(:off)
+      expect(data_collection.http_bodies).to be_empty
+      expect(data_collection.url_query_params.mode).to eq(:off)
+    end
+
+    it 'does not collect GraphQL, database, or queue data' do
+      expect(data_collection.graphql.document).to be(false)
+      expect(data_collection.graphql.variables).to be(false)
+      expect(data_collection.database_query_data).to be(false)
+      expect(data_collection.queues).to be(false)
+      expect(data_collection.stack_frame_variables.mode).to eq(:off)
+    end
+
+    it 'filters PII-related request and response headers' do
+      expect(data_collection.http_headers.request.mode).to eq(:deny_list)
+      expect(data_collection.http_headers.request.terms).to eq(Sentry::DataCollection::PII_HEADER_SNIPPETS)
+      expect(data_collection.http_headers.response.mode).to eq(:deny_list)
+      expect(data_collection.http_headers.response.terms).to eq(Sentry::DataCollection::PII_HEADER_SNIPPETS)
+    end
+  end
+
   describe 'user field filtering' do
     it 'filters sensitive user fields' do
       expect(result.user['email']).to eq('[FILTERED]')
@@ -28,7 +58,7 @@ RSpec.describe 'Sentry before_send callback' do # rubocop:disable RSpec/Describe
     let(:request_interface) do
       Sentry::RequestInterface.new(
         env: Rack::MockRequest.env_for('/test'),
-        send_default_pii: false,
+        data_collection: Sentry.configuration.data_collection,
         rack_env_whitelist: Sentry.configuration.rack_env_whitelist
       ).tap do |r|
         r.data    = { 'nino' => 'AB123456C', 'action' => 'submit' }
