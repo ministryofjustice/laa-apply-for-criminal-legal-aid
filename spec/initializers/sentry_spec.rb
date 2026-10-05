@@ -16,6 +16,10 @@ RSpec.describe 'Sentry before_send callback' do # rubocop:disable RSpec/Describe
   describe 'SDK data collection' do
     let(:data_collection) { Sentry.configuration.data_collection }
 
+    it 'disables Sentry Rails structured logging' do
+      expect(Sentry.configuration.rails.structured_logging.enabled?).to be(false)
+    end
+
     it 'does not collect user information, cookies, bodies, or query parameters' do
       expect(data_collection.user_info).to be(false)
       expect(data_collection.cookies.mode).to eq(:off)

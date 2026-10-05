@@ -7,6 +7,7 @@ Rails.application.config.to_prepare do
     # Opt in to new Rails error reporting API
     # https://edgeguides.rubyonrails.org/error_reporting.html
     config.rails.register_error_subscriber = true
+    config.rails.structured_logging.enabled = false
 
     # Filtering
     # https://docs.sentry.io/platforms/ruby/guides/rails/configuration/filtering/
