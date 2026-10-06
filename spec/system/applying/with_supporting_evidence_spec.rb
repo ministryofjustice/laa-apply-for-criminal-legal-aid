@@ -117,8 +117,11 @@ RSpec.describe 'Supporting evidence' do
       # A valid file
       upload_evidence_file('test.csv')
 
-      # Successful upload status is announced to screen readers (CRIMAPP-2131)
-      expect(page).to have_css('[aria-live="polite"]', text: 'Uploaded')
+      # The uploaded file is shown with its 'Uploaded' status. In the no-JS
+      # fallback the page reloads, so the new content is announced naturally.
+      # The JS (dropzone) path announces success via a dedicated aria-live
+      # region (#upload-status-notification-container).
+      expect(page).to have_css('.app-uploaded-file__status', text: 'Uploaded')
 
       save_and_continue
 
