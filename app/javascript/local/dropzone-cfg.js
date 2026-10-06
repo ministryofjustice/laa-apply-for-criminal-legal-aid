@@ -96,6 +96,8 @@ DropzoneCfg.prototype.init = function () {
     this.$statusTag.classList.add("govuk-tag--green")
     this.$statusTag.textContent = this.i18n.uploaded || 'Uploaded'
 
+    announceUploadSuccess(this.i18n)
+
     setDeleteDocumentValue(file, response)
   });
 
@@ -138,9 +140,20 @@ function createUploadedFileRow(file) {
 function createStatusTag(text) {
   let tag = document.createElement("strong")
   tag.classList.add("govuk-tag", "govuk-tag--yellow", "app-uploaded-file__status")
-  tag.setAttribute("aria-live", "polite")
   tag.textContent = text
   return tag
+}
+
+function announceUploadSuccess(i18n) {
+  const liveRegion = document.getElementById('upload-status-notification-container')
+
+  if (!liveRegion) { return }
+
+  // Reset the live region before inserting the new message. Repeating identical
+  // text is not detected as a change, so clearing first ensures each successful
+  // upload is announced to screen readers.
+  liveRegion.textContent = ""
+  liveRegion.textContent = i18n.uploaded || 'Uploaded'
 }
 
 function createDownloadLink(file, response) {
