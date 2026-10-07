@@ -379,15 +379,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"accessible-autocomplete@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "accessible-autocomplete@npm:3.0.1"
+"accessible-autocomplete@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "accessible-autocomplete@npm:3.0.2"
   peerDependencies:
     preact: ^8.0.0
   peerDependenciesMeta:
     preact:
       optional: true
-  checksum: 10c0/a90d76f29940cd7c5cb0795f2062d32f8f4904bae3acfc89eab717c56f2b18ce3fd07a4035ec5e30643119cdfe56be3a4bc260eb80e39eeb4009ea5dc09b163c
+  checksum: 10c0/23be53e61c1fde637cc04a1e842ff01ad8a76e6137473fcce975f5350ab23b075003b3f0544745b822e01de3f919cca83859e68a84e8119ae2567aa3b3c2e6b6
   languageName: node
   linkType: hard
 
@@ -507,10 +507,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dropzone@npm:^6.3.4":
-  version: 6.3.4
-  resolution: "dropzone@npm:6.3.4"
-  checksum: 10c0/a59f2fec25ed9bb824aa98318b8560a9e4029fd1c030f200dff4ae8ec8984fe0caff37645ceb2ab1b05ae0c2ce06cce987141bd744be54bceb571a2a9f0187cd
+"dropzone@npm:^6.3.5":
+  version: 6.3.5
+  resolution: "dropzone@npm:6.3.5"
+  checksum: 10c0/a6d0d5eacf20a0ef7498a7097f99f648d5a7ba6d42d6416856c4c41dc7cf4cc848949083f484d227dcbd2ebf227357781fc79e13619de0fe2e0c72ae2e61f583
   languageName: node
   linkType: hard
 
@@ -805,12 +805,12 @@ __metadata:
   resolution: "laa-apply-for-criminal-legal-aid@workspace:."
   dependencies:
     "@ministryofjustice/frontend": "npm:^11.1.0"
-    accessible-autocomplete: "npm:^3.0.1"
-    dropzone: "npm:^6.3.4"
+    accessible-autocomplete: "npm:^3.0.2"
+    dropzone: "npm:^6.3.5"
     esbuild: "npm:^0.28.2"
     govuk-frontend: "npm:^6.5.1"
     moment: "npm:2.31.0"
-    sass: "npm:^1.104.1"
+    sass: "npm:^1.105.0"
   languageName: unknown
   linkType: soft
 
@@ -1095,9 +1095,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.104.1":
-  version: 1.104.1
-  resolution: "sass@npm:1.104.1"
+"sass@npm:^1.105.0":
+  version: 1.105.0
+  resolution: "sass@npm:1.105.0"
   dependencies:
     "@parcel/watcher": "npm:^2.4.1"
     chokidar: "npm:^5.0.0"
@@ -1108,7 +1108,7 @@ __metadata:
       optional: true
   bin:
     sass: sass.js
-  checksum: 10c0/d04e1898a9470a7a5052e67cbe5fc4ec342374f6d65a75eb180a5a60d0ee1af85bb2df6d877087169c4d53e358ff0864f2343fd594dc60474ce7a6467ee41961
+  checksum: 10c0/ddd6a8cc70d325fe7465036de32cb3506b578e131719c8bcfd4c225e051b7e8f5b231c3be450e293043876db58a247b9c354ecc1ca466a8274e2d9a8d4bc1ae1
   languageName: node
   linkType: hard
 
