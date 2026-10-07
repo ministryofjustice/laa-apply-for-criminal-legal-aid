@@ -22,9 +22,9 @@ feature_flags:
     preprod: true
     production: true
   slipstream_audit:
-    local: false
-    staging: false
-    preprod: false
+    local: true
+    staging: true
+    preprod: true
     production: false
 
 # NOTE: consider if the setting you are adding here
