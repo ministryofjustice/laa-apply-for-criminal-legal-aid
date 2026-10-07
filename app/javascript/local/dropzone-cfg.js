@@ -149,11 +149,16 @@ function announceUploadSuccess(i18n) {
 
   if (!liveRegion) { return }
 
-  // Reset the live region before inserting the new message. Repeating identical
-  // text is not detected as a change, so clearing first ensures each successful
-  // upload is announced to screen readers.
+  const message = i18n.uploaded || 'Uploaded'
+
+  // Clear the live region, then write the message on a later tick. Setting both
+  // values synchronously would be collapsed into a single accessibility-tree
+  // update, so a screen reader would see "Uploaded" replaced by "Uploaded" and
+  // may not announce it (notably VoiceOver with Safari). Deferring the write
+  // lets the browser flush the empty state first, so each upload — including
+  // repeated identical messages — is detected as a change and announced.
   liveRegion.textContent = ""
-  liveRegion.textContent = i18n.uploaded || 'Uploaded'
+  setTimeout(() => { liveRegion.textContent = message }, 100)
 }
 
 function createDownloadLink(file, response) {

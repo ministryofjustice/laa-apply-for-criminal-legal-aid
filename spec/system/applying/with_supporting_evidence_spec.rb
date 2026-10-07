@@ -84,6 +84,15 @@ RSpec.describe 'Supporting evidence' do
 
       expect(page).to have_text 'their National Insurance number'
 
+      # The dedicated live region used to announce successful uploads to screen
+      # readers is present and empty on page load, so assistive technologies can
+      # monitor it for changes (the JS populates it when an upload completes).
+      expect(page).to have_css(
+        '#upload-status-notification-container[aria-live="polite"]',
+        text: '',
+        visible: :all
+      )
+
       # Without a file attached
       save_and_continue
 
