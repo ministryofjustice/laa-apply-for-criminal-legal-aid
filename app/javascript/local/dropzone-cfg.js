@@ -63,6 +63,12 @@ DropzoneCfg.prototype.init = function () {
   const self = this
   this.$dropzone = new Dropzone(this.$dropzoneContainer, {
     paramName: "document",
+    // This component renders its own uploaded-files list, so Dropzone's built-in
+    // image preview is unused. Generating it also decodes the image in the browser,
+    // and a decode failure makes Dropzone emit an `error` event *during* an upload
+    // that is actually succeeding on the server — surfacing a spurious "could not be
+    // uploaded" message for images (e.g. JPGs) that are in fact uploaded. Disable it.
+    createImageThumbnails: false,
     dictDefaultMessage: this.i18n.drag_and_drop || 'Drag and drop files here or',
     clickable: '#choose_files_button',
     // Sanitise the filename sent to the server so the WAF doesn't reject
