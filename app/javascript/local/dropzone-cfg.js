@@ -150,6 +150,8 @@ function createStatusTag(text) {
   return tag
 }
 
+let announceTimer = null
+
 function announceUploadSuccess(i18n) {
   const liveRegion = document.getElementById('upload-status-notification-container')
 
@@ -163,8 +165,17 @@ function announceUploadSuccess(i18n) {
   // may not announce it (notably VoiceOver with Safari). Deferring the write
   // lets the browser flush the empty state first, so each upload — including
   // repeated identical messages — is detected as a change and announced.
+  //
+  // A single shared timer is used so that uploads finishing within the delay of
+  // each other are combined into one announcement, rather than clearing the
+  // region twice before either timer writes (which would announce only once
+  // anyway). Each success cancels the pending timer and restarts the delay.
+  clearTimeout(announceTimer)
   liveRegion.textContent = ""
-  setTimeout(() => { liveRegion.textContent = message }, 100)
+  announceTimer = setTimeout(() => {
+    liveRegion.textContent = message
+    announceTimer = null
+  }, 100)
 }
 
 function createDownloadLink(file, response) {
