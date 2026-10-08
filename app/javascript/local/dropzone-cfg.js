@@ -63,6 +63,12 @@ DropzoneCfg.prototype.init = function () {
   const self = this
   this.$dropzone = new Dropzone(this.$dropzoneContainer, {
     paramName: "document",
+    // This component renders its own uploaded-files list, so Dropzone's built-in
+    // image preview is unused. Generating it also decodes the image in the browser,
+    // and a decode failure makes Dropzone emit an `error` event *during* an upload
+    // that is actually succeeding on the server — surfacing a spurious "could not be
+    // uploaded" message for images (e.g. JPGs) that are in fact uploaded. Disable it.
+    createImageThumbnails: false,
     dictDefaultMessage: this.i18n.drag_and_drop || 'Drag and drop files here or',
     clickable: '#choose_files_button',
     // Sanitise the filename sent to the server so the WAF doesn't reject
@@ -95,6 +101,8 @@ DropzoneCfg.prototype.init = function () {
     this.$statusTag.classList.remove("govuk-tag--yellow")
     this.$statusTag.classList.add("govuk-tag--green")
     this.$statusTag.textContent = this.i18n.uploaded || 'Uploaded'
+
+    announceUploadSuccess(this.i18n)
 
     setDeleteDocumentValue(file, response)
   });
@@ -138,9 +146,36 @@ function createUploadedFileRow(file) {
 function createStatusTag(text) {
   let tag = document.createElement("strong")
   tag.classList.add("govuk-tag", "govuk-tag--yellow", "app-uploaded-file__status")
-  tag.setAttribute("aria-live", "polite")
   tag.textContent = text
   return tag
+}
+
+let announceTimer = null
+
+function announceUploadSuccess(i18n) {
+  const liveRegion = document.getElementById('upload-status-notification-container')
+
+  if (!liveRegion) { return }
+
+  const message = i18n.uploaded || 'Uploaded'
+
+  // Clear the live region, then write the message on a later tick. Setting both
+  // values synchronously would be collapsed into a single accessibility-tree
+  // update, so a screen reader would see "Uploaded" replaced by "Uploaded" and
+  // may not announce it (notably VoiceOver with Safari). Deferring the write
+  // lets the browser flush the empty state first, so each upload — including
+  // repeated identical messages — is detected as a change and announced.
+  //
+  // A single shared timer is used so that uploads finishing within the delay of
+  // each other are combined into one announcement, rather than clearing the
+  // region twice before either timer writes (which would announce only once
+  // anyway). Each success cancels the pending timer and restarts the delay.
+  clearTimeout(announceTimer)
+  liveRegion.textContent = ""
+  announceTimer = setTimeout(() => {
+    liveRegion.textContent = message
+    announceTimer = null
+  }, 100)
 }
 
 function createDownloadLink(file, response) {
