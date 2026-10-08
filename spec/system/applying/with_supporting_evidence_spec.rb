@@ -88,8 +88,7 @@ RSpec.describe 'Supporting evidence' do
       # readers is present and empty on page load, so assistive technologies can
       # monitor it for changes (the JS populates it when an upload completes).
       expect(page).to have_css(
-        '#upload-status-notification-container[aria-live="polite"]',
-        text: '',
+        '#upload-status-notification-container[aria-live="polite"]:empty',
         visible: :all
       )
 
