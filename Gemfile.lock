@@ -19,10 +19,10 @@ GIT
 
 GIT
   remote: https://github.com/ministryofjustice/moj-components.git
-  revision: c4342bebf9b07c767d45a90bb58b32c84c38d450
-  tag: v0.2.3
+  revision: 518a9404b450c8d8eda6fdc244d7a1a32ef827ba
+  tag: v0.3.0
   specs:
-    moj_components (0.2.3)
+    moj_components (0.3.0)
       govuk-components
       view_component (>= 4.0)
 
@@ -539,7 +539,7 @@ GEM
     unicode-display_width (3.3.0)
       unicode-emoji (~> 4.3)
     unicode-emoji (4.3.0)
-    uri (1.1.1)
+    uri (1.1.2)
     useragent (0.16.11)
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
