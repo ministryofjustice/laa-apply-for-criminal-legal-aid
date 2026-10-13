@@ -5,6 +5,10 @@ RSpec.describe 'Drafting a resubmision' do
 
   context 'when updating a returned application' do
     before do
+      # This scenario covers resubmission routing independently of slipstream audit selection.
+      allow(FeatureFlags).to receive(:slipstream_audit)
+        .and_return(instance_double(FeatureFlags::EnabledFeature, enabled?: false))
+
       draft_age_passported_application
       submit_drafted_application
       return_submitted_application
