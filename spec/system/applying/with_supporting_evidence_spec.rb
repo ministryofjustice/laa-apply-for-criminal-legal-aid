@@ -84,6 +84,14 @@ RSpec.describe 'Supporting evidence' do
 
       expect(page).to have_text 'their National Insurance number'
 
+      # The dedicated live region used to announce successful uploads to screen
+      # readers is present and empty on page load, so assistive technologies can
+      # monitor it for changes (the JS populates it when an upload completes).
+      expect(page).to have_css(
+        '#upload-status-notification-container[aria-live="polite"]:empty',
+        visible: :all
+      )
+
       # Without a file attached
       save_and_continue
 
@@ -117,8 +125,11 @@ RSpec.describe 'Supporting evidence' do
       # A valid file
       upload_evidence_file('test.csv')
 
-      # Successful upload status is announced to screen readers (CRIMAPP-2131)
-      expect(page).to have_css('[aria-live="polite"]', text: 'Uploaded')
+      # The uploaded file is shown with its 'Uploaded' status. In the no-JS
+      # fallback the page reloads, so the new content is announced naturally.
+      # The JS (dropzone) path announces success via a dedicated aria-live
+      # region (#upload-status-notification-container).
+      expect(page).to have_css('.app-uploaded-file__status', text: 'Uploaded')
 
       save_and_continue
 
