@@ -5,6 +5,9 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'webmock/rspec'
 
+# Allow the local browser driver and Capybara server, while keeping external services stubbed.
+WebMock.disable_net_connect!(allow_localhost: true)
+
 require 'laa_crime_schemas'
 
 # Checks for pending migrations and applies them before tests are run.
@@ -16,6 +19,9 @@ rescue ActiveRecord::PendingMigrationError
 end
 
 Dir['./spec/support/**/*.rb'].each { |f| require f }
+
+# GOV.UK radios and checkboxes visually hide their inputs behind visible labels.
+Capybara.automatic_label_click = true
 
 RSpec.configure do |config|
   config.fixture_paths = Rails.root.join('spec/fixtures')
@@ -56,8 +62,15 @@ RSpec.configure do |config|
   # an automatic sign in. Otherwise assume user is signed out.
   config.before(:each, :authorized, type: :request) { post provider_entra_omniauth_callback_path }
 
-  # Use the faster rack test by default for system specs
-  config.before(:each, type: :system) { driven_by :rack_test }
+  # Only start a browser for specs that need JavaScript.
+  config.before(:each, type: :system) do |example|
+    if example.metadata[:js]
+      browser = ENV['HEADLESS'] == 'false' ? :chrome : :headless_chrome
+      driven_by :selenium, using: browser, screen_size: [1400, 1400]
+    else
+      driven_by :rack_test
+    end
+  end
 
   # Stubs the following requests to the datastore that are triggered when an application is created/updated/deleted
   # globally as they are frequently called. There are specific tests for these requests.
