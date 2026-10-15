@@ -11,3 +11,7 @@ offence_synonyms:
   synonyms: [pwits]
 - regex: !ruby/regexp /section 18/i
   synonyms: [s18]
+- regex: !ruby/regexp /\AHandle stolen goods, selling \(/i
+  synonyms: ['handling stolen goods, selling']
+- regex: !ruby/regexp /\AHandling stolen goods, buying - Theft Act 1968 \(/i
+  synonyms: ['handle stolen goods, buying']

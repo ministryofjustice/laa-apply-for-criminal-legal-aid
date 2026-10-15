@@ -95,6 +95,33 @@ RSpec.describe Datastore::ApplicationRehydration do
       end
     end
 
+    [
+      ['Handle stolen goods', 'TH68073', false],
+      ['Handling stolen goods - Theft Act 1968', 'TH68072', true],
+    ].each do |name, code, slipstreamable|
+      context "with the historical offence name #{name}" do
+        let(:parent) do
+          offences = [
+            { 'name' => "#{name} (Over £100,000)", 'offence_class' => 'K',
+              'slipstreamable' => slipstreamable, 'dates' => [{ 'date_from' => '2026-01-01', 'date_to' => nil }] },
+          ]
+          super().deep_merge('case_details' => { 'offences' => offences })
+        end
+
+        it 'restores the original name, class and eligibility for resubmission' do
+          restored_charge = have_attributes(
+            offence_name: "#{name} (Over £100,000)",
+            offence: have_attributes(code: code, offence_class: 'K', slipstreamable: slipstreamable)
+          )
+          expect(crime_application).to receive(:update!).with(
+            hash_including(case: have_attributes(charges: contain_exactly(restored_charge)))
+          )
+
+          subject.call
+        end
+      end
+    end
+
     context 'date stamp' do
       let(:parent) do
         super().deep_merge(

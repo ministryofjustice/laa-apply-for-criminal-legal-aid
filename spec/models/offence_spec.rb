@@ -35,10 +35,51 @@ RSpec.describe Offence, type: :model do
     end
   end
 
+  # This is a custom CSV lookup with legacy aliases, not an ActiveRecord dynamic finder.
+  # rubocop:disable-next Rails/DynamicFindBy
   describe '.find_by_name' do
+    bands = [
+      ['£30,000 or less', 'F'],
+      ['Over £30,000 up to £100,000', 'G'],
+      ['Over £100,000', 'K'],
+    ]
+
     it 'is shorthand for `.find_by`' do
       expect(described_class).to receive(:find_by).with(name: 'Foobar')
-      described_class.find_by(name: 'Foobar')
+      described_class.find_by_name('Foobar')
+    end
+
+    [
+      ['TH68072', 'Handling stolen goods - Theft Act 1968', 'Handle stolen goods, selling', true],
+      ['TH68073', 'Handle stolen goods', 'Handling stolen goods, buying - Theft Act 1968', false],
+    ].each do |code, old_name, new_name, slipstreamable|
+      bands.each do |band, offence_class|
+        context "for #{code} (#{band})" do
+          let(:name) { "#{new_name} (#{band})" }
+          let(:legacy_name) { "#{old_name} (#{band})" }
+
+          it 'resolves the clarified name with the original classification and eligibility' do
+            expect(described_class.find_by_name(name)).to have_attributes(
+              name: name, code: code, offence_class: offence_class,
+              offence_type: 'CE Either Way', slipstreamable: slipstreamable
+            )
+          end
+
+          it 'resolves the historical name to the same offence without adding a selectable duplicate' do
+            expect(described_class.find_by_name(legacy_name)).to eq(described_class.find_by_name(name))
+            expect(described_class.all.map(&:name)).to include(name)
+            expect(described_class.all.map(&:name)).not_to include(legacy_name)
+          end
+        end
+      end
+    end
+
+    it 'does not resolve an unrecognised historical value band' do
+      expect(described_class.find_by_name('Handle stolen goods (unknown value)')).to be_nil
+    end
+
+    it 'allows a missing name' do
+      expect(described_class.find_by_name(nil)).to be_nil
     end
   end
 

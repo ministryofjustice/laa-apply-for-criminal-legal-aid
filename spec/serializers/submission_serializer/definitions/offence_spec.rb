@@ -45,5 +45,22 @@ RSpec.describe SubmissionSerializer::Definitions::Offence do
 
   describe '#generate' do
     it { expect(subject).to eq(json_output) }
+
+    [
+      ['Handle stolen goods, selling (Over £30,000 up to £100,000)', true],
+      ['Handling stolen goods, buying - Theft Act 1968 (Over £30,000 up to £100,000)', false],
+      ['Handling stolen goods - Theft Act 1968 (Over £30,000 up to £100,000)', true],
+      ['Handle stolen goods (Over £30,000 up to £100,000)', false],
+    ].each do |name, slipstreamable|
+      context "with #{name}" do
+        let(:charges) { [Charge.new(offence_name: name)] }
+
+        it 'preserves the saved wording and resolves the correct submission metadata' do
+          expect(subject).to contain_exactly(
+            include('name' => name, 'offence_class' => 'G', 'slipstreamable' => slipstreamable)
+          )
+        end
+      end
+    end
   end
 end

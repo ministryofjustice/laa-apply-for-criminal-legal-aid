@@ -64,6 +64,19 @@ RSpec.describe Slipstream::EligibilityChecker do
     end
 
     context 'when the applicant is 18 or older' do
+      [
+        ['Handle stolen goods, selling (£30,000 or less)', :offence],
+        ['Handling stolen goods, buying - Theft Act 1968 (£30,000 or less)', nil],
+        ['Handling stolen goods - Theft Act 1968 (£30,000 or less)', :offence],
+        ['Handle stolen goods (£30,000 or less)', nil],
+      ].each do |name, reason|
+        context "with #{name}" do
+          let(:charges) { [Charge.new(offence_name: name)] }
+
+          it { expect(checker.selection_reason).to eq(reason) }
+        end
+      end
+
       context 'with one slipstreamable charge' do
         let(:charges) { [slipstreamable_charge] }
 
