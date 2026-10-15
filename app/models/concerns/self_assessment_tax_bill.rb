@@ -13,18 +13,28 @@ module SelfAssessmentTaxBill
   end
 
   def applicant_self_assessment_tax_bill_amount
-    super if applicant_self_assessment_tax_bill == YesNoAnswer::YES.to_s
+    super if applicant_pays_self_assessment_tax_bill?
   end
 
   def applicant_self_assessment_tax_bill_frequency
-    super if applicant_self_assessment_tax_bill == YesNoAnswer::YES.to_s
+    super if applicant_pays_self_assessment_tax_bill?
   end
 
   def partner_self_assessment_tax_bill_amount
-    super if partner_self_assessment_tax_bill == YesNoAnswer::YES.to_s
+    super if partner_pays_self_assessment_tax_bill?
   end
 
   def partner_self_assessment_tax_bill_frequency
-    super if partner_self_assessment_tax_bill == YesNoAnswer::YES.to_s
+    super if partner_pays_self_assessment_tax_bill?
+  end
+
+  private
+
+  def applicant_pays_self_assessment_tax_bill?
+    applicant_self_assessment_tax_bill == YesNoAnswer::YES.to_s
+  end
+
+  def partner_pays_self_assessment_tax_bill?
+    partner_self_assessment_tax_bill == YesNoAnswer::YES.to_s
   end
 end
