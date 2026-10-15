@@ -7,6 +7,9 @@ RSpec.describe Income, type: :model do
 
   it_behaves_like 'it has a means ownership scope'
 
+  it_behaves_like 'Self Assessment payment relevance', :applicant, :employment_status
+  it_behaves_like 'Self Assessment payment relevance', :partner, :partner_employment_status
+
   describe 'validations' do
     let(:answers_validator) { double('answers_validator') }
 

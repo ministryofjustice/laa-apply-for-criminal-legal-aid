@@ -8,16 +8,7 @@
 
     <%= step_form @form_object do |f| %>
       <%= f.govuk_radio_buttons_fieldset :applicant_self_assessment_tax_bill, legend: { tag: 'h1', size: 'xl' } do %>
-        <%= f.govuk_radio_button :applicant_self_assessment_tax_bill, YesNoAnswer::YES do %>
-          <%= f.govuk_number_field(:applicant_self_assessment_tax_bill_amount,
-                                   prefix_text: '£',
-                                   width: 'one-half') %>
-          <%= f.govuk_collection_radio_buttons(:applicant_self_assessment_tax_bill_frequency,
-                                               PaymentFrequencyType.values,
-                                               :value,
-                                               legend: { size: 's',
-                                                         class: 'govuk-!-font-weight-regular' }) %>
-        <% end %>
+        <%= f.govuk_radio_button :applicant_self_assessment_tax_bill, YesNoAnswer::YES %>
         <%= f.govuk_radio_button :applicant_self_assessment_tax_bill, YesNoAnswer::NO %>
       <% end %>
       <%= f.continue_button %>

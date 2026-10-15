@@ -581,16 +581,24 @@ cy:
           attributes:
             applicant_self_assessment_tax_bill:
               inclusion: Dewiswch ie os yw eich cleient yn talu bil treth Hunanasesu a dderbyniwyd yn ystod y 2 flynedd diwethaf
+        steps/income/client/self_assessment_tax_bill_payment_form:
+          attributes:
             applicant_self_assessment_tax_bill_amount:
               not_a_number: Rhowch y swm maen nhw'n ei dalu
+              # TODO: Obtain approved Welsh translation before adding this key.
+              # greater_than_or_equal_to: Enter an amount of 0 or more
             applicant_self_assessment_tax_bill_frequency:
               inclusion: Dewiswch pa mor aml maen nhw'n talu’r swm yma
         steps/income/partner/self_assessment_tax_bill_form:
           attributes:
             partner_self_assessment_tax_bill:
               inclusion: Dewiswch ie os yw eich partner yn talu bil treth Hunanasesu a dderbyniwyd yn ystod y 2 flynedd diwethaf
+        steps/income/partner/self_assessment_tax_bill_payment_form:
+          attributes:
             partner_self_assessment_tax_bill_amount:
               not_a_number: Rhowch y swm maen nhw'n ei dalu
+              # TODO: Obtain approved Welsh translation before adding this key.
+              # greater_than_or_equal_to: Enter an amount of 0 or more
             partner_self_assessment_tax_bill_frequency:
               inclusion: Dewiswch pa mor aml maen nhw'n talu’r swm yma
         steps/income/client/other_work_benefits_form:
@@ -1283,4 +1291,3 @@ cy:
           attributes:
             documents:
               blank: Rhaid i chi ddarparu'r dystiolaeth ofynnol
-
