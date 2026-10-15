@@ -19,6 +19,11 @@ RSpec.describe 'Self Assessment payment questions' do
 
   %w[client partner].each do |person|
     context "for the #{person}" do
+      let(:payment_heading) do
+        "Payments for #{person == 'client' ? 'your client’s' : 'the partner’s'} " \
+          'Self Assessment tax calculation received in the last 2 years'
+      end
+
       before do
         visit public_send("edit_steps_income_#{person}_self_assessment_tax_bill_path", id: crime_application)
       end
@@ -41,6 +46,8 @@ RSpec.describe 'Self Assessment payment questions' do
       it 'asks for amount and frequency on a separate page for Yes' do
         choose('Yes')
         save_and_continue
+        expect(page).to have_css('h1', exact_text: payment_heading)
+        expect(page).to have_title(payment_heading.tr('’', "'"))
         expect(page).to have_current_path(
           public_send("edit_steps_income_#{person}_self_assessment_tax_bill_payment_path", id: crime_application)
         )

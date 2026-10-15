@@ -375,8 +375,8 @@ cy:
         # TODO: Obtain approved Welsh translations before adding these keys.
         # self_assessment_tax_bill_payment:
         #   edit:
-        #     page_title: Your client's Self Assessment payments
-        #     heading: Your client’s Self Assessment payments
+        #     page_title: Payments for your client's Self Assessment tax calculation received in the last 2 years
+        #     heading: Payments for your client’s Self Assessment tax calculation received in the last 2 years
         deductions:
           edit:
             page_title: Didyniadau o gyflog eich cleient
@@ -444,8 +444,8 @@ cy:
         # TODO: Obtain approved Welsh translations before adding these keys.
         # self_assessment_tax_bill_payment:
         #   edit:
-        #     page_title: The partner's Self Assessment payments
-        #     heading: The partner’s Self Assessment payments
+        #     page_title: Payments for the partner's Self Assessment tax calculation received in the last 2 years
+        #     heading: Payments for the partner’s Self Assessment tax calculation received in the last 2 years
         deductions:
           edit:
             page_title: Didyniadau o gyflog y partner
