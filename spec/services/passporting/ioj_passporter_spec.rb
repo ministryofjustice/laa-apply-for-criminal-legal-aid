@@ -213,6 +213,25 @@ RSpec.describe Passporting::IojPassporter do
     let(:non_passported_charge) { Charge.new(offence_name: 'Make off without making payment') }
     let(:passported_charge) { Charge.new(offence_name: 'Assault by beating') }
 
+    [
+      ['Handle stolen goods, selling (£30,000 or less)', true],
+      ['Handling stolen goods, buying - Theft Act 1968 (£30,000 or less)', false],
+      ['Handling stolen goods - Theft Act 1968 (£30,000 or less)', true],
+      ['Handle stolen goods (£30,000 or less)', false],
+    ].each do |name, passported|
+      context "with #{name}" do
+        let(:charges) { [Charge.new(offence_name: name)] }
+
+        it { expect(subject.offence_passported?).to be(passported) }
+
+        context 'for an appeal case' do
+          let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT.to_s }
+
+          it { expect(subject.offence_passported?).to be(false) }
+        end
+      end
+    end
+
     context 'for an appeal case type' do
       let(:case_type) { CaseType::APPEAL_TO_CROWN_COURT.to_s }
 

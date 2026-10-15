@@ -50,9 +50,9 @@ TH68007,"Theft from a motor vehicle (Over £100,000)",CE Either Way,K,false
 CJ88149,Assault by beating of an emergency worker,CE Either Way,H,true
 FL96001,Breach a non-molestation order - Family Law Act 1996,CE Either Way,H,true
 MD71210,Possess a controlled drug of Class A - Cocaine,CE Either Way,C,false
-TH68073,"Handle stolen goods (£30,000 or less)",CE Either Way,F,false
-TH68073,"Handle stolen goods (Over £30,000 up to £100,000)",CE Either Way,G,false
-TH68073,"Handle stolen goods (Over £100,000)",CE Either Way,K,false
+TH68073,"Handling stolen goods, buying - Theft Act 1968 (£30,000 or less)",CE Either Way,F,false
+TH68073,"Handling stolen goods, buying - Theft Act 1968 (Over £30,000 up to £100,000)",CE Either Way,G,false
+TH68073,"Handling stolen goods, buying - Theft Act 1968 (Over £100,000)",CE Either Way,K,false
 RT88010,Fail to provide specimen for analysis - vehicle driver,CM Summary - Motoring,H,false
 MD71231,Possess with intent to supply a controlled drug of Class A - Heroin,CE Either Way,B,true
 TH68001,"Theft from the person of another (£30,000 or less)",CE Either Way,F,true
@@ -103,9 +103,9 @@ SX56025,"Indecent assault on a girl under the age of 14 years (Indecency with Ch
 SX56025,"Indecent assault on a girl under the age of 14 years (Sexual Offences Act 1956, s.14)",CE Either Way,D,true
 CD98070,Racially / religiously aggravated common assault / beating,CE Either Way,C,true
 CJ88150,Common assault of an emergency worker,CE Either Way,H,true
-TH68072,"Handling stolen goods - Theft Act 1968 (£30,000 or less)",CE Either Way,F,true
-TH68072,"Handling stolen goods - Theft Act 1968 (Over £30,000 up to £100,000)",CE Either Way,G,true
-TH68072,"Handling stolen goods - Theft Act 1968 (Over £100,000)",CE Either Way,K,true
+TH68072,"Handle stolen goods, selling (£30,000 or less)",CE Either Way,F,true
+TH68072,"Handle stolen goods, selling (Over £30,000 up to £100,000)",CE Either Way,G,true
+TH68072,"Handle stolen goods, selling (Over £100,000)",CE Either Way,K,true
 CD98075,Racially / religiously aggravated harassment / alarm / distress by words / writing,CS Summary Non-Motoring,H,false
 CD71043,Threat to damage / destroy property,CE Either Way,C,true
 SS92039,"Dishonestly fail notify change of circumstances affecting entitlement to social security benefit / advantage / payment (£30,000 or less)",CE Either Way,F,false
