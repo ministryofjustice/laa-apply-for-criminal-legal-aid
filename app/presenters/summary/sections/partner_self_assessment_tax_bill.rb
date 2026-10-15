@@ -22,7 +22,7 @@ module Summary
         if income.partner_self_assessment_tax_bill == YesNoAnswer::YES.to_s
           answers << Components::PaymentAnswer.new(
             :partner_self_assessment_tax_bill_payment, self_assessment_tax_bill_payment,
-            change_path: edit_steps_income_partner_self_assessment_tax_bill_path
+            change_path: edit_steps_income_partner_self_assessment_tax_bill_payment_path
           )
         end
 

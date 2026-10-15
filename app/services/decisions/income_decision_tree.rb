@@ -43,8 +43,18 @@ module Decisions
       when :partner_employment_income
         edit('/steps/income/income_payments_partner')
       when :client_self_assessment_tax_bill
-        edit(:other_work_benefits)
+        if form_object.applicant_self_assessment_tax_bill.yes?
+          edit(:self_assessment_tax_bill_payment)
+        else
+          edit(:other_work_benefits)
+        end
       when :partner_self_assessment_tax_bill
+        if form_object.partner_self_assessment_tax_bill.yes?
+          edit(:self_assessment_tax_bill_payment)
+        else
+          edit(:other_work_benefits)
+        end
+      when :client_self_assessment_tax_bill_payment, :partner_self_assessment_tax_bill_payment
         edit(:other_work_benefits)
       when :client_other_work_benefits
         edit('/steps/income/income_payments')

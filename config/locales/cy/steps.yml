@@ -372,6 +372,11 @@ cy:
         self_assessment_tax_bill:
           edit:
             page_title: Ydy eich cleient wedi derbyn cyfrifiad treth Hunanasesu yn ystod y 2 flynedd diwethaf?
+        # TODO: Obtain approved Welsh translations before adding these keys.
+        # self_assessment_tax_bill_payment:
+        #   edit:
+        #     page_title: Your client's Self Assessment payments
+        #     heading: Your client’s Self Assessment payments
         deductions:
           edit:
             page_title: Didyniadau o gyflog eich cleient
@@ -436,6 +441,11 @@ cy:
         self_assessment_tax_bill:
           edit:
             page_title: Ydy'r partner wedi derbyn cyfrifiad treth Hunanasesu yn ystod y 2 flynedd diwethaf?
+        # TODO: Obtain approved Welsh translations before adding these keys.
+        # self_assessment_tax_bill_payment:
+        #   edit:
+        #     page_title: The partner's Self Assessment payments
+        #     heading: The partner’s Self Assessment payments
         deductions:
           edit:
             page_title: Didyniadau o gyflog y partner
