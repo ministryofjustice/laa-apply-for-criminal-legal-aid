@@ -56,7 +56,8 @@ module CapybaraHelpers # rubocop:disable Metrics/ModuleLength
   end
 
   def save_and_continue
-    click_button('Save and continue')
+    # MultiActionForm adds a visually hidden clone to handle Enter-key submission.
+    click_button('Save and continue', class: 'govuk-button')
   end
 
   def summary_card(card_title)

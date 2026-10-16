@@ -131,6 +131,14 @@ jobs:
                 puts example_ids.join(" ")
               ')
 
+      - name: Upload browser test failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: browser-test-failures-${{ matrix.ci_node_index }}
+          path: tmp/capybara
+          if-no-files-found: ignore
+
       - name: Upload coverage results for merging
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

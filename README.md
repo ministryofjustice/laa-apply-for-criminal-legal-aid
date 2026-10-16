@@ -82,6 +82,61 @@ Or you can run them individually:
 - `rake rubocop`
 - `rake brakeman`
 
+### JavaScript system specs
+
+System specs use the fast `rack_test` driver by default. Add `:js` metadata
+(equivalent to `js: true`) to an RSpec example or group to run it in Chrome through
+Selenium, with a consistent window size of 1400 × 1400. See
+[`offence_suggestions_spec.rb`](spec/system/applying/offence_suggestions_spec.rb)
+for an authenticated example that exercises the application's JavaScript.
+
+Install Google Chrome locally. The existing `selenium-webdriver` dependency
+includes Selenium Manager, which resolves and downloads a compatible driver;
+the first run needs network access. No `webdrivers` gem or manual ChromeDriver
+installation is required.
+
+Build fresh assets before running browser specs, so they test the current source:
+
+```shell
+yarn build
+yarn build:css
+COVERAGE=false bundle exec rspec --tag js
+```
+
+Alternatively, keep `bin/dev` running to rebuild assets as you edit. If you have
+previously precompiled assets locally, clear the stale `public/assets` output
+with `RAILS_ENV=test bin/rails assets:clobber` before rebuilding.
+
+Chrome runs headlessly by default. To see the browser while debugging:
+
+```shell
+HEADLESS=false COVERAGE=false bundle exec rspec --tag js
+```
+
+`COVERAGE=false` avoids the whole-suite coverage threshold when running a subset.
+
+Use Capybara's waiting finders and assertions for asynchronous behaviour, without
+fixed sleeps or automatic retries. Keep the default wait time; justify any
+targeted `wait:` override. Existing transactional fixtures and Capybara session
+cleanup remain enabled. Check for state leaking between examples by running new
+browser specs alongside existing system specs with multiple random seeds, for
+example `COVERAGE=false bundle exec rspec spec/system --seed 12345` and `--seed 67890`.
+
+Existing Ruby-side service stubs apply to requests handled by the application.
+WebMock does not intercept external requests made directly by browser JavaScript.
+Localhost connections are allowed for ChromeDriver and the Capybara server.
+Capybara can click visible labels when GOV.UK radio or checkbox inputs are hidden.
+
+CI already builds assets and runs all specs across the test matrix. Browser specs
+use Chrome supplied by the GitHub-hosted Ubuntu runner, with Selenium Manager
+resolving the driver; the browser version is not pinned. Browser examples use the
+same distribution by example ID as other specs, so their runtime adds to the node
+that receives them.
+
+On browser test failures, Rails saves screenshots and page HTML in `tmp/capybara`
+(`RAILS_SYSTEM_TESTING_SCREENSHOT_HTML=1` is set in `.env.test`). CI uploads these
+as `browser-test-failures-<node index>` artifacts for failed matrix nodes.
+
 ## Docker
 
 The application can be run inside a docker container. This will take care of the ruby environment, postgres database
