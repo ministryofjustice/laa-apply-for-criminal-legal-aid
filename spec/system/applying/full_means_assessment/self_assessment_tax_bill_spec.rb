@@ -103,6 +103,45 @@ RSpec.describe 'Self Assessment payment questions' do
         expect(page).to have_field('How much do they pay?', with: '123.45')
         expect(page).to have_checked_field('Monthly')
       end
+
+      context 'in Welsh' do
+        let(:payment_heading) do
+          if person == 'client'
+            'Taliadau am gyfrifiad Hunanasesiad treth eich cleient a dderbyniwyd yn ystod y ddwy flynedd ddiwethaf'
+          else
+            'Taliadau am gyfrifiad Hunanasesiad treth y partner a dderbyniwyd yn ystod y ddwy flynedd ddiwethaf'
+          end
+        end
+
+        before do
+          click_link('Cymraeg')
+          choose('Ie')
+          click_button('Cadw a bwrw ymlaen')
+        end
+
+        it 'shows the approved heading and title and accepts payment details' do
+          expect(page).to have_css('h1', exact_text: payment_heading)
+          expect(page).to have_title(payment_heading)
+
+          fill_in("Faint maen nhw'n ei dalu?", with: '123.45')
+          choose('Bob mis')
+          click_button('Cadw a bwrw ymlaen')
+
+          expect(page).to have_current_path(
+            public_send("edit_steps_income_#{person}_other_work_benefits_path", id: crime_application, locale: 'cy')
+          )
+        end
+
+        it 'shows the approved validation message for a negative amount' do
+          fill_in("Faint maen nhw'n ei dalu?", with: '-1')
+          choose('Bob mis')
+          click_button('Cadw a bwrw ymlaen')
+
+          within('.govuk-error-summary') do
+            expect(page).to have_link('Rhowch swm o 0 neu fwy')
+          end
+        end
+      end
     end
   end
 end

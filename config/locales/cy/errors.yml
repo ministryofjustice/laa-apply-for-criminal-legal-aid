@@ -585,8 +585,7 @@ cy:
           attributes:
             applicant_self_assessment_tax_bill_amount:
               not_a_number: Rhowch y swm maen nhw'n ei dalu
-              # TODO: Obtain approved Welsh translation before adding this key.
-              # greater_than_or_equal_to: Enter an amount of 0 or more
+              greater_than_or_equal_to: Rhowch swm o 0 neu fwy
             applicant_self_assessment_tax_bill_frequency:
               inclusion: Dewiswch pa mor aml maen nhw'n talu’r swm yma
         steps/income/partner/self_assessment_tax_bill_form:
@@ -597,8 +596,7 @@ cy:
           attributes:
             partner_self_assessment_tax_bill_amount:
               not_a_number: Rhowch y swm maen nhw'n ei dalu
-              # TODO: Obtain approved Welsh translation before adding this key.
-              # greater_than_or_equal_to: Enter an amount of 0 or more
+              greater_than_or_equal_to: Rhowch swm o 0 neu fwy
             partner_self_assessment_tax_bill_frequency:
               inclusion: Dewiswch pa mor aml maen nhw'n talu’r swm yma
         steps/income/client/other_work_benefits_form:
