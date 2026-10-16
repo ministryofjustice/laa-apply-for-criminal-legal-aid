@@ -73,7 +73,9 @@ describe Summary::Sections::SelfAssessmentTaxBill do
         expect(answers[0].value).to eq('yes')
         expect(answers[1]).to be_an_instance_of(Summary::Components::PaymentAnswer)
         expect(answers[1].question).to eq(:self_assessment_tax_bill_payment)
-        expect(answers[1].change_path).to match('applications/12345/steps/income/client/self-assessment-client')
+        expect(answers[1].change_path).to eq(
+          '/applications/12345/steps/income/client/self-assessment-tax-bill-payment'
+        )
         expect(answers[1].value).to be_an_instance_of(
           Summary::Sections::SelfAssessmentTaxBill::SelfAssessmentTaxBillPayment
         )

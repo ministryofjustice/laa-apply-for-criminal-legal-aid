@@ -2,6 +2,7 @@ class Income < ApplicationRecord
   include MeansOwnershipScope
   include EmployedIncome
   include SelfEmployedIncome
+  include SelfAssessmentTaxBill
 
   belongs_to :crime_application, touch: true
   has_many :dependants, through: :crime_application
@@ -48,19 +49,6 @@ class Income < ApplicationRecord
     @income_benefits ||= crime_application.income_benefits.where(
       ownership_type: ownership_types
     )
-  end
-
-  def applicant_self_assessment_tax_bill
-    return unless client_employed? || client_self_employed?
-
-    super if known_to_be_full_means?
-  end
-
-  def partner_self_assessment_tax_bill
-    return unless partner_employed? || partner_self_employed?
-    return unless MeansStatus.include_partner?(crime_application)
-
-    super if known_to_be_full_means?
   end
 
   def applicant_other_work_benefit_received

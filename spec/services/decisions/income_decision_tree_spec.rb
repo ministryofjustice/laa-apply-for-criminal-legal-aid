@@ -974,15 +974,43 @@ RSpec.describe Decisions::IncomeDecisionTree do
   end
 
   context 'when the step is `client_self_assessment_tax_bill`' do
-    let(:form_object) { double('FormObject') }
+    let(:form_object) { double('FormObject', applicant_self_assessment_tax_bill: answer) }
     let(:step_name) { :client_self_assessment_tax_bill }
+    let(:answer) { YesNoAnswer::NO }
+
+    it { is_expected.to have_destination(:other_work_benefits, :edit, id: crime_application) }
+
+    context 'when the answer is Yes' do
+      let(:answer) { YesNoAnswer::YES }
+
+      it { is_expected.to have_destination(:self_assessment_tax_bill_payment, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `partner_self_assessment_tax_bill`' do
+    let(:form_object) { double('FormObject', partner_self_assessment_tax_bill: answer) }
+    let(:step_name) { :partner_self_assessment_tax_bill }
+    let(:answer) { YesNoAnswer::NO }
+
+    it { is_expected.to have_destination(:other_work_benefits, :edit, id: crime_application) }
+
+    context 'when the answer is Yes' do
+      let(:answer) { YesNoAnswer::YES }
+
+      it { is_expected.to have_destination(:self_assessment_tax_bill_payment, :edit, id: crime_application) }
+    end
+  end
+
+  context 'when the step is `client_self_assessment_tax_bill_payment`' do
+    let(:form_object) { double('FormObject') }
+    let(:step_name) { :client_self_assessment_tax_bill_payment }
 
     it { is_expected.to have_destination(:other_work_benefits, :edit, id: crime_application) }
   end
 
-  context 'when the step is `partner_self_assessment_tax_bill`' do
+  context 'when the step is `partner_self_assessment_tax_bill_payment`' do
     let(:form_object) { double('FormObject') }
-    let(:step_name) { :partner_self_assessment_tax_bill }
+    let(:step_name) { :partner_self_assessment_tax_bill_payment }
 
     it { is_expected.to have_destination(:other_work_benefits, :edit, id: crime_application) }
   end
