@@ -10,6 +10,15 @@ RSpec.shared_examples 'a Self Assessment question form' do |owner|
     expect(crime_application.income.reload[question]).to eq('yes')
   end
 
+  it 'does not change existing payment details when saving Yes' do
+    income = crime_application.income
+    income.update!("#{question}_amount" => 123_45, "#{question}_frequency" => 'month')
+
+    expect(form.save).to be(true)
+    expect(income.reload["#{question}_amount"].to_i).to eq(123_45)
+    expect(income["#{question}_frequency"]).to eq('month')
+  end
+
   context 'with no answer' do
     let(:answer) { nil }
 
@@ -28,20 +37,34 @@ RSpec.shared_examples 'a Self Assessment question form' do |owner|
   context 'when changing the answer to No' do
     let(:answer) { 'no' }
 
-    it 'preserves the stored payment details' do
+    it 'clears the stored payment details' do
       income = crime_application.income
       income.update!("#{question}_amount" => 123_45, "#{question}_frequency" => 'month')
 
       expect(form.save).to be(true)
       expect(income.reload[question]).to eq('no')
-      expect(income["#{question}_amount"].to_i).to eq(123_45)
-      expect(income["#{question}_frequency"]).to eq('month')
+      expect(income["#{question}_amount"]).to be_nil
+      expect(income["#{question}_frequency"]).to be_nil
+    end
+
+    it 'also clears payment details when saving a draft' do
+      income = crime_application.income
+      income.update!("#{question}_amount" => 123_45, "#{question}_frequency" => 'month')
+
+      expect(form.save!).to be(true)
+      expect(income.reload["#{question}_amount"]).to be_nil
+      expect(income["#{question}_frequency"]).to be_nil
     end
   end
 
   it 'allows saving an unanswered draft' do
+    income = crime_application.income
+    income.update!("#{question}_amount" => 123_45, "#{question}_frequency" => 'month')
     form.public_send("#{question}=", nil)
+
     expect(form.save!).to be(true)
+    expect(income.reload["#{question}_amount"]).to be_nil
+    expect(income["#{question}_frequency"]).to be_nil
   end
 end
 

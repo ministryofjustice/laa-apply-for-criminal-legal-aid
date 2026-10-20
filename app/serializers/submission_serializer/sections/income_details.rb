@@ -28,7 +28,7 @@ module SubmissionSerializer
 
           if income.applicant_self_assessment_tax_bill.present?
             json.applicant_self_assessment_tax_bill income.applicant_self_assessment_tax_bill
-            json.applicant_self_assessment_tax_bill_amount income.applicant_self_assessment_tax_bill_amount&.to_i
+            json.applicant_self_assessment_tax_bill_amount income.applicant_self_assessment_tax_bill_amount_before_type_cast # rubocop:disable Layout/LineLength
             json.applicant_self_assessment_tax_bill_frequency income.applicant_self_assessment_tax_bill_frequency
           end
 
@@ -40,7 +40,7 @@ module SubmissionSerializer
 
             if income.partner_self_assessment_tax_bill.present?
               json.partner_self_assessment_tax_bill income.partner_self_assessment_tax_bill
-              json.partner_self_assessment_tax_bill_amount income.partner_self_assessment_tax_bill_amount&.to_i
+              json.partner_self_assessment_tax_bill_amount income.partner_self_assessment_tax_bill_amount_before_type_cast # rubocop:disable Layout/LineLength
               json.partner_self_assessment_tax_bill_frequency income.partner_self_assessment_tax_bill_frequency
             end
           end

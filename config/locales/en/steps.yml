@@ -371,7 +371,7 @@ en:
             page_title: Has your client received a Self Assessment tax calculation in the last 2 years?
         self_assessment_tax_bill_payment:
           edit:
-            page_title: Payments for your client's Self Assessment tax calculation received in the last 2 years
+            page_title: Payments for your client’s Self Assessment tax calculation received in the last 2 years
             heading: Payments for your client’s Self Assessment tax calculation received in the last 2 years
         deductions:
           edit:
@@ -439,7 +439,7 @@ en:
             page_title: Has the partner received a Self Assessment tax calculation in the last 2 years?
         self_assessment_tax_bill_payment:
           edit:
-            page_title: Payments for the partner's Self Assessment tax calculation received in the last 2 years
+            page_title: Payments for the partner’s Self Assessment tax calculation received in the last 2 years
             heading: Payments for the partner’s Self Assessment tax calculation received in the last 2 years
         deductions:
           edit:

@@ -47,7 +47,7 @@ RSpec.describe 'Self Assessment payment questions' do
         choose('Yes')
         save_and_continue
         expect(page).to have_css('h1', exact_text: payment_heading)
-        expect(page).to have_title(payment_heading.tr('’', "'"))
+        expect(page).to have_title(payment_heading)
         expect(page).to have_current_path(
           public_send("edit_steps_income_#{person}_self_assessment_tax_bill_payment_path", id: crime_application)
         )
@@ -81,7 +81,7 @@ RSpec.describe 'Self Assessment payment questions' do
         expect(page).to have_field('How much do they pay?', with: '123.45')
       end
 
-      it 'preserves payment details when navigating back and changing Yes to No to Yes' do
+      it 'clears payment details when the answer changes to No' do
         question_path = current_path
         choose('Yes')
         save_and_continue
@@ -100,8 +100,8 @@ RSpec.describe 'Self Assessment payment questions' do
         expect(page).to have_current_path(question_path)
         choose('Yes')
         save_and_continue
-        expect(page).to have_field('How much do they pay?', with: '123.45')
-        expect(page).to have_checked_field('Monthly')
+        expect(find_field('How much do they pay?').value).to be_blank
+        expect(page).to have_no_checked_field('Monthly')
       end
 
       context 'in Welsh' do

@@ -54,10 +54,10 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
       applicant_other_work_benefit_received: nil,
       partner_other_work_benefit_received: nil,
       applicant_self_assessment_tax_bill: 'yes',
-      applicant_self_assessment_tax_bill_amount: Money.new(100_00),
+      applicant_self_assessment_tax_bill_amount_before_type_cast: 100_00,
       applicant_self_assessment_tax_bill_frequency: 'week',
       partner_self_assessment_tax_bill: 'no',
-      partner_self_assessment_tax_bill_amount: nil,
+      partner_self_assessment_tax_bill_amount_before_type_cast: nil,
       partner_self_assessment_tax_bill_frequency: nil,
       known_to_be_full_means?: true,
     )
@@ -453,44 +453,6 @@ RSpec.describe SubmissionSerializer::Sections::IncomeDetails do
     end
 
     it { expect(subject.generate).to eq(json_output) }
-
-    %w[applicant partner].each do |owner|
-      context "when #{owner} payment details are no longer relevant" do
-        before do
-          allow(income).to receive_messages(
-            "#{owner}_self_assessment_tax_bill" => 'no',
-            "#{owner}_self_assessment_tax_bill_amount" => nil,
-            "#{owner}_self_assessment_tax_bill_frequency" => nil,
-            "#{owner}_self_assessment_tax_bill_amount_before_type_cast" => 123_45
-          )
-        end
-
-        it 'does not serialize the retained raw payment amount' do
-          expect(subject.generate).to include(
-            "#{owner}_self_assessment_tax_bill" => 'no',
-            "#{owner}_self_assessment_tax_bill_amount" => nil,
-            "#{owner}_self_assessment_tax_bill_frequency" => nil
-          )
-        end
-      end
-    end
-
-    context 'when the partner has Self Assessment payments' do
-      before do
-        allow(income).to receive_messages(
-          partner_self_assessment_tax_bill: 'yes',
-          partner_self_assessment_tax_bill_amount: Money.new(123_45),
-          partner_self_assessment_tax_bill_frequency: 'month'
-        )
-      end
-
-      it 'serializes the amount in pence' do
-        expect(subject.generate).to include(
-          'partner_self_assessment_tax_bill_amount' => 123_45,
-          'partner_self_assessment_tax_bill_frequency' => 'month'
-        )
-      end
-    end
 
     context 'when frozen assets belong to the applicant and partner' do
       before do

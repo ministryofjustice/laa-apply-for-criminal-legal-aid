@@ -13,7 +13,16 @@ module Steps
         private
 
         def persist!
-          income.update!(attributes)
+          income.update!(attributes.merge(payment_attributes))
+        end
+
+        def payment_attributes
+          return {} if applicant_self_assessment_tax_bill&.yes?
+
+          {
+            applicant_self_assessment_tax_bill_amount: nil,
+            applicant_self_assessment_tax_bill_frequency: nil
+          }
         end
       end
     end
