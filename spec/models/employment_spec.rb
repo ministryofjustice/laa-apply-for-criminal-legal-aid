@@ -94,7 +94,7 @@ RSpec.describe Employment, type: :model do
       end
 
       context 'when address is incomplete' do
-        before { address_attributes.merge!(postcode: nil) }
+        before { address_attributes.merge!('postcode' => nil) }
 
         it 'returns false' do
           expect(subject.complete?).to be(false)
