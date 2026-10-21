@@ -73,6 +73,9 @@ cy:
       extension_option_two: opsiwn 2
       extension_option_three: opsiwn 3
       opening_hours: 9am i 5pm, o ddydd Llun i ddydd Gwener (ac eithrio gwyliau banc)
+      online: Ar-lein
+      non_urgent_enquiries_html: Ar gyfer ymholiadau nad ydynt yn rhai brys, %{URL}
+      technical_fault_link: cyflwynwch gais am nam technegol (yn agor mewn tab newydd)
       technical_support: Cymorth technegol
       technical_support_subheading: I gael help i ddefnyddio’r gwasanaeth gwneud cais am gymorth cyfreithiol troseddol.
       telephone: Ffôn
