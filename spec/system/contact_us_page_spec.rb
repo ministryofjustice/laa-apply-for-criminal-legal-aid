@@ -15,7 +15,7 @@ RSpec.describe 'Contact us page' do
     expect(page).to have_css('h3', text: 'Online')
     expect(page).to have_css('p',
                              text: 'For non-urgent enquiries, submit a technical fault request (opens in a new tab)')
-    expect(page).to have_link('submit a technical fault request (opens in a new tab)',
+    expect(page).to have_link('submit a technical fault request (opens in a new tab)', exact: true,
                               href: 'https://laa-technical-fault-reporting-form.form.service.justice.gov.uk/',
                               target: '_blank')
     expect(page.find_link('submit a technical fault request (opens in a new tab)')[:rel]).to include('noopener')
@@ -35,7 +35,7 @@ RSpec.describe 'Contact us page' do
       expect(page).to have_css('h3', text: 'Ar-lein')
       expect(page).to have_css('p',
                                text: 'Ar gyfer ymholiadau nad ydynt yn rhai brys, cyflwynwch gais am nam technegol')
-      expect(page).to have_link('cyflwynwch gais am nam technegol (yn agor mewn tab newydd)',
+      expect(page).to have_link('cyflwynwch gais am nam technegol (yn agor mewn tab newydd)', exact: true,
                                 href: 'https://laa-technical-fault-reporting-form.form.service.justice.gov.uk/',
                                 target: '_blank')
     end
