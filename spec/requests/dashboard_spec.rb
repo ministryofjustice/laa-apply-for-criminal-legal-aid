@@ -96,9 +96,9 @@ RSpec.describe 'Dashboard', :authorized do
         let(:application_fixture) do
           LaaCrimeSchemas.fixture(1.0) do |data|
             data.merge(
-              reviewed_at: '2025-02-01',
-              review_status: 'assessment_completed',
-              application_type: 'post_submission_evidence'
+              'reviewed_at' => '2025-02-01',
+              'review_status' => 'assessment_completed',
+              'application_type' => 'post_submission_evidence'
             ).to_json
           end
         end
