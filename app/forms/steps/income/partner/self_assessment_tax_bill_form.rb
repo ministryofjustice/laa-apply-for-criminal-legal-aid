@@ -7,30 +7,22 @@ module Steps
         has_one_association :income
 
         attribute :partner_self_assessment_tax_bill, :value_object, source: YesNoAnswer
-        attribute :partner_self_assessment_tax_bill_amount, :pence
-        attribute :partner_self_assessment_tax_bill_frequency, :value_object, source: PaymentFrequencyType
 
         validates :partner_self_assessment_tax_bill, inclusion: { in: YesNoAnswer.values }
-        validates :partner_self_assessment_tax_bill_amount,
-                  numericality: { greater_than_or_equal_to: 0 }, if: -> { pays_self_assessment_tax_bill? }
-        validates :partner_self_assessment_tax_bill_frequency,
-                  inclusion: { in: PaymentFrequencyType.values }, if: -> { pays_self_assessment_tax_bill? }
 
         private
 
         def persist!
-          income.update!(attributes)
+          income.update!(attributes.merge(payment_attributes))
         end
 
-        def pays_self_assessment_tax_bill?
-          partner_self_assessment_tax_bill&.yes?
-        end
+        def payment_attributes
+          return {} if partner_self_assessment_tax_bill&.yes?
 
-        def before_save
-          return if pays_self_assessment_tax_bill?
-
-          self.partner_self_assessment_tax_bill_amount = nil
-          self.partner_self_assessment_tax_bill_frequency = nil
+          {
+            partner_self_assessment_tax_bill_amount: nil,
+            partner_self_assessment_tax_bill_frequency: nil
+          }
         end
       end
     end

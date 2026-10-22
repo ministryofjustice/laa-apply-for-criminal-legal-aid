@@ -581,16 +581,22 @@ cy:
           attributes:
             applicant_self_assessment_tax_bill:
               inclusion: Dewiswch ie os yw eich cleient yn talu bil treth Hunanasesu a dderbyniwyd yn ystod y 2 flynedd diwethaf
+        steps/income/client/self_assessment_tax_bill_payment_form:
+          attributes:
             applicant_self_assessment_tax_bill_amount:
               not_a_number: Rhowch y swm maen nhw'n ei dalu
+              greater_than_or_equal_to: Rhowch swm o 0 neu fwy
             applicant_self_assessment_tax_bill_frequency:
               inclusion: Dewiswch pa mor aml maen nhw'n talu’r swm yma
         steps/income/partner/self_assessment_tax_bill_form:
           attributes:
             partner_self_assessment_tax_bill:
               inclusion: Dewiswch ie os yw eich partner yn talu bil treth Hunanasesu a dderbyniwyd yn ystod y 2 flynedd diwethaf
+        steps/income/partner/self_assessment_tax_bill_payment_form:
+          attributes:
             partner_self_assessment_tax_bill_amount:
               not_a_number: Rhowch y swm maen nhw'n ei dalu
+              greater_than_or_equal_to: Rhowch swm o 0 neu fwy
             partner_self_assessment_tax_bill_frequency:
               inclusion: Dewiswch pa mor aml maen nhw'n talu’r swm yma
         steps/income/client/other_work_benefits_form:

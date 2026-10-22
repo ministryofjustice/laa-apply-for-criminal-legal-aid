@@ -20,7 +20,7 @@ module Summary
         if income.applicant_self_assessment_tax_bill == YesNoAnswer::YES.to_s
           answers << Components::PaymentAnswer.new(
             :self_assessment_tax_bill_payment, self_assessment_tax_bill_payment,
-            change_path: edit_steps_income_client_self_assessment_tax_bill_path
+            change_path: edit_steps_income_client_self_assessment_tax_bill_payment_path
           )
         end
 

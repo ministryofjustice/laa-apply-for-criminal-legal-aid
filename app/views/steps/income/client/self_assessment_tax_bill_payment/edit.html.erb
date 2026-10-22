@@ -1,0 +1,19 @@
+<% title t('.page_title') %>
+<% step_header %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl"><%= t('steps.income.caption') %></span>
+    <h1 class="govuk-heading-xl"><%= t('.heading') %></h1>
+    <%= govuk_error_summary(@form_object) %>
+
+    <%= step_form @form_object do |f| %>
+      <%= f.govuk_number_field :applicant_self_assessment_tax_bill_amount,
+                               prefix_text: '£', width: 'one-half' %>
+      <%= f.govuk_collection_radio_buttons :applicant_self_assessment_tax_bill_frequency,
+                                           PaymentFrequencyType.values, :value,
+                                           legend: { size: 's', class: 'govuk-!-font-weight-regular' } %>
+      <%= f.continue_button %>
+    <% end %>
+  </div>
+</div>

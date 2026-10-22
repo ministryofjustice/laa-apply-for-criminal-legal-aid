@@ -581,16 +581,22 @@ en:
           attributes:
             applicant_self_assessment_tax_bill:
               inclusion: Select yes if your client pays a Self Assessment tax bill received in the last 2 years
+        steps/income/client/self_assessment_tax_bill_payment_form:
+          attributes:
             applicant_self_assessment_tax_bill_amount:
               not_a_number: Enter the amount they pay
+              greater_than_or_equal_to: Enter an amount of 0 or more
             applicant_self_assessment_tax_bill_frequency:
               inclusion: Select how often they pay this amount
         steps/income/partner/self_assessment_tax_bill_form:
           attributes:
             partner_self_assessment_tax_bill:
               inclusion: Select yes if your partner pays a Self Assessment tax bill received in the last 2 years
+        steps/income/partner/self_assessment_tax_bill_payment_form:
+          attributes:
             partner_self_assessment_tax_bill_amount:
               not_a_number: Enter the amount they pay
+              greater_than_or_equal_to: Enter an amount of 0 or more
             partner_self_assessment_tax_bill_frequency:
               inclusion: Select how often they pay this amount
         steps/income/client/other_work_benefits_form:

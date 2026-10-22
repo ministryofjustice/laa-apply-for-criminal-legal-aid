@@ -228,9 +228,11 @@ cy:
         add_partner_employment: Ydych chi eisiau ychwanegu swydd arall?
       steps_income_client_self_assessment_tax_bill_form:
         applicant_self_assessment_tax_bill: Ydy eich cleient wedi derbyn cyfrifiad treth Hunanasesu yn ystod y 2 flynedd diwethaf?
+      steps_income_client_self_assessment_tax_bill_payment_form:
         applicant_self_assessment_tax_bill_frequency: Pa mor aml maen nhw'n talu’r swm hwn?
       steps_income_partner_self_assessment_tax_bill_form:
         partner_self_assessment_tax_bill: Ydy'r partner wedi derbyn cyfrifiad treth Hunanasesu yn ystod y 2 flynedd diwethaf?
+      steps_income_partner_self_assessment_tax_bill_payment_form:
         partner_self_assessment_tax_bill_frequency: Pa mor aml maen nhw'n talu’r swm hwn?
       steps_income_income_payments_form:
         income_payments: Pa rai o’r taliadau hyn y mae eich cleient yn eu cael?
@@ -523,9 +525,11 @@ cy:
           other: Er enghraifft, Benthyciadau Myfyrwyr, pensiynau neu fuddion i gyflogeion
       steps_income_client_self_assessment_tax_bill_form:
         applicant_self_assessment_tax_bill: Bydd hyn gan Gyllid a Thollau EF (CThEF).
+      steps_income_client_self_assessment_tax_bill_payment_form:
         applicant_self_assessment_tax_bill_amount: Rhowch '0' os nad oes dim.
       steps_income_partner_self_assessment_tax_bill_form:
         partner_self_assessment_tax_bill: Bydd hyn gan Gyllid a Thollau EF (CThEF).
+      steps_income_partner_self_assessment_tax_bill_payment_form:
         partner_self_assessment_tax_bill_amount: Rhowch '0' os nad oes dim.
       steps_income_lost_job_in_custody_form:
         date_job_lost: Er enghraifft, 12 11 2007, 12 Tach 2007 neu 12 Tachwedd 2007.
@@ -858,10 +862,12 @@ cy:
           details: Rhowch fanylion didyniadau eraill
       steps_income_client_self_assessment_tax_bill_form:
         applicant_self_assessment_tax_bill_options: *YESNO
+      steps_income_client_self_assessment_tax_bill_payment_form:
         applicant_self_assessment_tax_bill_amount: Faint maen nhw'n ei dalu?
         applicant_self_assessment_tax_bill_frequency_options: *frequency_options
       steps_income_partner_self_assessment_tax_bill_form:
         partner_self_assessment_tax_bill_options: *YESNO
+      steps_income_partner_self_assessment_tax_bill_payment_form:
         partner_self_assessment_tax_bill_amount: Faint maen nhw'n ei dalu?
         partner_self_assessment_tax_bill_frequency_options: *frequency_options
       steps_income_client_employments_summary_form:
