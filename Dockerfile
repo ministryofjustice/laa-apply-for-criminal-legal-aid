@@ -1,6 +1,10 @@
 FROM ruby:4.0.7-alpine3.23 AS base
 LABEL maintainer="LAA Crime Apply Team"
 
+RUN apk add --no-cache --upgrade \
+    ca-certificates \
+    ca-certificates-bundle
+
 RUN apk add --no-cache \
   postgresql17-dev tzdata gcompat nodejs build-base yaml-dev git && \
   apk add --update clamav-clamdscan && \
