@@ -112,7 +112,7 @@
 
         <h2 class="govuk-heading-l">Contact us or make a complaint</h2>
 
-        <p class="govuk-body">Contact us by email at <%= mail_to Settings.support_email %> if you:</p>
+        <p class="govuk-body">Email <%= mail_to Settings.data_protection_email %> if you:</p>
         <div class="govuk-list">
           <ul class="govuk-list govuk-list--bullet">
             <li>have a question about anything in this privacy notice</li>
@@ -120,9 +120,11 @@
           </ul>
         </div>
 
+        <p class="govuk-body">Or you can <%= govuk_link_to 'complain to the Legal Aid Agency', Settings.laa_complaints_url %>.</p>
+
         <h3 class="govuk-heading-m">Data Protection Officer (DPO)</h3>
         <p class="govuk-body">You can also contact our DPO:</p>
-        <p class="govuk-body"><%= mail_to 'dataprotection@justice.gov.uk' %></p>
+        <p class="govuk-body"><%= mail_to Settings.data_protection_email %></p>
         <p class="govuk-body">
           Data Protection Officer<br>
           Ministry of Justice<br>
@@ -157,7 +159,7 @@
       <div class="app-c-updated-date">
         <%# TODO Implement non-hardcoded solution %>
 
-        <p class="govuk-body-s">Last updated 20 June 2023</p>
+        <p class="govuk-body-s">Last updated 26 October 2026</p>
       </div>
     </div>
   </div>
@@ -226,7 +228,7 @@
 
         <h2 class="govuk-heading-l">Contact us or make a complaint</h2>
 
-        <p class="govuk-body">Contact us by email at <%= mail_to Settings.support_email %> if you:</p>
+        <p class="govuk-body">Email <%= mail_to Settings.data_protection_email %> if you:</p>
         <div class="govuk-list">
           <ul class="govuk-list govuk-list--bullet">
             <li>have a question about anything in this privacy notice</li>
@@ -234,9 +236,11 @@
           </ul>
         </div>
 
+        <p class="govuk-body">Or you can <%= govuk_link_to 'complain to the Legal Aid Agency', Settings.laa_complaints_url %>.</p>
+
         <h3 class="govuk-heading-m">Data Protection Officer (DPO)</h3>
         <p class="govuk-body">You can also contact our DPO:</p>
-        <p class="govuk-body"><%= mail_to 'dataprotection@justice.gov.uk' %></p>
+        <p class="govuk-body"><%= mail_to Settings.data_protection_email %></p>
         <p class="govuk-body">
           Data Protection Officer<br>
           Ministry of Justice<br>
@@ -271,7 +275,7 @@
       <div class="app-c-updated-date">
         <%# TODO Implement non-hardcoded solution %>
 
-        <p class="govuk-body-s">Last updated 04 August 2025</p>
+        <p class="govuk-body-s">Last updated 26 October 2026</p>
       </div>
     </div>
   </div>

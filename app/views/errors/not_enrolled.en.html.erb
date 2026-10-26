@@ -9,9 +9,16 @@
     <p class="govuk-body"><%= Settings.case_enquiries_tel %>, <%= t('helpers.contact.extension_option_three') %></p>
     <p class="govuk-body"><%= t('helpers.contact.opening_hours') %></p>
     <p class="govuk-body"><%= govuk_link_to(t('helpers.contact.call_charges'), Settings.call_charges_url) %></p>
-    <h2 class="govuk-heading-s"><%= t('helpers.contact.email') %></h2>
-    <p class="govuk-body"><%= mail_to Settings.support_email, class: 'govuk-link--no-visited-state' %></p>
-    <p class="govuk-body"><%= t('helpers.contact.email_response_time') %></p>
+    <h2 class="govuk-heading-s"><%= t('helpers.contact.online') %></h2>
+    <p class="govuk-body">
+      <%= t(
+            'helpers.contact.non_urgent_enquiries_html',
+            URL: govuk_link_to(
+              t('helpers.contact.technical_fault_link'), Settings.technical_fault_reporting_url,
+              new_tab: t('helpers.contact.opens_in_new_tab')
+            )
+          ) %>
+    </p>
     <h2 class="govuk-heading-s"><%= t('helpers.contact.webchat') %></h2>
     <p class="govuk-body"><%= govuk_link_to(t('helpers.contact.webchat_adviser'), Settings.laa_contact_url) %></p>
   </div>

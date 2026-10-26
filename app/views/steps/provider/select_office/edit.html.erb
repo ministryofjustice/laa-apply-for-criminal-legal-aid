@@ -10,7 +10,14 @@
             inline: false,
             hint: {
               text: sanitize(
-                hint_t(:office_code, support_email: govuk_mail_to(Settings.support_email))
+                hint_t(
+                  :office_code,
+                  URL: govuk_link_to(
+                    hint_t(:office_code_link), Settings.technical_fault_reporting_url,
+                    new_tab: t('helpers.contact.opens_in_new_tab')
+                  )
+                ),
+                tags: %w[a], attributes: %w[href class target rel]
               ),
               class: ['govuk-inset-text', 'govuk-!-margin-top-6']
             },

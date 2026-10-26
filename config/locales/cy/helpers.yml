@@ -422,7 +422,8 @@ cy:
       search: Rhowch unrhyw gyfuniad o enw cyntaf y cleient, cyfenw, cyfeirnod LAA
       stored_search: Rhowch unrhyw gyfuniad o enw cyntaf y cleient, cyfenw, cyfeirnod LAA neu ID MAAT
       steps_provider_select_office_form:
-        office_code: "Os nad yw rhif cyfrif eich swyddfa wedi'i restru, anfonwch e-bost at: %{support_email}"
+        office_code: "Os nad yw rhif eich swyddfa wedi'i restru, gallwch %{URL}."
+        office_code_link: gyflwyno cais am nam technegol
       steps_circumstances_pre_cifc_reference_number_form:
         pre_cifc_reference_number: Mae angen naill ai ID MAAT neu rif cyflwyno unigryw (USN) eich cleient.
       steps_client_is_means_tested_form:

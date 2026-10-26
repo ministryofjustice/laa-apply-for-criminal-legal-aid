@@ -64,7 +64,7 @@ data:
                   <li>clearing your saved browser cookies</li>
                   <li>going back and entering different information</li>
                 </ul>
-                <p class="govuk-body">If you still cannot use the service, email: <a href="mailto:online-support@justice.gov.uk">online-support@justice.gov.uk</a></p>
+                <p class="govuk-body">If this is preventing you from using the digital service, you can <a href="https://laa-technical-fault-reporting-form.form.service.justice.gov.uk/" target="_blank" rel="noopener noreferrer">submit a technical fault request (opens in a new tab)</a>.</p>
               </div>
             </div>
           </main>

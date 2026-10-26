@@ -56,6 +56,31 @@ RSpec.describe 'Sign in user journey' do
       expect(current_url).to match(steps_provider_select_office_path)
     end
 
+    it 'directs users with a missing office number to the reporting form in a new tab' do
+      within('.govuk-inset-text') do
+        expect(page).to have_text('If your office number is not listed, you can submit a technical fault request')
+        expect(page).to have_link('submit a technical fault request (opens in a new tab)', exact: true,
+                                  href: 'https://laa-technical-fault-reporting-form.form.service.justice.gov.uk/',
+                                  target: '_blank')
+        expect(page.find_link('submit a technical fault request (opens in a new tab)')[:rel]).to include('noopener')
+        expect(page).not_to have_link(href: 'mailto:online-support@justice.gov.uk')
+      end
+    end
+
+    it 'shows the supplied Welsh office hint and reporting form link' do
+      visit edit_steps_provider_select_office_path(locale: 'cy')
+
+      within('.govuk-inset-text') do
+        expect(page).to have_text("Os nad yw rhif eich swyddfa wedi'i restru, gallwch")
+        expect(page).to have_link('gyflwyno cais am nam technegol (yn agor mewn tab newydd)', exact: true,
+                                  href: 'https://laa-technical-fault-reporting-form.form.service.justice.gov.uk/',
+                                  target: '_blank')
+        link = page.find_link('gyflwyno cais am nam technegol (yn agor mewn tab newydd)')
+        expect(link[:rel]).to include('noopener')
+        expect(page).not_to have_link(href: 'mailto:online-support@justice.gov.uk')
+      end
+    end
+
     context 'when the user attempts to access the dashboard' do
       it 'redirects to the select office path' do
         visit 'applications'
