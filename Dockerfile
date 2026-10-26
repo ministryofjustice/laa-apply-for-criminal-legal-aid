@@ -52,7 +52,7 @@ COPY . .
 
 RUN chown -R appuser:appgroup log tmp
 
-ENV RDS_COMBINED_CA_BUNDLE /usr/src/app/config/global-bundle.pem
+ENV RDS_COMBINED_CA_BUNDLE=/usr/src/app/config/global-bundle.pem
 ADD https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem $RDS_COMBINED_CA_BUNDLE
 RUN chmod +r $RDS_COMBINED_CA_BUNDLE
 
