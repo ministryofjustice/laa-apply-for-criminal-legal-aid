@@ -421,7 +421,8 @@ en:
       search: Enter any combination of client first name, last name, LAA reference
       stored_search: Enter any combination of client first name, last name, LAA reference or MAAT ID
       steps_provider_select_office_form:
-        office_code: "If your office account number is not listed, email: %{support_email}"
+        office_code: "If your office number is not listed, you can %{URL}."
+        office_code_link: submit a technical fault request
       steps_circumstances_pre_cifc_reference_number_form:
         pre_cifc_reference_number: We need either your client's MAAT ID or unique submission number (USN).
       steps_client_is_means_tested_form:

@@ -36,6 +36,9 @@ settings:
   feedback_survey_url: https://www.smartsurvey.co.uk/s/crimeapply/
   onboarding_email: LAAapplyonboarding@justice.gov.uk
   support_email: online-support@justice.gov.uk
+  accessibility_email: accessibility@justice.gov.uk
+  data_protection_email: dataprotection@justice.gov.uk
+  laa_complaints_url: https://complain-to-the-laa.form.service.justice.gov.uk/
   technical_fault_reporting_url: https://laa-technical-fault-reporting-form.form.service.justice.gov.uk/
   case_enquiries_tel: 0300 200 2020
   laa_applicant_declaration_form_url: https://assets.publishing.service.gov.uk/media/62cd63f7d3bf7f2ffb6e6d60/applicant-declaration-form.pdf
