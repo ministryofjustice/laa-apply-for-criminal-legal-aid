@@ -6,7 +6,7 @@ RUN apk add --no-cache --upgrade \
     ca-certificates-bundle
 
 RUN apk add --no-cache \
-  postgresql17-dev tzdata gcompat nodejs build-base yaml-dev git && \
+  postgresql17-dev tzdata gcompat nodejs>=24.22.1 build-base yaml-dev git && \
   apk add --update clamav-clamdscan && \
   apk del clamav-daemon freshclam && \
   apk upgrade --no-cache zlib && \
