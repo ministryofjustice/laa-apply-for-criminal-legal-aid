@@ -9,9 +9,9 @@
     "@ministryofjustice/frontend": "^11.1.0",
     "accessible-autocomplete": "^3.0.2",
     "dropzone": "^6.3.5",
-    "govuk-frontend": "^6.5.1",
+    "govuk-frontend": "^6.6.0",
     "moment": "2.31.0",
-    "sass": "^1.105.1"
+    "sass": "^1.105.2"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
