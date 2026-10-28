@@ -8,7 +8,7 @@ gem 'faraday-retry'
 gem 'govuk-components'
 gem 'govuk_design_system_formbuilder', '~> 6.5'
 gem 'jbuilder', '~> 2.15.1'
-gem 'json', '~> 2.0'
+gem 'json', '~> 3.1'
 gem 'kaminari'
 gem 'lograge'
 gem 'logstash-event'
@@ -49,7 +49,7 @@ gem 'laa-criminal-applications-datastore-api-client',
 
 gem 'laa-criminal-legal-aid-schemas',
     github: 'ministryofjustice/laa-criminal-legal-aid-schemas',
-    tag: 'v1.8.3'
+    tag: 'v1.8.4'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
