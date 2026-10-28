@@ -86,6 +86,12 @@ RSpec.describe 'Evidence upload page', :authorized do
       expect(i18n['upload_success']).to eq('You uploaded {{file_name}}')
     end
 
+    it 'exposes the localised delete button label for the JavaScript upload component' do
+      i18n = dropzone_i18n(response.body)
+
+      expect(i18n['remove_button']).to eq(I18n.t('steps.evidence.upload.uploaded_file.remove_button'))
+    end
+
     context 'when the locale is Welsh' do
       before do
         get edit_steps_evidence_upload_path(crime_application, locale: :cy)
@@ -95,6 +101,7 @@ RSpec.describe 'Evidence upload page', :authorized do
         i18n = dropzone_i18n(response.body)
 
         expect(i18n['uploaded']).to eq(I18n.t('steps.evidence.upload.edit.uploaded', locale: :cy))
+        expect(i18n['remove_button']).to eq('Dileu')
       end
     end
 

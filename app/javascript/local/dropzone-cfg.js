@@ -90,7 +90,7 @@ DropzoneCfg.prototype.init = function () {
     hideUploadSuccessBanner()
     removeErrorMessages()
 
-    let row = createUploadedFileRow(file);
+    let row = createUploadedFileRow(file, this.i18n);
     document.querySelector('#uploaded-files-dropzone .app-uploaded-files').append(row);
   });
 
@@ -139,12 +139,12 @@ DropzoneCfg.prototype.init = function () {
   })
 }
 
-function createUploadedFileRow(file) {
+function createUploadedFileRow(file, i18n) {
   let row = document.createElement("div")
   let value = document.createElement("dt")
   let span = document.createElement("span")
   let statusTag = createStatusTag("Uploading")
-  let actions = createDeleteAction()
+  let actions = createDeleteAction(i18n)
 
   row.setAttribute("id", file.upload.uuid)
 
@@ -242,7 +242,7 @@ function createErrorSummary (msg) {
   return errorSummary
 }
 
-function createDeleteAction () {
+function createDeleteAction (i18n) {
   const actions = document.createElement("dd")
   actions.classList.add("govuk-summary-list__actions")
 
@@ -250,7 +250,7 @@ function createDeleteAction () {
   deleteButton.classList.add("app-button--link", "app-uploaded-file__delete")
   deleteButton.setAttribute("type", "submit")
   deleteButton.setAttribute("name", "document_id")
-  deleteButton.innerText = "Delete"
+  deleteButton.innerText = i18n.remove_button || "Delete"
 
   actions.append(deleteButton)
   return actions
