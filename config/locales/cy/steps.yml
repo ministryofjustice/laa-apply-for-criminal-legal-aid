@@ -722,6 +722,7 @@ cy:
           uploaded_files_info: Pan fyddwch yn cyflwyno'r cais hwn, bydd gweithiwr achos yn gallu gweld y ffeiliau hyn.
           file_name: Enw’r ffeil
           uploaded: Wedi lanlwytho
+          upload_success: "Rydych wedi uwchlwytho %{file_name}"
           delete:
             success: "Rydych chi wedi dileu %{file_name}"
             failure: "Doedd dim modd dileu %{file_name} – rhowch gynnig arall arni"

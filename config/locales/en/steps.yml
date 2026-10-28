@@ -719,6 +719,7 @@ en:
           uploaded_files_info: When you submit this application, a caseworker will be able to access these files.
           file_name: File name
           uploaded: Uploaded
+          upload_success: "You uploaded %{file_name}"
           delete:
             success: "You deleted %{file_name}"
             failure: "%{file_name} could not be deleted – try again"

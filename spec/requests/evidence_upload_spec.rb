@@ -80,6 +80,12 @@ RSpec.describe 'Evidence upload page', :authorized do
       expect(i18n['uploaded']).to eq(I18n.t('steps.evidence.upload.edit.uploaded'))
     end
 
+    it 'exposes the upload success message template for the JavaScript upload component' do
+      i18n = dropzone_i18n(response.body)
+
+      expect(i18n['upload_success']).to eq('You uploaded {{file_name}}')
+    end
+
     context 'when the locale is Welsh' do
       before do
         get edit_steps_evidence_upload_path(crime_application, locale: :cy)
