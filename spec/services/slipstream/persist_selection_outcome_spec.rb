@@ -16,7 +16,7 @@ RSpec.describe Slipstream::PersistSelectionOutcome do
 
   before do
     allow(Slipstream::CandidateSelector).to receive(:new)
-      .with(crime_application, sample_rate: 80)
+      .with(crime_application, sample_rate: 10)
       .and_return(selector)
     allow(Time).to receive(:current).and_return(sampled_at)
   end
@@ -29,7 +29,7 @@ RSpec.describe Slipstream::PersistSelectionOutcome do
         crime_application: crime_application,
         status: 'selected',
         selection_reason: 'offence',
-        sample_rate: 80,
+        sample_rate: 10,
         sampled_at: sampled_at,
         status_determined_at: sampled_at
       )

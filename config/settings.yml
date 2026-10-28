@@ -46,6 +46,6 @@ settings:
   call_charges_url: https://www.gov.uk/call-charges
   criminal_legal_aid_manual: https://www.gov.uk/government/publications/criminal-legal-aid-manual
 
-  # Slipstream audit: percentage of eligible applications that are selected (80 = 80%)
+  # Slipstream audit: percentage of eligible applications that are selected (10 = 10%)
   slipstream_audit:
-    sample_rate: 80
+    sample_rate: 10
