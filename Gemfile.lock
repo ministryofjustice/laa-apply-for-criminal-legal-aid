@@ -1,13 +1,4 @@
 GIT
-  remote: https://github.com/ministryofjustice/laa-criminal-applications-datastore-api-client.git
-  revision: 3cb0dfd46a358b0086b5973d01fbcae3aff1a46f
-  tag: v1.3.0
-  specs:
-    laa-criminal-applications-datastore-api-client (1.3.0)
-      faraday (~> 2.7)
-      moj-simple-jwt-auth (~> 0.2.0)
-
-GIT
   remote: https://github.com/ministryofjustice/laa-criminal-legal-aid-schemas.git
   revision: c471a67be09233ea78c7f5f4485dd9b0c995b171
   tag: v1.8.4
@@ -274,6 +265,9 @@ GEM
       activerecord
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
+    laa-criminal-applications-datastore-api-client (1.3.0)
+      faraday (~> 2.7)
+      moj-simple-jwt-auth (~> 0.2.0)
     language_server-protocol (3.17.0.6)
     lint_roller (1.1.0)
     logger (1.7.0)
@@ -593,7 +587,7 @@ DEPENDENCIES
   jsbundling-rails (~> 1.3)
   json (~> 3.1)
   kaminari
-  laa-criminal-applications-datastore-api-client!
+  laa-criminal-applications-datastore-api-client (= 1.3.0)
   laa-criminal-legal-aid-schemas!
   lograge
   logstash-event

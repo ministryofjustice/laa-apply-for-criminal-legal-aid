@@ -43,8 +43,7 @@ gem 'bootsnap', require: false
 
 gem 'moj_components', '~> 0.3'
 
-gem 'laa-criminal-applications-datastore-api-client',
-    github: 'ministryofjustice/laa-criminal-applications-datastore-api-client', tag: 'v1.3.0',
+gem 'laa-criminal-applications-datastore-api-client', '1.3.0',
     require: 'datastore_api'
 
 gem 'laa-criminal-legal-aid-schemas',
