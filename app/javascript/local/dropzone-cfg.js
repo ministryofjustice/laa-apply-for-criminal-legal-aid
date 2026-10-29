@@ -176,7 +176,7 @@ function showUploadSuccessBanner(i18n, fileNames, moveFocus) {
   const messages = fileNames.map((fileName) => {
     const message = document.createElement('p')
     message.classList.add('govuk-notification-banner__heading')
-    message.textContent = template.replace('{{file_name}}', fileName)
+    message.textContent = template.replace('{{file_name}}', () => fileName)
     return message
   })
 
