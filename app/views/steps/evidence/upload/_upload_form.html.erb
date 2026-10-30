@@ -14,6 +14,8 @@
                                     data: { 'dropzone-i18n': {
                                       drag_and_drop: t("#{i18n_scope}.drag_and_drop"),
                                       uploaded: t("#{i18n_scope}.uploaded"),
+                                      upload_success: t("#{i18n_scope}.upload_success", file_name: '{{file_name}}'),
+                                      remove_button: t('steps.evidence.upload.uploaded_file.remove_button'),
                                     }.to_json } },
                url: crime_application_documents_path,
                method: :post, multipart: true do |f| %>

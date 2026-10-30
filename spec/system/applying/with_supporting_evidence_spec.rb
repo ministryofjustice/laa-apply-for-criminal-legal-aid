@@ -84,13 +84,9 @@ RSpec.describe 'Supporting evidence' do
 
       expect(page).to have_text 'their National Insurance number'
 
-      # The dedicated live region used to announce successful uploads to screen
-      # readers is present and empty on page load, so assistive technologies can
-      # monitor it for changes (the JS populates it when an upload completes).
-      expect(page).to have_css(
-        '#upload-status-notification-container[aria-live="polite"]:empty',
-        visible: :all
-      )
+      # The success banner used to confirm uploads is present but hidden on
+      # page load; the JS reveals and focuses it once an upload completes.
+      expect(page).to have_css('#upload-success-banner[role="alert"][tabindex="-1"]', visible: :hidden)
 
       # Without a file attached
       save_and_continue
@@ -127,8 +123,7 @@ RSpec.describe 'Supporting evidence' do
 
       # The uploaded file is shown with its 'Uploaded' status. In the no-JS
       # fallback the page reloads, so the new content is announced naturally.
-      # The JS (dropzone) path announces success via a dedicated aria-live
-      # region (#upload-status-notification-container).
+      # The JS (dropzone) path shows and focuses a success banner instead.
       expect(page).to have_css('.app-uploaded-file__status', text: 'Uploaded')
 
       save_and_continue

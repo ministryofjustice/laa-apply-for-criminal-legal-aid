@@ -79,13 +79,18 @@ DropzoneCfg.prototype.init = function () {
   this.$dropzoneContainerText = document.querySelector('div.dz-message')
   this.$dropzoneContainerText.appendChild(this.$chooseFilesButton)
 
+  // Outcome of the current batch of uploads, reported once the whole queue completes
+  this.batchUploadedFileNames = []
+  this.batchErrorCount = 0
+
   this.$dropzone.on('addedfile', (file) => {
     // Remove any notification banners (e.g. for deleting a file) and error messages from view if present
     const notificationBanner = document.getElementById('notification-banner')
     notificationBanner?.remove()
+    hideUploadSuccessBanner()
     removeErrorMessages()
 
-    let row = createUploadedFileRow(file);
+    let row = createUploadedFileRow(file, this.i18n);
     document.querySelector('#uploaded-files-dropzone .app-uploaded-files').append(row);
   });
 
@@ -102,12 +107,14 @@ DropzoneCfg.prototype.init = function () {
     this.$statusTag.classList.add("govuk-tag--green")
     this.$statusTag.textContent = this.i18n.uploaded || 'Uploaded'
 
-    announceUploadSuccess(this.i18n)
+    this.batchUploadedFileNames.push(file.name)
 
     setDeleteDocumentValue(file, response)
   });
 
   this.$dropzone.on('error', (file, response) => {
+    this.batchErrorCount++
+
     let errorMsg = generateErrorMessage(file, response)
 
     this.$row = document.getElementById(file.upload.uuid)
@@ -117,17 +124,27 @@ DropzoneCfg.prototype.init = function () {
     displayErrorMessage(errorSummary, errorMsg)
   })
 
+  this.$dropzone.on('queuecomplete', () => {
+    if (this.batchUploadedFileNames.length > 0) {
+      // When any file in the batch failed, focus stays on the error summary
+      showUploadSuccessBanner(this.i18n, this.batchUploadedFileNames, this.batchErrorCount === 0)
+    }
+
+    this.batchUploadedFileNames = []
+    this.batchErrorCount = 0
+  })
+
   this.$dropzone.on('drop', () => {
     removeErrorMessages()
   })
 }
 
-function createUploadedFileRow(file) {
+function createUploadedFileRow(file, i18n) {
   let row = document.createElement("div")
   let value = document.createElement("dt")
   let span = document.createElement("span")
   let statusTag = createStatusTag("Uploading")
-  let actions = createDeleteAction()
+  let actions = createDeleteAction(i18n)
 
   row.setAttribute("id", file.upload.uuid)
 
@@ -150,32 +167,44 @@ function createStatusTag(text) {
   return tag
 }
 
-let announceTimer = null
+function showUploadSuccessBanner(i18n, fileNames, moveFocus) {
+  const banner = document.getElementById('upload-success-banner')
 
-function announceUploadSuccess(i18n) {
-  const liveRegion = document.getElementById('upload-status-notification-container')
+  if (!banner) { return }
 
-  if (!liveRegion) { return }
+  const template = i18n.upload_success || 'You uploaded {{file_name}}'
+  const messages = fileNames.map((fileName) => {
+    const message = document.createElement('p')
+    message.classList.add('govuk-notification-banner__heading')
+    message.textContent = template.replace('{{file_name}}', () => fileName)
+    return message
+  })
 
-  const message = i18n.uploaded || 'Uploaded'
+  banner.querySelector('.govuk-notification-banner__content').replaceChildren(...messages)
+  banner.hidden = false
 
-  // Clear the live region, then write the message on a later tick. Setting both
-  // values synchronously would be collapsed into a single accessibility-tree
-  // update, so a screen reader would see "Uploaded" replaced by "Uploaded" and
-  // may not announce it (notably VoiceOver with Safari). Deferring the write
-  // lets the browser flush the empty state first, so each upload — including
-  // repeated identical messages — is detected as a change and announced.
-  //
-  // A single shared timer is used so that uploads finishing within the delay of
-  // each other are combined into one announcement, rather than clearing the
-  // region twice before either timer writes (which would announce only once
-  // anyway). Each success cancels the pending timer and restarts the delay.
-  clearTimeout(announceTimer)
-  liveRegion.textContent = ""
-  announceTimer = setTimeout(() => {
-    liveRegion.textContent = message
-    announceTimer = null
-  }, 100)
+  if (moveFocus) { focusWhenDocumentActive(banner) }
+}
+
+function hideUploadSuccessBanner() {
+  const banner = document.getElementById('upload-success-banner')
+
+  if (banner) { banner.hidden = true }
+}
+
+// Screen readers on Windows (NVDA, JAWS) don't reliably announce live region
+// updates made while focus is returning from the OS file dialog, as the
+// re-announcement of the window and focused button drowns them out. Instead
+// focus the visible banner, waiting until the document has focus again so the
+// screen reader announces it once it is back in the page.
+function focusWhenDocumentActive(element) {
+  const focus = () => requestAnimationFrame(() => element.focus())
+
+  if (document.hasFocus()) {
+    focus()
+  } else {
+    window.addEventListener('focus', focus, { once: true })
+  }
 }
 
 function createDownloadLink(file, response) {
@@ -213,7 +242,7 @@ function createErrorSummary (msg) {
   return errorSummary
 }
 
-function createDeleteAction () {
+function createDeleteAction (i18n) {
   const actions = document.createElement("dd")
   actions.classList.add("govuk-summary-list__actions")
 
@@ -221,7 +250,7 @@ function createDeleteAction () {
   deleteButton.classList.add("app-button--link", "app-uploaded-file__delete")
   deleteButton.setAttribute("type", "submit")
   deleteButton.setAttribute("name", "document_id")
-  deleteButton.innerText = "Delete"
+  deleteButton.innerText = i18n.remove_button || "Delete"
 
   actions.append(deleteButton)
   return actions
